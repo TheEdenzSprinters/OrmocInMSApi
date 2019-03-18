@@ -1,0 +1,1704 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="OrmocIMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BrandName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CodeDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodeValue" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModuleType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ItemDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubCategoryID" Type="int" Nullable="false" />
+          <Property Name="ItemDetailName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ItemDetailMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="ItemDetailID" Type="int" Nullable="false" />
+          <Property Name="ShowUnitsOfMeasure" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ItemRequestForm">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="StatusCd" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ItemRequestFormMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="IRFID" Type="int" Nullable="false" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="SubCategoryID" Type="int" Nullable="false" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
+          <Property Name="BrandID" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="MeasuredBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Notes" Type="varchar" MaxLength="500" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Locations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LocationName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PurchaseOrderMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="POID" Type="int" Nullable="false" />
+          <Property Name="SupplierID" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="SupplierPrice" Type="int" Nullable="false" />
+          <Property Name="PaymentTerms" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PurchaseOrders">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuotationID" Type="int" />
+          <Property Name="Title" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="SupplierID" Type="int" Nullable="false" />
+          <Property Name="StatusCd" Type="int" Nullable="false" />
+          <Property Name="Notes" Type="varchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Quotations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IRFID" Type="int" />
+          <Property Name="StatusCd" Type="int" Nullable="false" />
+          <Property Name="SupplierID" Type="int" Nullable="false" />
+          <Property Name="Notes" Type="varchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QuotationsMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="QuotationID" Type="int" Nullable="false" />
+          <Property Name="SupplierID" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="SupplierPrice" Type="int" Nullable="false" />
+          <Property Name="PaymentTerms" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="SubCategoryName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Suppliers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SupplierName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="SupplierAddress" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="TelephoneNumber" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Notes" Type="varchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TagValue" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TagsMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="TagID" Type="int" Nullable="false" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UnitsOfMeasure">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemDetailID" Type="int" Nullable="false" />
+          <Property Name="UnitOfMeasure" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_IRFIDItemRequest_ItemRequest">
+          <End Role="ItemRequestForm" Type="Self.ItemRequestForm" Multiplicity="1" />
+          <End Role="ItemRequestFormMapping" Type="Self.ItemRequestFormMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemRequestForm">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemRequestFormMapping">
+              <PropertyRef Name="IRFID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IRFIDQoutations_ItemRequests">
+          <End Role="ItemRequestForm" Type="Self.ItemRequestForm" Multiplicity="0..1" />
+          <End Role="Quotations" Type="Self.Quotations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemRequestForm">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Quotations">
+              <PropertyRef Name="IRFID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IRFIDQoutations_PurchaseOrders">
+          <End Role="Quotations" Type="Self.Quotations" Multiplicity="0..1" />
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quotations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrders">
+              <PropertyRef Name="QuotationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemBrand_Brand">
+          <End Role="Brand" Type="Self.Brand" Multiplicity="1" />
+          <End Role="Items" Type="Self.Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="BrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemCategory_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Items" Type="Self.Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemDetailID_ItemDetail">
+          <End Role="ItemDetail" Type="Self.ItemDetail" Multiplicity="1" />
+          <End Role="ItemDetailMapping" Type="Self.ItemDetailMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemDetailMapping">
+              <PropertyRef Name="ItemDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemDetaiLSubCategory_SubCategory">
+          <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="1" />
+          <End Role="ItemDetail" Type="Self.ItemDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemDetail">
+              <PropertyRef Name="SubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemDetailUOM_ItemDetail">
+          <End Role="ItemDetail" Type="Self.ItemDetail" Multiplicity="1" />
+          <End Role="UnitsOfMeasure" Type="Self.UnitsOfMeasure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitsOfMeasure">
+              <PropertyRef Name="ItemDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemID_Item">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="ItemDetailMapping" Type="Self.ItemDetailMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemDetailMapping">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemIDItemRequest_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="ItemRequestFormMapping" Type="Self.ItemRequestFormMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemRequestFormMapping">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemIDPurchaseOrders_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="PurchaseOrderMapping" Type="Self.PurchaseOrderMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrderMapping">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemIDQoutations_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="QuotationsMapping" Type="Self.QuotationsMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuotationsMapping">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemIDTags_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="TagsMapping" Type="Self.TagsMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TagsMapping">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemLocation_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="Items" Type="Self.Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemSubCategory_SubCategory">
+          <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="1" />
+          <End Role="Items" Type="Self.Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="SubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_POID_PurchaseOrders">
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="1" />
+          <End Role="PurchaseOrderMapping" Type="Self.PurchaseOrderMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrders">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrderMapping">
+              <PropertyRef Name="POID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuotationID_Quotations">
+          <End Role="Quotations" Type="Self.Quotations" Multiplicity="1" />
+          <End Role="QuotationsMapping" Type="Self.QuotationsMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quotations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuotationsMapping">
+              <PropertyRef Name="QuotationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatusCdItemRequests_CodeDetail">
+          <End Role="CodeDetail" Type="Self.CodeDetail" Multiplicity="1" />
+          <End Role="ItemRequestForm" Type="Self.ItemRequestForm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemRequestForm">
+              <PropertyRef Name="StatusCd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatusCdPurchaseOrders_CodeDetail">
+          <End Role="CodeDetail" Type="Self.CodeDetail" Multiplicity="1" />
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrders">
+              <PropertyRef Name="StatusCd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatusCdQuotations_CodeDetail">
+          <End Role="CodeDetail" Type="Self.CodeDetail" Multiplicity="1" />
+          <End Role="Quotations" Type="Self.Quotations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Quotations">
+              <PropertyRef Name="StatusCd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubCategoryCategory_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubCategory">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierIDPurchaseOrders_Suppliers">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrders">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierIDQuotations_Suppliers">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
+          <End Role="Quotations" Type="Self.Quotations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Quotations">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TagID_Tags">
+          <End Role="Tags" Type="Self.Tags" Multiplicity="1" />
+          <End Role="TagsMapping" Type="Self.TagsMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TagsMapping">
+              <PropertyRef Name="TagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OrmocIMSModelStoreContainer">
+          <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CodeDetail" EntityType="Self.CodeDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemDetail" EntityType="Self.ItemDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemDetailMapping" EntityType="Self.ItemDetailMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemRequestForm" EntityType="Self.ItemRequestForm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemRequestFormMapping" EntityType="Self.ItemRequestFormMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseOrderMapping" EntityType="Self.PurchaseOrderMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseOrders" EntityType="Self.PurchaseOrders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Quotations" EntityType="Self.Quotations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuotationsMapping" EntityType="Self.QuotationsMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubCategory" EntityType="Self.SubCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TagsMapping" EntityType="Self.TagsMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UnitsOfMeasure" EntityType="Self.UnitsOfMeasure" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_IRFIDItemRequest_ItemRequest" Association="Self.FK_IRFIDItemRequest_ItemRequest">
+            <End Role="ItemRequestForm" EntitySet="ItemRequestForm" />
+            <End Role="ItemRequestFormMapping" EntitySet="ItemRequestFormMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IRFIDQoutations_ItemRequests" Association="Self.FK_IRFIDQoutations_ItemRequests">
+            <End Role="ItemRequestForm" EntitySet="ItemRequestForm" />
+            <End Role="Quotations" EntitySet="Quotations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IRFIDQoutations_PurchaseOrders" Association="Self.FK_IRFIDQoutations_PurchaseOrders">
+            <End Role="Quotations" EntitySet="Quotations" />
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemBrand_Brand" Association="Self.FK_ItemBrand_Brand">
+            <End Role="Brand" EntitySet="Brand" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemCategory_Category" Association="Self.FK_ItemCategory_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemDetailID_ItemDetail" Association="Self.FK_ItemDetailID_ItemDetail">
+            <End Role="ItemDetail" EntitySet="ItemDetail" />
+            <End Role="ItemDetailMapping" EntitySet="ItemDetailMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemDetaiLSubCategory_SubCategory" Association="Self.FK_ItemDetaiLSubCategory_SubCategory">
+            <End Role="SubCategory" EntitySet="SubCategory" />
+            <End Role="ItemDetail" EntitySet="ItemDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemDetailUOM_ItemDetail" Association="Self.FK_ItemDetailUOM_ItemDetail">
+            <End Role="ItemDetail" EntitySet="ItemDetail" />
+            <End Role="UnitsOfMeasure" EntitySet="UnitsOfMeasure" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemID_Item" Association="Self.FK_ItemID_Item">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="ItemDetailMapping" EntitySet="ItemDetailMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemIDItemRequest_Items" Association="Self.FK_ItemIDItemRequest_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="ItemRequestFormMapping" EntitySet="ItemRequestFormMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemIDPurchaseOrders_Items" Association="Self.FK_ItemIDPurchaseOrders_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="PurchaseOrderMapping" EntitySet="PurchaseOrderMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemIDQoutations_Items" Association="Self.FK_ItemIDQoutations_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="QuotationsMapping" EntitySet="QuotationsMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemIDTags_Items" Association="Self.FK_ItemIDTags_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="TagsMapping" EntitySet="TagsMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemLocation_Locations" Association="Self.FK_ItemLocation_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemSubCategory_SubCategory" Association="Self.FK_ItemSubCategory_SubCategory">
+            <End Role="SubCategory" EntitySet="SubCategory" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_POID_PurchaseOrders" Association="Self.FK_POID_PurchaseOrders">
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
+            <End Role="PurchaseOrderMapping" EntitySet="PurchaseOrderMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuotationID_Quotations" Association="Self.FK_QuotationID_Quotations">
+            <End Role="Quotations" EntitySet="Quotations" />
+            <End Role="QuotationsMapping" EntitySet="QuotationsMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatusCdItemRequests_CodeDetail" Association="Self.FK_StatusCdItemRequests_CodeDetail">
+            <End Role="CodeDetail" EntitySet="CodeDetail" />
+            <End Role="ItemRequestForm" EntitySet="ItemRequestForm" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatusCdPurchaseOrders_CodeDetail" Association="Self.FK_StatusCdPurchaseOrders_CodeDetail">
+            <End Role="CodeDetail" EntitySet="CodeDetail" />
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatusCdQuotations_CodeDetail" Association="Self.FK_StatusCdQuotations_CodeDetail">
+            <End Role="CodeDetail" EntitySet="CodeDetail" />
+            <End Role="Quotations" EntitySet="Quotations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubCategoryCategory_Category" Association="Self.FK_SubCategoryCategory_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="SubCategory" EntitySet="SubCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierIDPurchaseOrders_Suppliers" Association="Self.FK_SupplierIDPurchaseOrders_Suppliers">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierIDQuotations_Suppliers" Association="Self.FK_SupplierIDQuotations_Suppliers">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Quotations" EntitySet="Quotations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TagID_Tags" Association="Self.FK_TagID_Tags">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="TagsMapping" EntitySet="TagsMapping" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OrmocIMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BrandName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_ItemBrand_Brand" FromRole="Brand" ToRole="Items" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_ItemCategory_Category" FromRole="Category" ToRole="Items" />
+          <NavigationProperty Name="SubCategories" Relationship="Self.FK_SubCategoryCategory_Category" FromRole="Category" ToRole="SubCategory" />
+        </EntityType>
+        <EntityType Name="CodeDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodeValue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModuleType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemRequestForms" Relationship="Self.FK_StatusCdItemRequests_CodeDetail" FromRole="CodeDetail" ToRole="ItemRequestForm" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK_StatusCdPurchaseOrders_CodeDetail" FromRole="CodeDetail" ToRole="PurchaseOrders" />
+          <NavigationProperty Name="Quotations" Relationship="Self.FK_StatusCdQuotations_CodeDetail" FromRole="CodeDetail" ToRole="Quotations" />
+        </EntityType>
+        <EntityType Name="ItemDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="ItemDetailName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemDetailMappings" Relationship="Self.FK_ItemDetailID_ItemDetail" FromRole="ItemDetail" ToRole="ItemDetailMapping" />
+          <NavigationProperty Name="SubCategory" Relationship="Self.FK_ItemDetaiLSubCategory_SubCategory" FromRole="ItemDetail" ToRole="SubCategory" />
+          <NavigationProperty Name="UnitsOfMeasures" Relationship="Self.FK_ItemDetailUOM_ItemDetail" FromRole="ItemDetail" ToRole="UnitsOfMeasure" />
+        </EntityType>
+        <EntityType Name="ItemDetailMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="ItemDetailID" Type="Int32" Nullable="false" />
+          <Property Name="ShowUnitsOfMeasure" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemDetail" Relationship="Self.FK_ItemDetailID_ItemDetail" FromRole="ItemDetailMapping" ToRole="ItemDetail" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_ItemID_Item" FromRole="ItemDetailMapping" ToRole="Items" />
+        </EntityType>
+        <EntityType Name="ItemRequestForm">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StatusCd" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CodeDetail" Relationship="Self.FK_StatusCdItemRequests_CodeDetail" FromRole="ItemRequestForm" ToRole="CodeDetail" />
+          <NavigationProperty Name="ItemRequestFormMappings" Relationship="Self.FK_IRFIDItemRequest_ItemRequest" FromRole="ItemRequestForm" ToRole="ItemRequestFormMapping" />
+          <NavigationProperty Name="Quotations" Relationship="Self.FK_IRFIDQoutations_ItemRequests" FromRole="ItemRequestForm" ToRole="Quotations" />
+        </EntityType>
+        <EntityType Name="ItemRequestFormMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="IRFID" Type="Int32" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemRequestForm" Relationship="Self.FK_IRFIDItemRequest_ItemRequest" FromRole="ItemRequestFormMapping" ToRole="ItemRequestForm" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_ItemIDItemRequest_Items" FromRole="ItemRequestFormMapping" ToRole="Items" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="SubCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="BrandID" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="MeasuredBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Brand" Relationship="Self.FK_ItemBrand_Brand" FromRole="Items" ToRole="Brand" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_ItemCategory_Category" FromRole="Items" ToRole="Category" />
+          <NavigationProperty Name="ItemDetailMappings" Relationship="Self.FK_ItemID_Item" FromRole="Items" ToRole="ItemDetailMapping" />
+          <NavigationProperty Name="ItemRequestFormMappings" Relationship="Self.FK_ItemIDItemRequest_Items" FromRole="Items" ToRole="ItemRequestFormMapping" />
+          <NavigationProperty Name="PurchaseOrderMappings" Relationship="Self.FK_ItemIDPurchaseOrders_Items" FromRole="Items" ToRole="PurchaseOrderMapping" />
+          <NavigationProperty Name="QuotationsMappings" Relationship="Self.FK_ItemIDQoutations_Items" FromRole="Items" ToRole="QuotationsMapping" />
+          <NavigationProperty Name="TagsMappings" Relationship="Self.FK_ItemIDTags_Items" FromRole="Items" ToRole="TagsMapping" />
+          <NavigationProperty Name="Location" Relationship="Self.FK_ItemLocation_Locations" FromRole="Items" ToRole="Locations" />
+          <NavigationProperty Name="SubCategory" Relationship="Self.FK_ItemSubCategory_SubCategory" FromRole="Items" ToRole="SubCategory" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LocationName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_ItemLocation_Locations" FromRole="Locations" ToRole="Items" />
+        </EntityType>
+        <EntityType Name="PurchaseOrderMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="POID" Type="Int32" Nullable="false" />
+          <Property Name="SupplierID" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="SupplierPrice" Type="Int32" Nullable="false" />
+          <Property Name="PaymentTerms" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_ItemIDPurchaseOrders_Items" FromRole="PurchaseOrderMapping" ToRole="Items" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="Self.FK_POID_PurchaseOrders" FromRole="PurchaseOrderMapping" ToRole="PurchaseOrders" />
+        </EntityType>
+        <EntityType Name="PurchaseOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuotationID" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StatusCd" Type="Int32" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CodeDetail" Relationship="Self.FK_StatusCdPurchaseOrders_CodeDetail" FromRole="PurchaseOrders" ToRole="CodeDetail" />
+          <NavigationProperty Name="PurchaseOrderMappings" Relationship="Self.FK_POID_PurchaseOrders" FromRole="PurchaseOrders" ToRole="PurchaseOrderMapping" />
+          <NavigationProperty Name="Quotation" Relationship="Self.FK_IRFIDQoutations_PurchaseOrders" FromRole="PurchaseOrders" ToRole="Quotations" />
+          <Property Name="SupplierID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Supplier" Relationship="OrmocIMSModel.FK_SupplierIDPurchaseOrders_Suppliers" FromRole="PurchaseOrder" ToRole="Supplier" />
+        </EntityType>
+        <EntityType Name="Quotation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IRFID" Type="Int32" />
+          <Property Name="StatusCd" Type="Int32" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CodeDetail" Relationship="Self.FK_StatusCdQuotations_CodeDetail" FromRole="Quotations" ToRole="CodeDetail" />
+          <NavigationProperty Name="ItemRequestForm" Relationship="Self.FK_IRFIDQoutations_ItemRequests" FromRole="Quotations" ToRole="ItemRequestForm" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK_IRFIDQoutations_PurchaseOrders" FromRole="Quotations" ToRole="PurchaseOrders" />
+          <NavigationProperty Name="QuotationsMappings" Relationship="Self.FK_QuotationID_Quotations" FromRole="Quotations" ToRole="QuotationsMapping" />
+          <Property Name="SupplierID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Supplier" Relationship="OrmocIMSModel.FK_SupplierIDQuotations_Suppliers" FromRole="Quotation" ToRole="Supplier" />
+        </EntityType>
+        <EntityType Name="QuotationsMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="QuotationID" Type="Int32" Nullable="false" />
+          <Property Name="SupplierID" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="SupplierPrice" Type="Int32" Nullable="false" />
+          <Property Name="PaymentTerms" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_ItemIDQoutations_Items" FromRole="QuotationsMapping" ToRole="Items" />
+          <NavigationProperty Name="Quotation" Relationship="Self.FK_QuotationID_Quotations" FromRole="QuotationsMapping" ToRole="Quotations" />
+        </EntityType>
+        <EntityType Name="SubCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="SubCategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_SubCategoryCategory_Category" FromRole="SubCategory" ToRole="Category" />
+          <NavigationProperty Name="ItemDetails" Relationship="Self.FK_ItemDetaiLSubCategory_SubCategory" FromRole="SubCategory" ToRole="ItemDetail" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_ItemSubCategory_SubCategory" FromRole="SubCategory" ToRole="Items" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SupplierAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TelephoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="OrmocIMSModel.FK_SupplierIDPurchaseOrders_Suppliers" FromRole="Supplier" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="Quotations" Relationship="OrmocIMSModel.FK_SupplierIDQuotations_Suppliers" FromRole="Supplier" ToRole="Quotation" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TagValue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="TagsMappings" Relationship="Self.FK_TagID_Tags" FromRole="Tags" ToRole="TagsMapping" />
+        </EntityType>
+        <EntityType Name="TagsMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="TagID" Type="Int32" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_ItemIDTags_Items" FromRole="TagsMapping" ToRole="Items" />
+          <NavigationProperty Name="Tag" Relationship="Self.FK_TagID_Tags" FromRole="TagsMapping" ToRole="Tags" />
+        </EntityType>
+        <EntityType Name="UnitsOfMeasure">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemDetailID" Type="Int32" Nullable="false" />
+          <Property Name="UnitOfMeasure" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemDetail" Relationship="Self.FK_ItemDetailUOM_ItemDetail" FromRole="UnitsOfMeasure" ToRole="ItemDetail" />
+        </EntityType>
+        <Association Name="FK_ItemBrand_Brand">
+          <End Role="Brand" Type="Self.Brand" Multiplicity="1" />
+          <End Role="Items" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="BrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemCategory_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Items" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubCategoryCategory_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubCategory">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatusCdItemRequests_CodeDetail">
+          <End Role="CodeDetail" Type="Self.CodeDetail" Multiplicity="1" />
+          <End Role="ItemRequestForm" Type="Self.ItemRequestForm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemRequestForm">
+              <PropertyRef Name="StatusCd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatusCdPurchaseOrders_CodeDetail">
+          <End Role="CodeDetail" Type="Self.CodeDetail" Multiplicity="1" />
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrders">
+              <PropertyRef Name="StatusCd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatusCdQuotations_CodeDetail">
+          <End Role="CodeDetail" Type="Self.CodeDetail" Multiplicity="1" />
+          <End Role="Quotations" Type="Self.Quotation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Quotations">
+              <PropertyRef Name="StatusCd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemDetailID_ItemDetail">
+          <End Role="ItemDetail" Type="Self.ItemDetail" Multiplicity="1" />
+          <End Role="ItemDetailMapping" Type="Self.ItemDetailMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemDetailMapping">
+              <PropertyRef Name="ItemDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemDetaiLSubCategory_SubCategory">
+          <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="1" />
+          <End Role="ItemDetail" Type="Self.ItemDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemDetail">
+              <PropertyRef Name="SubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemDetailUOM_ItemDetail">
+          <End Role="ItemDetail" Type="Self.ItemDetail" Multiplicity="1" />
+          <End Role="UnitsOfMeasure" Type="Self.UnitsOfMeasure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitsOfMeasure">
+              <PropertyRef Name="ItemDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemID_Item">
+          <End Role="Items" Type="Self.Item" Multiplicity="1" />
+          <End Role="ItemDetailMapping" Type="Self.ItemDetailMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemDetailMapping">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IRFIDItemRequest_ItemRequest">
+          <End Role="ItemRequestForm" Type="Self.ItemRequestForm" Multiplicity="1" />
+          <End Role="ItemRequestFormMapping" Type="Self.ItemRequestFormMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemRequestForm">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemRequestFormMapping">
+              <PropertyRef Name="IRFID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IRFIDQoutations_ItemRequests">
+          <End Role="ItemRequestForm" Type="Self.ItemRequestForm" Multiplicity="0..1" />
+          <End Role="Quotations" Type="Self.Quotation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemRequestForm">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Quotations">
+              <PropertyRef Name="IRFID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemIDItemRequest_Items">
+          <End Role="Items" Type="Self.Item" Multiplicity="1" />
+          <End Role="ItemRequestFormMapping" Type="Self.ItemRequestFormMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemRequestFormMapping">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemIDPurchaseOrders_Items">
+          <End Role="Items" Type="Self.Item" Multiplicity="1" />
+          <End Role="PurchaseOrderMapping" Type="Self.PurchaseOrderMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrderMapping">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemIDQoutations_Items">
+          <End Role="Items" Type="Self.Item" Multiplicity="1" />
+          <End Role="QuotationsMapping" Type="Self.QuotationsMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuotationsMapping">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemIDTags_Items">
+          <End Role="Items" Type="Self.Item" Multiplicity="1" />
+          <End Role="TagsMapping" Type="Self.TagsMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TagsMapping">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemLocation_Locations">
+          <End Role="Locations" Type="Self.Location" Multiplicity="1" />
+          <End Role="Items" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemSubCategory_SubCategory">
+          <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="1" />
+          <End Role="Items" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="SubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_POID_PurchaseOrders">
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrder" Multiplicity="1" />
+          <End Role="PurchaseOrderMapping" Type="Self.PurchaseOrderMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrders">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrderMapping">
+              <PropertyRef Name="POID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IRFIDQoutations_PurchaseOrders">
+          <End Role="Quotations" Type="Self.Quotation" Multiplicity="0..1" />
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quotations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrders">
+              <PropertyRef Name="QuotationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuotationID_Quotations">
+          <End Role="Quotations" Type="Self.Quotation" Multiplicity="1" />
+          <End Role="QuotationsMapping" Type="Self.QuotationsMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quotations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuotationsMapping">
+              <PropertyRef Name="QuotationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TagID_Tags">
+          <End Role="Tags" Type="Self.Tag" Multiplicity="1" />
+          <End Role="TagsMapping" Type="Self.TagsMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TagsMapping">
+              <PropertyRef Name="TagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OrmocIMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Brands" EntityType="Self.Brand" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="CodeDetails" EntityType="Self.CodeDetail" />
+          <EntitySet Name="ItemDetails" EntityType="Self.ItemDetail" />
+          <EntitySet Name="ItemDetailMappings" EntityType="Self.ItemDetailMapping" />
+          <EntitySet Name="ItemRequestForms" EntityType="Self.ItemRequestForm" />
+          <EntitySet Name="ItemRequestFormMappings" EntityType="Self.ItemRequestFormMapping" />
+          <EntitySet Name="Items" EntityType="Self.Item" />
+          <EntitySet Name="Locations" EntityType="Self.Location" />
+          <EntitySet Name="PurchaseOrderMappings" EntityType="Self.PurchaseOrderMapping" />
+          <EntitySet Name="PurchaseOrders" EntityType="Self.PurchaseOrder" />
+          <EntitySet Name="Quotations" EntityType="Self.Quotation" />
+          <EntitySet Name="QuotationsMappings" EntityType="Self.QuotationsMapping" />
+          <EntitySet Name="SubCategories" EntityType="Self.SubCategory" />
+          <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+          <EntitySet Name="Tags" EntityType="Self.Tag" />
+          <EntitySet Name="TagsMappings" EntityType="Self.TagsMapping" />
+          <EntitySet Name="UnitsOfMeasures" EntityType="Self.UnitsOfMeasure" />
+          <AssociationSet Name="FK_ItemBrand_Brand" Association="Self.FK_ItemBrand_Brand">
+            <End Role="Brand" EntitySet="Brands" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemCategory_Category" Association="Self.FK_ItemCategory_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubCategoryCategory_Category" Association="Self.FK_SubCategoryCategory_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="SubCategory" EntitySet="SubCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatusCdItemRequests_CodeDetail" Association="Self.FK_StatusCdItemRequests_CodeDetail">
+            <End Role="CodeDetail" EntitySet="CodeDetails" />
+            <End Role="ItemRequestForm" EntitySet="ItemRequestForms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatusCdPurchaseOrders_CodeDetail" Association="Self.FK_StatusCdPurchaseOrders_CodeDetail">
+            <End Role="CodeDetail" EntitySet="CodeDetails" />
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatusCdQuotations_CodeDetail" Association="Self.FK_StatusCdQuotations_CodeDetail">
+            <End Role="CodeDetail" EntitySet="CodeDetails" />
+            <End Role="Quotations" EntitySet="Quotations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemDetailID_ItemDetail" Association="Self.FK_ItemDetailID_ItemDetail">
+            <End Role="ItemDetail" EntitySet="ItemDetails" />
+            <End Role="ItemDetailMapping" EntitySet="ItemDetailMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemDetaiLSubCategory_SubCategory" Association="Self.FK_ItemDetaiLSubCategory_SubCategory">
+            <End Role="SubCategory" EntitySet="SubCategories" />
+            <End Role="ItemDetail" EntitySet="ItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemDetailUOM_ItemDetail" Association="Self.FK_ItemDetailUOM_ItemDetail">
+            <End Role="ItemDetail" EntitySet="ItemDetails" />
+            <End Role="UnitsOfMeasure" EntitySet="UnitsOfMeasures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemID_Item" Association="Self.FK_ItemID_Item">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="ItemDetailMapping" EntitySet="ItemDetailMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IRFIDItemRequest_ItemRequest" Association="Self.FK_IRFIDItemRequest_ItemRequest">
+            <End Role="ItemRequestForm" EntitySet="ItemRequestForms" />
+            <End Role="ItemRequestFormMapping" EntitySet="ItemRequestFormMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IRFIDQoutations_ItemRequests" Association="Self.FK_IRFIDQoutations_ItemRequests">
+            <End Role="ItemRequestForm" EntitySet="ItemRequestForms" />
+            <End Role="Quotations" EntitySet="Quotations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemIDItemRequest_Items" Association="Self.FK_ItemIDItemRequest_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="ItemRequestFormMapping" EntitySet="ItemRequestFormMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemIDPurchaseOrders_Items" Association="Self.FK_ItemIDPurchaseOrders_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="PurchaseOrderMapping" EntitySet="PurchaseOrderMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemIDQoutations_Items" Association="Self.FK_ItemIDQoutations_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="QuotationsMapping" EntitySet="QuotationsMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemIDTags_Items" Association="Self.FK_ItemIDTags_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="TagsMapping" EntitySet="TagsMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemLocation_Locations" Association="Self.FK_ItemLocation_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemSubCategory_SubCategory" Association="Self.FK_ItemSubCategory_SubCategory">
+            <End Role="SubCategory" EntitySet="SubCategories" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_POID_PurchaseOrders" Association="Self.FK_POID_PurchaseOrders">
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
+            <End Role="PurchaseOrderMapping" EntitySet="PurchaseOrderMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IRFIDQoutations_PurchaseOrders" Association="Self.FK_IRFIDQoutations_PurchaseOrders">
+            <End Role="Quotations" EntitySet="Quotations" />
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuotationID_Quotations" Association="Self.FK_QuotationID_Quotations">
+            <End Role="Quotations" EntitySet="Quotations" />
+            <End Role="QuotationsMapping" EntitySet="QuotationsMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TagID_Tags" Association="Self.FK_TagID_Tags">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="TagsMapping" EntitySet="TagsMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierIDPurchaseOrders_Suppliers" Association="OrmocIMSModel.FK_SupplierIDPurchaseOrders_Suppliers">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierIDQuotations_Suppliers" Association="OrmocIMSModel.FK_SupplierIDQuotations_Suppliers">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Quotation" EntitySet="Quotations" />
+          </AssociationSet>
+          <EntitySet Name="Users" EntityType="OrmocIMSModel.User" />
+        </EntityContainer>
+        <Association Name="FK_SupplierIDPurchaseOrders_Suppliers">
+          <End Type="OrmocIMSModel.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="OrmocIMSModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierIDQuotations_Suppliers">
+          <End Type="OrmocIMSModel.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="OrmocIMSModel.Quotation" Role="Quotation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Quotation">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OrmocIMSModelStoreContainer" CdmEntityContainer="OrmocIMSEntities">
+          <EntitySetMapping Name="Brands">
+            <EntityTypeMapping TypeName="OrmocIMSModel.Brand">
+              <MappingFragment StoreEntitySet="Brand">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BrandName" ColumnName="BrandName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="OrmocIMSModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CodeDetails">
+            <EntityTypeMapping TypeName="OrmocIMSModel.CodeDetail">
+              <MappingFragment StoreEntitySet="CodeDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CodeValue" ColumnName="CodeValue" />
+                <ScalarProperty Name="ModuleType" ColumnName="ModuleType" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemDetails">
+            <EntityTypeMapping TypeName="OrmocIMSModel.ItemDetail">
+              <MappingFragment StoreEntitySet="ItemDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
+                <ScalarProperty Name="ItemDetailName" ColumnName="ItemDetailName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemDetailMappings">
+            <EntityTypeMapping TypeName="OrmocIMSModel.ItemDetailMapping">
+              <MappingFragment StoreEntitySet="ItemDetailMapping">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="ItemDetailID" ColumnName="ItemDetailID" />
+                <ScalarProperty Name="ShowUnitsOfMeasure" ColumnName="ShowUnitsOfMeasure" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemRequestForms">
+            <EntityTypeMapping TypeName="OrmocIMSModel.ItemRequestForm">
+              <MappingFragment StoreEntitySet="ItemRequestForm">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="StatusCd" ColumnName="StatusCd" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemRequestFormMappings">
+            <EntityTypeMapping TypeName="OrmocIMSModel.ItemRequestFormMapping">
+              <MappingFragment StoreEntitySet="ItemRequestFormMapping">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="IRFID" ColumnName="IRFID" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="OrmocIMSModel.Item">
+              <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="MeasuredBy" ColumnName="MeasuredBy" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="OrmocIMSModel.Location">
+              <MappingFragment StoreEntitySet="Locations">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrderMappings">
+            <EntityTypeMapping TypeName="OrmocIMSModel.PurchaseOrderMapping">
+              <MappingFragment StoreEntitySet="PurchaseOrderMapping">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="POID" ColumnName="POID" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="SupplierPrice" ColumnName="SupplierPrice" />
+                <ScalarProperty Name="PaymentTerms" ColumnName="PaymentTerms" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrders">
+            <EntityTypeMapping TypeName="OrmocIMSModel.PurchaseOrder">
+              <MappingFragment StoreEntitySet="PurchaseOrders">
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="QuotationID" ColumnName="QuotationID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="StatusCd" ColumnName="StatusCd" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Quotations">
+            <EntityTypeMapping TypeName="OrmocIMSModel.Quotation">
+              <MappingFragment StoreEntitySet="Quotations">
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IRFID" ColumnName="IRFID" />
+                <ScalarProperty Name="StatusCd" ColumnName="StatusCd" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuotationsMappings">
+            <EntityTypeMapping TypeName="OrmocIMSModel.QuotationsMapping">
+              <MappingFragment StoreEntitySet="QuotationsMapping">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="QuotationID" ColumnName="QuotationID" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="SupplierPrice" ColumnName="SupplierPrice" />
+                <ScalarProperty Name="PaymentTerms" ColumnName="PaymentTerms" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubCategories">
+            <EntityTypeMapping TypeName="OrmocIMSModel.SubCategory">
+              <MappingFragment StoreEntitySet="SubCategory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="OrmocIMSModel.Supplier">
+              <MappingFragment StoreEntitySet="Suppliers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="SupplierAddress" ColumnName="SupplierAddress" />
+                <ScalarProperty Name="TelephoneNumber" ColumnName="TelephoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="OrmocIMSModel.Tag">
+              <MappingFragment StoreEntitySet="Tags">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TagValue" ColumnName="TagValue" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TagsMappings">
+            <EntityTypeMapping TypeName="OrmocIMSModel.TagsMapping">
+              <MappingFragment StoreEntitySet="TagsMapping">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="TagID" ColumnName="TagID" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnitsOfMeasures">
+            <EntityTypeMapping TypeName="OrmocIMSModel.UnitsOfMeasure">
+              <MappingFragment StoreEntitySet="UnitsOfMeasure">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ItemDetailID" ColumnName="ItemDetailID" />
+                <ScalarProperty Name="UnitOfMeasure" ColumnName="UnitOfMeasure" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="OrmocIMSModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
