@@ -24,13 +24,13 @@ namespace IMSRepository
         public int Id { get; set; }
         public Nullable<int> IRFID { get; set; }
         public int StatusCd { get; set; }
+        public int SupplierID { get; set; }
         public string Notes { get; set; }
         public bool IsActive { get; set; }
         public string CreateUserName { get; set; }
         public System.DateTime CreateDttm { get; set; }
         public string UpdateUserName { get; set; }
         public System.DateTime UpdateDttm { get; set; }
-        public int SupplierID { get; set; }
     
         public virtual CodeDetail CodeDetail { get; set; }
         public virtual ItemRequestForm ItemRequestForm { get; set; }

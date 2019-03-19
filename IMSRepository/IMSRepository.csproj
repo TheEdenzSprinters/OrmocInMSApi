@@ -51,107 +51,109 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Brand.cs">
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Category.cs">
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Class1.cs" />
     <Compile Include="CodeDetail.cs">
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Item.cs">
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="ItemDetail.cs">
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="ItemDetailMapping.cs">
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="ItemRequestForm.cs">
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="ItemRequestFormMapping.cs">
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Location.cs">
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="OrmocIMSModel.Context.cs">
+    <Compile Include="OrmocIMSEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>OrmocIMSModel.Context.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="OrmocIMSModel.cs">
+    <Compile Include="OrmocIMSEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="OrmocIMSModel.Designer.cs">
+    <Compile Include="OrmocIMSEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>OrmocIMSModel.edmx</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaseOrder.cs">
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="PurchaseOrderMapping.cs">
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Quotation.cs">
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="QuotationsMapping.cs">
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="SubCategory.cs">
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Supplier.cs">
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Tag.cs">
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="TagsMapping.cs">
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="UnitsOfMeasure.cs">
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
-      <DependentUpon>OrmocIMSModel.tt</DependentUpon>
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="OrmocIMSModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>OrmocIMSModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
+    <Compile Include="Utilities\ISubCategoryDataAccess.cs" />
+    <Compile Include="Utilities\SubCategoryDataAccess.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <None Include="OrmocIMSModel.edmx.diagram">
-      <DependentUpon>OrmocIMSModel.edmx</DependentUpon>
+    <EntityDeploy Include="OrmocIMSEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>OrmocIMSEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="OrmocIMSEntities.edmx.diagram">
+      <DependentUpon>OrmocIMSEntities.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="OrmocIMSModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>OrmocIMSModel.Context.cs</LastGenOutput>
-      <DependentUpon>OrmocIMSModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="OrmocIMSModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>OrmocIMSModel.edmx</DependentUpon>
-      <LastGenOutput>OrmocIMSModel.cs</LastGenOutput>
-    </Content>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="OrmocIMSEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OrmocIMSEntities.edmx</DependentUpon>
+      <LastGenOutput>OrmocIMSEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="OrmocIMSEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OrmocIMSEntities.edmx</DependentUpon>
+      <LastGenOutput>OrmocIMSEntities.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

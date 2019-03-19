@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Ercel Peter Sotto\Source\Repos\TheEdenzSprinters\OrmocInMSApi\IMSRepository\OrmocIMSModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Ercel Peter Sotto\source\repos\TheEdenzSprinters\OrmocInMSApi\IMSRepository\OrmocIMSEntities.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

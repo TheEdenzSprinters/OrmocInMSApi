@@ -4,25 +4,26 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bad6e252c56142498a459cb845a443de" Name="Diagram1">
-        <EntityTypeShape EntityType="OrmocIMSModel.Brand" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrmocIMSModel.Category" Width="1.5" PointX="0.75" PointY="11.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrmocIMSModel.CodeDetail" Width="1.5" PointX="6" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrmocIMSModel.ItemDetail" Width="1.5" PointX="5.25" PointY="17.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrmocIMSModel.ItemDetailMapping" Width="1.5" PointX="7.5" PointY="13.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrmocIMSModel.ItemRequestForm" Width="1.5" PointX="6" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrmocIMSModel.ItemRequestFormMapping" Width="1.5" PointX="7.5" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrmocIMSModel.Item" Width="1.5" PointX="5.25" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrmocIMSModel.Location" Width="1.5" PointX="3" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrmocIMSModel.PurchaseOrderMapping" Width="1.5" PointX="10.5" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrmocIMSModel.PurchaseOrder" Width="1.5" PointX="8.25" PointY="21.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrmocIMSModel.Quotation" Width="1.5" PointX="8.25" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrmocIMSModel.QuotationsMapping" Width="1.5" PointX="10.5" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrmocIMSModel.SubCategory" Width="1.5" PointX="3" PointY="17.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrmocIMSModel.Supplier" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrmocIMSModel.Tag" Width="1.5" PointX="8.25" PointY="26.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrmocIMSModel.TagsMapping" Width="1.5" PointX="10.5" PointY="16" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrmocIMSModel.UnitsOfMeasure" Width="1.5" PointX="7.5" PointY="18" IsExpanded="true" />
+      <Diagram DiagramId="2df87e6c7117481a8203f2263cba6efc" Name="Diagram1">
+        <EntityTypeShape EntityType="OrmocIMSModel.Brand" Width="1.5" PointX="3" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrmocIMSModel.Category" Width="1.5" PointX="0.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrmocIMSModel.CodeDetail" Width="1.5" PointX="6" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrmocIMSModel.ItemDetail" Width="1.5" PointX="5.25" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrmocIMSModel.ItemDetailMapping" Width="1.5" PointX="7.5" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrmocIMSModel.ItemRequestForm" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrmocIMSModel.ItemRequestFormMapping" Width="1.5" PointX="7.5" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrmocIMSModel.Item" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrmocIMSModel.Location" Width="1.5" PointX="3" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrmocIMSModel.PurchaseOrderMapping" Width="1.5" PointX="10.5" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrmocIMSModel.PurchaseOrder" Width="1.5" PointX="8.25" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrmocIMSModel.Quotation" Width="1.5" PointX="8.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrmocIMSModel.QuotationsMapping" Width="1.5" PointX="10.5" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrmocIMSModel.SubCategory" Width="1.5" PointX="3" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrmocIMSModel.Supplier" Width="1.5" PointX="6" PointY="22.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrmocIMSModel.Tag" Width="1.5" PointX="8.25" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrmocIMSModel.TagsMapping" Width="1.5" PointX="10.5" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrmocIMSModel.UnitsOfMeasure" Width="1.5" PointX="7.5" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrmocIMSModel.User" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
         <AssociationConnector Association="OrmocIMSModel.FK_ItemBrand_Brand" ManuallyRouted="false" />
         <AssociationConnector Association="OrmocIMSModel.FK_ItemCategory_Category" ManuallyRouted="false" />
         <AssociationConnector Association="OrmocIMSModel.FK_SubCategoryCategory_Category" ManuallyRouted="false" />
@@ -43,11 +44,10 @@
         <AssociationConnector Association="OrmocIMSModel.FK_ItemSubCategory_SubCategory" ManuallyRouted="false" />
         <AssociationConnector Association="OrmocIMSModel.FK_POID_PurchaseOrders" ManuallyRouted="false" />
         <AssociationConnector Association="OrmocIMSModel.FK_IRFIDQoutations_PurchaseOrders" ManuallyRouted="false" />
+        <AssociationConnector Association="OrmocIMSModel.FK_SupplierIDPurchaseOrders_Suppliers" ManuallyRouted="false" />
         <AssociationConnector Association="OrmocIMSModel.FK_QuotationID_Quotations" ManuallyRouted="false" />
+        <AssociationConnector Association="OrmocIMSModel.FK_SupplierIDQuotations_Suppliers" ManuallyRouted="false" />
         <AssociationConnector Association="OrmocIMSModel.FK_TagID_Tags" ManuallyRouted="false" />
-        <AssociationConnector Association="OrmocIMSModel.FK_SupplierIDPurchaseOrders_Suppliers" />
-        <AssociationConnector Association="OrmocIMSModel.FK_SupplierIDQuotations_Suppliers" />
-        <EntityTypeShape EntityType="OrmocIMSModel.User" Width="1.5" PointX="0.75" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

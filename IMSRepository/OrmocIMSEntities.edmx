@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="OrmocIMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="OrmocIMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Brand">
           <Key>
             <PropertyRef Name="Id" />
@@ -672,7 +672,8 @@
             <End Role="TagsMapping" EntitySet="TagsMapping" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OrmocIMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -847,6 +848,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="QuotationID" Type="Int32" />
           <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SupplierID" Type="Int32" Nullable="false" />
           <Property Name="StatusCd" Type="Int32" Nullable="false" />
           <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
@@ -857,8 +859,7 @@
           <NavigationProperty Name="CodeDetail" Relationship="Self.FK_StatusCdPurchaseOrders_CodeDetail" FromRole="PurchaseOrders" ToRole="CodeDetail" />
           <NavigationProperty Name="PurchaseOrderMappings" Relationship="Self.FK_POID_PurchaseOrders" FromRole="PurchaseOrders" ToRole="PurchaseOrderMapping" />
           <NavigationProperty Name="Quotation" Relationship="Self.FK_IRFIDQoutations_PurchaseOrders" FromRole="PurchaseOrders" ToRole="Quotations" />
-          <Property Name="SupplierID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Supplier" Relationship="OrmocIMSModel.FK_SupplierIDPurchaseOrders_Suppliers" FromRole="PurchaseOrder" ToRole="Supplier" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK_SupplierIDPurchaseOrders_Suppliers" FromRole="PurchaseOrders" ToRole="Suppliers" />
         </EntityType>
         <EntityType Name="Quotation">
           <Key>
@@ -867,6 +868,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IRFID" Type="Int32" />
           <Property Name="StatusCd" Type="Int32" Nullable="false" />
+          <Property Name="SupplierID" Type="Int32" Nullable="false" />
           <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
@@ -877,8 +879,7 @@
           <NavigationProperty Name="ItemRequestForm" Relationship="Self.FK_IRFIDQoutations_ItemRequests" FromRole="Quotations" ToRole="ItemRequestForm" />
           <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK_IRFIDQoutations_PurchaseOrders" FromRole="Quotations" ToRole="PurchaseOrders" />
           <NavigationProperty Name="QuotationsMappings" Relationship="Self.FK_QuotationID_Quotations" FromRole="Quotations" ToRole="QuotationsMapping" />
-          <Property Name="SupplierID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Supplier" Relationship="OrmocIMSModel.FK_SupplierIDQuotations_Suppliers" FromRole="Quotation" ToRole="Supplier" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK_SupplierIDQuotations_Suppliers" FromRole="Quotations" ToRole="Suppliers" />
         </EntityType>
         <EntityType Name="QuotationsMapping">
           <Key>
@@ -929,8 +930,8 @@
           <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="PurchaseOrders" Relationship="OrmocIMSModel.FK_SupplierIDPurchaseOrders_Suppliers" FromRole="Supplier" ToRole="PurchaseOrder" />
-          <NavigationProperty Name="Quotations" Relationship="OrmocIMSModel.FK_SupplierIDQuotations_Suppliers" FromRole="Supplier" ToRole="Quotation" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK_SupplierIDPurchaseOrders_Suppliers" FromRole="Suppliers" ToRole="PurchaseOrders" />
+          <NavigationProperty Name="Quotations" Relationship="Self.FK_SupplierIDQuotations_Suppliers" FromRole="Suppliers" ToRole="Quotations" />
         </EntityType>
         <EntityType Name="Tag">
           <Key>
@@ -971,6 +972,20 @@
           <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="ItemDetail" Relationship="Self.FK_ItemDetailUOM_ItemDetail" FromRole="UnitsOfMeasure" ToRole="ItemDetail" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="FK_ItemBrand_Brand">
           <End Role="Brand" Type="Self.Brand" Multiplicity="1" />
@@ -1212,6 +1227,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SupplierIDPurchaseOrders_Suppliers">
+          <End Role="Suppliers" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrders">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_QuotationID_Quotations">
           <End Role="Quotations" Type="Self.Quotation" Multiplicity="1" />
           <End Role="QuotationsMapping" Type="Self.QuotationsMapping" Multiplicity="*" />
@@ -1221,6 +1248,18 @@
             </Principal>
             <Dependent Role="QuotationsMapping">
               <PropertyRef Name="QuotationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierIDQuotations_Suppliers">
+          <End Role="Suppliers" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="Quotations" Type="Self.Quotation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Quotations">
+              <PropertyRef Name="SupplierID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1255,6 +1294,7 @@
           <EntitySet Name="Tags" EntityType="Self.Tag" />
           <EntitySet Name="TagsMappings" EntityType="Self.TagsMapping" />
           <EntitySet Name="UnitsOfMeasures" EntityType="Self.UnitsOfMeasure" />
+          <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK_ItemBrand_Brand" Association="Self.FK_ItemBrand_Brand">
             <End Role="Brand" EntitySet="Brands" />
             <End Role="Items" EntitySet="Items" />
@@ -1335,62 +1375,23 @@
             <End Role="Quotations" EntitySet="Quotations" />
             <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
           </AssociationSet>
+          <AssociationSet Name="FK_SupplierIDPurchaseOrders_Suppliers" Association="Self.FK_SupplierIDPurchaseOrders_Suppliers">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
+          </AssociationSet>
           <AssociationSet Name="FK_QuotationID_Quotations" Association="Self.FK_QuotationID_Quotations">
             <End Role="Quotations" EntitySet="Quotations" />
             <End Role="QuotationsMapping" EntitySet="QuotationsMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierIDQuotations_Suppliers" Association="Self.FK_SupplierIDQuotations_Suppliers">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Quotations" EntitySet="Quotations" />
           </AssociationSet>
           <AssociationSet Name="FK_TagID_Tags" Association="Self.FK_TagID_Tags">
             <End Role="Tags" EntitySet="Tags" />
             <End Role="TagsMapping" EntitySet="TagsMappings" />
           </AssociationSet>
-          <AssociationSet Name="FK_SupplierIDPurchaseOrders_Suppliers" Association="OrmocIMSModel.FK_SupplierIDPurchaseOrders_Suppliers">
-            <End Role="Supplier" EntitySet="Suppliers" />
-            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SupplierIDQuotations_Suppliers" Association="OrmocIMSModel.FK_SupplierIDQuotations_Suppliers">
-            <End Role="Supplier" EntitySet="Suppliers" />
-            <End Role="Quotation" EntitySet="Quotations" />
-          </AssociationSet>
-          <EntitySet Name="Users" EntityType="OrmocIMSModel.User" />
         </EntityContainer>
-        <Association Name="FK_SupplierIDPurchaseOrders_Suppliers">
-          <End Type="OrmocIMSModel.Supplier" Role="Supplier" Multiplicity="1" />
-          <End Type="OrmocIMSModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supplier">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseOrder">
-              <PropertyRef Name="SupplierID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SupplierIDQuotations_Suppliers">
-          <End Type="OrmocIMSModel.Supplier" Role="Supplier" Multiplicity="1" />
-          <End Type="OrmocIMSModel.Quotation" Role="Quotation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supplier">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Quotation">
-              <PropertyRef Name="SupplierID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1546,10 +1547,10 @@
           <EntitySetMapping Name="PurchaseOrders">
             <EntityTypeMapping TypeName="OrmocIMSModel.PurchaseOrder">
               <MappingFragment StoreEntitySet="PurchaseOrders">
-                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="QuotationID" ColumnName="QuotationID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="StatusCd" ColumnName="StatusCd" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
@@ -1563,10 +1564,10 @@
           <EntitySetMapping Name="Quotations">
             <EntityTypeMapping TypeName="OrmocIMSModel.Quotation">
               <MappingFragment StoreEntitySet="Quotations">
-                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IRFID" ColumnName="IRFID" />
                 <ScalarProperty Name="StatusCd" ColumnName="StatusCd" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
@@ -1666,15 +1667,15 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="OrmocIMSModel.User">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
-                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
-                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
-                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
