@@ -11,34 +11,10 @@ namespace ItemManagementService.Controllers
 {
     public class ItemManagementController : ApiController
     {
-        // GET: api/ItemManagement
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/ItemManagement/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/ItemManagement
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT: api/ItemManagement/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/ItemManagement/5
-        public void Delete(int id)
-        {
-        }
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Route("api/ItemManagement/GetAllSubCategories")]
         [HttpGet]
         public IHttpActionResult GetAllSubCategories()
@@ -54,5 +30,28 @@ namespace ItemManagementService.Controllers
                 return Json(result);
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <returns></returns>
+        [Route("api/ItemManagement/GetAllSubCategoriesByCategory")]
+        [HttpPost]
+        public IHttpActionResult GetAllSubCategoriesByCategory([FromBody]int categoryId)
+        {
+            var container = ContainerConfig.Configure();
+
+            using(var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<ISubCategoryBusinessLayer>();
+
+                var result = app.GetAllSubCategoriesByCategory(categoryId);
+
+                return Json(result);
+            }
+
+        }
+
     }
 }

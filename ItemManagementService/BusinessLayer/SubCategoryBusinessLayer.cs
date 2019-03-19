@@ -44,5 +44,30 @@ namespace ItemManagementService.BusinessLayer
 
             return result;
         }
+
+        public List<SubCategory> GetAllSubCategoriesByCategory(int CategoryId)
+        {
+            List<SubCategory> result = new List<SubCategory>();
+            SubCategory singleSub = new SubCategory();
+
+
+            var subs = _subCategoryDataAccess.GetSubCategoriesByCategory(CategoryId);
+
+            for (int i = 0; i < subs.Count; i++)
+            {
+                singleSub.Id = subs[i].Id;
+                singleSub.CategoryId = subs[i].CategoryID;
+                singleSub.SubCategoryName = subs[i].SubCategoryName;
+                singleSub.IsActive = subs[i].IsActive;
+                singleSub.CreateUserName = subs[i].CreateUserName;
+                singleSub.CreateDttm = subs[i].CreateDttm;
+                singleSub.UpdateUserName = subs[i].UpdateUserName;
+                singleSub.UpdateDttm = subs[i].UpdateDttm;
+
+                result.Add(singleSub);
+            }
+
+            return result;
+        }
     }
 }

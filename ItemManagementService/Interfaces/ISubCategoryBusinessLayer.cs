@@ -9,5 +9,6 @@ namespace ItemManagementService.Interfaces
     public interface ISubCategoryBusinessLayer
     {
         List<SubCategory> GetAllSubCategories();
+        List<SubCategory> GetAllSubCategoriesByCategory(int CategoryId);
     }
 }

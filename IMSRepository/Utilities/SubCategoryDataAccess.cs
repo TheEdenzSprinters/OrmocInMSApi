@@ -33,7 +33,7 @@ namespace IMSRepository.Utilities
         {
             List<SubCategory> subs = new List<SubCategory>();
 
-            using(OrmocIMSEntities context = new OrmocIMSEntities())
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
             {
                 subs = context.SubCategories.Where(x => x.CategoryID == categoryId && x.IsActive == true).ToList();
             }
