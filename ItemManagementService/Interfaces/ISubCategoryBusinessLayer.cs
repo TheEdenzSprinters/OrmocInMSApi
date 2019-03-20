@@ -1,4 +1,5 @@
-﻿using ItemManagementService.Models;
+﻿using IMSRepository;
+using ItemManagementService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace ItemManagementService.Interfaces
     {
         List<SubCategory> GetAllSubCategories();
         List<SubCategory> GetAllSubCategoriesByCategory(int CategoryId);
+        string InsertNewSubcategory(SubcategoryModel sub);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using ItemManagementService.Interfaces;
+using ItemManagementService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,5 +54,25 @@ namespace ItemManagementService.Controllers
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subcategory"></param>
+        /// <returns></returns>
+        [Route("api/ItemManagement/InsertNewSubCategory")]
+        [HttpPost]
+        public IHttpActionResult InsertNewSubCategory([FromBody]SubcategoryModel subcategory)
+        {
+            var container = ContainerConfig.Configure();
+
+            using(var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<ISubCategoryBusinessLayer>();
+
+                var result = app.InsertNewSubcategory(subcategory);
+
+                return Json(new { Result = result });
+            }
+        }
     }
 }
