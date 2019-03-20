@@ -94,13 +94,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BusinessLayer\CategoryBusinessLayer.cs" />
     <Compile Include="BusinessLayer\SubCategoryBusinessLayer.cs" />
     <Compile Include="ContainerConfig.cs" />
     <Compile Include="Controllers\ItemManagementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\ICategoryBusinessLayer.cs" />
     <Compile Include="Interfaces\ISubCategoryBusinessLayer.cs" />
+    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\SubCategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
