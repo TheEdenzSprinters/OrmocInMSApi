@@ -84,7 +84,7 @@ namespace IMSRepository.Utilities
 
                     if(updateSub == null)
                     {
-                        throw new Exception("No record found.");
+                        return "No record found.";
                     }
 
                     updateSub.CategoryID = sub.CategoryID;
@@ -135,12 +135,12 @@ namespace IMSRepository.Utilities
                         }
                         else
                         {
-                            throw new Exception("Error encountered during save.");
+                            return "Error encountered during save.";
                         }
                     }
                     else
                     {
-                        throw new Exception("No record found.");
+                        return "No record found.";
                     }
                 }
             } catch(Exception ex)
