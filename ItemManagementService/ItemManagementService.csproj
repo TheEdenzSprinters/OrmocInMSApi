@@ -102,6 +102,7 @@
     </Compile>
     <Compile Include="Interfaces\ISubCategoryBusinessLayer.cs" />
     <Compile Include="Models\SubcategoryModel.cs" />
+    <Compile Include="Models\SubCategoryUpdateModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

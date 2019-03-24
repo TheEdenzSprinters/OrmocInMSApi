@@ -81,13 +81,13 @@ namespace ItemManagementService.BusinessLayer
         /// </summary>
         /// <param name="sub"></param>
         /// <returns></returns>
-        public string InsertNewSubcategory(SubcategoryModel sub)
+        public string InsertNewSubcategory(SubCategoryModel sub)
         {
             SubCategory subToInsert = new SubCategory();
 
             subToInsert.CategoryID = sub.CategoryId;
             subToInsert.SubCategoryName = sub.SubCategoryName;
-            subToInsert.IsActive = sub.IsActive;
+            subToInsert.IsActive = true;
             subToInsert.CreateUserName = "Admin";
             subToInsert.CreateDttm = DateTime.UtcNow;
             subToInsert.UpdateUserName = "Admin";
@@ -95,6 +95,38 @@ namespace ItemManagementService.BusinessLayer
 
             string insertSub = _subCategoryDataAccess.InsertNewSubCategory(subToInsert);
             return insertSub;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sub"></param>
+        /// <returns></returns>
+        public string UpdateSubCategoryDetail(SubCategoryUpdateModel sub)
+        {
+            SubCategory subToUpdate = new SubCategory();
+
+            subToUpdate.Id = sub.Id;
+            subToUpdate.CategoryID = sub.CategoryId;
+            subToUpdate.SubCategoryName = sub.SubCategoryName;
+            subToUpdate.IsActive = true;
+            subToUpdate.UpdateUserName = "ADMIN";
+            subToUpdate.UpdateDttm = DateTime.UtcNow;
+
+            string result = _subCategoryDataAccess.UpdateSubCategoryDetails(subToUpdate);
+
+            return result;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public string DeleteSubCategory(int Id)
+        {
+            string result = _subCategoryDataAccess.DeleteSubCategory(Id);
+            return result;
         }
     }
 }

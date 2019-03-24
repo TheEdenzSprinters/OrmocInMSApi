@@ -5,8 +5,9 @@ using System.Web;
 
 namespace ItemManagementService.Models
 {
-    public class SubCategoryModel
+    public class SubCategoryUpdateModel
     {
+        public int Id { get; set; }
         public int CategoryId { get; set; }
         public string SubCategoryName { get; set; }
         public bool IsActive { get; set; }

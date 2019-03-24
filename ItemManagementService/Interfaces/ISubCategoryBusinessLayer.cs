@@ -11,6 +11,8 @@ namespace ItemManagementService.Interfaces
     {
         List<SubCategory> GetAllSubCategories();
         List<SubCategory> GetAllSubCategoriesByCategory(int CategoryId);
-        string InsertNewSubcategory(SubcategoryModel sub);
+        string InsertNewSubcategory(SubCategoryModel sub);
+        string UpdateSubCategoryDetail(SubCategoryUpdateModel sub);
+        string DeleteSubCategory(int Id);
     }
 }

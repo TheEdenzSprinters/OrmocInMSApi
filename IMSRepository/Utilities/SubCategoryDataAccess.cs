@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,6 +66,86 @@ namespace IMSRepository.Utilities
             catch(Exception ex)
             {
                 return "Error while saving SubCategory.";
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sub"></param>
+        /// <returns></returns>
+        public string UpdateSubCategoryDetails(SubCategory sub)
+        {
+            try
+            {
+                using (OrmocIMSEntities context = new OrmocIMSEntities())
+                {
+                    SubCategory updateSub = context.SubCategories.Where(x => x.Id == sub.Id && x.IsActive == true).FirstOrDefault();
+
+                    if(updateSub == null)
+                    {
+                        throw new Exception("No record found.");
+                    }
+
+                    updateSub.CategoryID = sub.CategoryID;
+                    updateSub.SubCategoryName = sub.SubCategoryName;
+                    updateSub.IsActive = sub.IsActive;
+                    updateSub.UpdateUserName = sub.UpdateUserName;
+                    updateSub.UpdateDttm = sub.UpdateDttm;
+
+                    context.SubCategories.Attach(updateSub);
+                    context.Entry(updateSub).State = EntityState.Modified;
+                    int result = context.SaveChanges();
+
+                    return result > 0 ? "SubCategory updated." : "Error saving SubCategory.";
+                }
+            }
+            catch (Exception ex)
+            {
+                return "Internal error encountered.";
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subCategoryId"></param>
+        /// <returns></returns>
+        public string DeleteSubCategory(int subCategoryId)
+        {
+            try
+            {
+                using(OrmocIMSEntities context = new OrmocIMSEntities())
+                {
+                    var selectedSub = context.SubCategories.Where(x => x.Id == subCategoryId && x.IsActive == true).FirstOrDefault();
+
+                    if(selectedSub != null)
+                    {
+                        selectedSub.IsActive = false;
+                        selectedSub.UpdateUserName = "ADMIN";
+                        selectedSub.UpdateDttm = DateTime.UtcNow;
+
+                        context.SubCategories.Attach(selectedSub);
+                        context.Entry(selectedSub).State = EntityState.Modified;
+                        var result = context.SaveChanges();
+
+                        if(result > 0)
+                        {
+                            return "SubCategory deleted.";
+                        }
+                        else
+                        {
+                            throw new Exception("Error encountered during save.");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("No record found.");
+                    }
+                }
+            } catch(Exception ex)
+            {
+                return "Internal error encountered.";
             }
         }
     }

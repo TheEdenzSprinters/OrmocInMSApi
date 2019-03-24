@@ -61,7 +61,7 @@ namespace ItemManagementService.Controllers
         /// <returns></returns>
         [Route("api/ItemManagement/InsertNewSubCategory")]
         [HttpPost]
-        public IHttpActionResult InsertNewSubCategory([FromBody]SubcategoryModel subcategory)
+        public IHttpActionResult InsertNewSubCategory([FromBody]SubCategoryModel subcategory)
         {
             var container = ContainerConfig.Configure();
 
@@ -70,6 +70,38 @@ namespace ItemManagementService.Controllers
                 var app = scope.Resolve<ISubCategoryBusinessLayer>();
 
                 var result = app.InsertNewSubcategory(subcategory);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        [Route("api/ItemManagement/UpdateSubCategory")]
+        [HttpPost]
+        public IHttpActionResult UpdateSubCategory([FromBody]SubCategoryUpdateModel subcategory)
+        {
+            var container = ContainerConfig.Configure();
+
+            using(var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<ISubCategoryBusinessLayer>();
+
+                var result = app.UpdateSubCategoryDetail(subcategory);
+
+                return Json(new { Result = result }); 
+            }
+        }
+
+        [Route("api/ItemManagement/DeleteSubCategory")]
+        [HttpPost]
+        public IHttpActionResult DeleteSubCategory([FromBody]int id)
+        {
+            var container = ContainerConfig.Configure();
+
+            using(var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<ISubCategoryBusinessLayer>();
+
+                var result = app.DeleteSubCategory(id);
 
                 return Json(new { Result = result });
             }
