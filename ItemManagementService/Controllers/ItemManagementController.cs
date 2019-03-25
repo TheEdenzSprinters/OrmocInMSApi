@@ -16,6 +16,26 @@ namespace ItemManagementService.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
+        [Route("api/ItemManagement/GetAllCategories")]
+        [HttpGet]
+        public IHttpActionResult GetAllCategories()
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<ICategoryBusinessLayer>();
+
+                var result = app.GetAllCategories();
+
+                return Json(result);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Route("api/ItemManagement/GetAllSubCategories")]
         [HttpGet]
         public IHttpActionResult GetAllSubCategories()

@@ -123,7 +123,9 @@
     <Compile Include="User.cs">
       <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\ICategoryDataAccess.cs" />
     <Compile Include="Utilities\ISubCategoryDataAccess.cs" />
+    <Compile Include="Utilities\CategoryDataAccess.cs" />
     <Compile Include="Utilities\SubCategoryDataAccess.cs" />
   </ItemGroup>
   <ItemGroup>

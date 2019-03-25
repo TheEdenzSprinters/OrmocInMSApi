@@ -17,6 +17,7 @@ namespace ItemManagementService
             var builder = new ContainerBuilder();
 
             builder.RegisterType<SubCategoryBusinessLayer>().As<ISubCategoryBusinessLayer>();
+            builder.RegisterType<CategoryBusinessLayer>().As<ICategoryBusinessLayer>();
 
             builder.RegisterAssemblyTypes(Assembly.Load(nameof(IMSRepository)))
                 .Where(t => t.Namespace.Contains("Utilities"))
