@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace ItemManagementService.Models
+{
+    public class UpdateSubCategoryModel
+    {
+        public int Id { get; set; }
+        public int CategoryId { get; set; }
+        public string SubCategoryName { get; set; }
+        public bool IsActive { get; set; }
+        public string UpdateUserName { get; set; }
+        public DateTime UpdateDttm { get; set; }
+    }
+}

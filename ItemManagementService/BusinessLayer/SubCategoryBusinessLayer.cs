@@ -1,4 +1,5 @@
 ﻿using IMSRepository.Utilities;
+using IMSRepository;
 using ItemManagementService.Interfaces;
 using ItemManagementService.Models;
 using System;
@@ -31,7 +32,7 @@ namespace ItemManagementService.BusinessLayer
             for(int i = 0; i < subs.Count; i++)
             {
                 singleSub.Id = subs[i].Id;
-                singleSub.CategoryId = subs[i].CategoryID;
+                singleSub.CategoryID = subs[i].CategoryID;
                 singleSub.SubCategoryName = subs[i].SubCategoryName;
                 singleSub.IsActive = subs[i].IsActive;
                 singleSub.CreateUserName = subs[i].CreateUserName;
@@ -45,6 +46,11 @@ namespace ItemManagementService.BusinessLayer
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="CategoryId"></param>
+        /// <returns></returns>
         public List<SubCategory> GetAllSubCategoriesByCategory(int CategoryId)
         {
             List<SubCategory> result = new List<SubCategory>();
@@ -56,7 +62,7 @@ namespace ItemManagementService.BusinessLayer
             for (int i = 0; i < subs.Count; i++)
             {
                 singleSub.Id = subs[i].Id;
-                singleSub.CategoryId = subs[i].CategoryID;
+                singleSub.CategoryID = subs[i].CategoryID;
                 singleSub.SubCategoryName = subs[i].SubCategoryName;
                 singleSub.IsActive = subs[i].IsActive;
                 singleSub.CreateUserName = subs[i].CreateUserName;
@@ -67,6 +73,59 @@ namespace ItemManagementService.BusinessLayer
                 result.Add(singleSub);
             }
 
+            return result;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sub"></param>
+        /// <returns></returns>
+        public string InsertNewSubcategory(SubCategoryModel sub)
+        {
+            SubCategory subToInsert = new SubCategory();
+
+            subToInsert.CategoryID = sub.CategoryId;
+            subToInsert.SubCategoryName = sub.SubCategoryName;
+            subToInsert.IsActive = true;
+            subToInsert.CreateUserName = "ADMIN";
+            subToInsert.CreateDttm = DateTime.UtcNow;
+            subToInsert.UpdateUserName = "ADMIN";
+            subToInsert.UpdateDttm = DateTime.UtcNow;
+
+            string insertSub = _subCategoryDataAccess.InsertNewSubCategory(subToInsert);
+            return insertSub;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sub"></param>
+        /// <returns></returns>
+        public string UpdateSubCategoryDetail(SubCategoryUpdateModel sub)
+        {
+            SubCategory subToUpdate = new SubCategory();
+
+            subToUpdate.Id = sub.Id;
+            subToUpdate.CategoryID = sub.CategoryId;
+            subToUpdate.SubCategoryName = sub.SubCategoryName;
+            subToUpdate.IsActive = true;
+            subToUpdate.UpdateUserName = "ADMIN";
+            subToUpdate.UpdateDttm = DateTime.UtcNow;
+
+            string result = _subCategoryDataAccess.UpdateSubCategoryDetails(subToUpdate);
+
+            return result;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public string DeleteSubCategory(int Id)
+        {
+            string result = _subCategoryDataAccess.DeleteSubCategory(Id);
             return result;
         }
     }
