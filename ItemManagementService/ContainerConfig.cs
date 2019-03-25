@@ -10,7 +10,7 @@ using System.Web;
 
 namespace ItemManagementService
 {
-    public class ContainerConfig
+    public static class ContainerConfig
     {
         public static IContainer Configure()
         {
