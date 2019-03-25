@@ -88,9 +88,9 @@ namespace ItemManagementService.BusinessLayer
             subToInsert.CategoryID = sub.CategoryId;
             subToInsert.SubCategoryName = sub.SubCategoryName;
             subToInsert.IsActive = true;
-            subToInsert.CreateUserName = "Admin";
+            subToInsert.CreateUserName = "ADMIN";
             subToInsert.CreateDttm = DateTime.UtcNow;
-            subToInsert.UpdateUserName = "Admin";
+            subToInsert.UpdateUserName = "ADMIN";
             subToInsert.UpdateDttm = DateTime.UtcNow;
 
             string insertSub = _subCategoryDataAccess.InsertNewSubCategory(subToInsert);
