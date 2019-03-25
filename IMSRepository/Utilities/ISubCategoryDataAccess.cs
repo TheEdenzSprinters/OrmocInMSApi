@@ -6,5 +6,8 @@ namespace IMSRepository.Utilities
     {
         List<SubCategory> GetSubCategories();
         List<SubCategory> GetSubCategoriesByCategory(int categoryId);
+        string InsertNewSubCategory(SubCategory sub);
+        string UpdateSubCategoryDetails(SubCategory sub);
+        string DeleteSubCategory(int subCategoryId);
     }
 }
