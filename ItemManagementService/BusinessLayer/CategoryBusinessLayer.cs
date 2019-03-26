@@ -40,6 +40,7 @@ namespace ItemManagementService.BusinessLayer
                 singleCat.UpdateDttm = cats[i].UpdateDttm;
 
                 result.Add(singleCat);
+                singleCat = new Category();
             }
 
             return result;
