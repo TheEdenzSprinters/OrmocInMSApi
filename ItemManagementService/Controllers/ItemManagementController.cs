@@ -35,6 +35,69 @@ namespace ItemManagementService.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        [Route("api/ItemManagement/InsertNewCategory")]
+        [HttpPost]
+        public IHttpActionResult InsertNewCategory([FromBody]CategoryModel category)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<ICategoryBusinessLayer>();
+
+                var result = app.InsertNewCategory(category);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        [Route("api/ItemManagement/UpdateCategory")]
+        [HttpPost]
+        public IHttpActionResult UpdateCategory([FromBody]CategoryUpdateModel category)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<ICategoryBusinessLayer>();
+
+                var result = app.UpdateCategoryDetail(category);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("api/ItemManagement/DeleteCategory")]
+        [HttpPost]
+        public IHttpActionResult DeleteCategory([FromBody]int id)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<ICategoryBusinessLayer>();
+
+                var result = app.DeleteCategory(id);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         [Route("api/ItemManagement/GetAllSubCategories")]
         [HttpGet]
@@ -89,7 +152,7 @@ namespace ItemManagementService.Controllers
             {
                 var app = scope.Resolve<ISubCategoryBusinessLayer>();
 
-                var result = app.InsertNewSubcategory(subcategory);
+                var result = app.InsertNewSubCategory(subcategory);
 
                 return Json(new { Result = result });
             }

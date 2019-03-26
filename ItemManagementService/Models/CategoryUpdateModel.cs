@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ItemManagementService.Models
 {
-    public class Category
+    public class CategoryUpdateModel
     {
         public int Id { get; set; }
         public string CategoryName { get; set; }
