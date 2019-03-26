@@ -41,6 +41,7 @@ namespace ItemManagementService.BusinessLayer
                 singleSub.UpdateDttm = subs[i].UpdateDttm;
 
                 result.Add(singleSub);
+                singleSub = new SubCategory();
             }
 
             return result;
@@ -71,6 +72,7 @@ namespace ItemManagementService.BusinessLayer
                 singleSub.UpdateDttm = subs[i].UpdateDttm;
 
                 result.Add(singleSub);
+                singleSub = new SubCategory();
             }
 
             return result;
