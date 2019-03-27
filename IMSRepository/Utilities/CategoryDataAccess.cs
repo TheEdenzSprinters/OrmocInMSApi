@@ -75,8 +75,6 @@ namespace IMSRepository.Utilities
 
                     updateCat.CategoryName = cat.CategoryName;
                     updateCat.IsActive = cat.IsActive;
-                    updateCat.CreateUserName = cat.CreateUserName;
-                    updateCat.CreateDttm = cat.CreateDttm;
                     updateCat.UpdateUserName = cat.UpdateUserName;
                     updateCat.UpdateDttm = cat.UpdateDttm;
 
