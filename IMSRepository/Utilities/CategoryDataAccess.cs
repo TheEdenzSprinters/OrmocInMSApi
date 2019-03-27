@@ -64,9 +64,9 @@ namespace IMSRepository.Utilities
         {
             try
             {
-                using (OrmocIMSEntities contex = new OrmocIMSEntities())
+                using (OrmocIMSEntities context = new OrmocIMSEntities())
                 {
-                    Category updateCat = contex.Categories.Where(x => x.Id == cat.Id && x.IsActive == true).FirstOrDefault();
+                    Category updateCat = context.Categories.Where(x => x.Id == cat.Id && x.IsActive == true).FirstOrDefault();
 
                     if(updateCat == null)
                     {
@@ -78,9 +78,9 @@ namespace IMSRepository.Utilities
                     updateCat.UpdateUserName = cat.UpdateUserName;
                     updateCat.UpdateDttm = cat.UpdateDttm;
 
-                    contex.Categories.Attach(updateCat);
-                    contex.Entry(updateCat).State = System.Data.Entity.EntityState.Modified;
-                    int result = contex.SaveChanges();
+                    context.Categories.Attach(updateCat);
+                    context.Entry(updateCat).State = System.Data.Entity.EntityState.Modified;
+                    int result = context.SaveChanges();
 
                     return result > 0 ? "Category updated." : "Error saving Category.";
                 }
