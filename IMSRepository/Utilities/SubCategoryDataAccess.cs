@@ -63,7 +63,7 @@ namespace IMSRepository.Utilities
                     return result > 0 ? "SubCategory successfully added." : "No SubCategory added.";
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return "Error while saving SubCategory.";
             }
@@ -80,9 +80,9 @@ namespace IMSRepository.Utilities
             {
                 using (OrmocIMSEntities context = new OrmocIMSEntities())
                 {
-                    SubCategory updateSub = context.SubCategories.Where(x => x.Id == sub.Id && x.IsActive == true).FirstOrDefault();
+                    var updateSub = context.SubCategories.Where(x => x.Id == sub.Id && x.IsActive == true).FirstOrDefault();
 
-                    if(updateSub == null)
+                    if (updateSub == null)
                     {
                         return "No record found.";
                     }
@@ -115,11 +115,11 @@ namespace IMSRepository.Utilities
         {
             try
             {
-                using(OrmocIMSEntities context = new OrmocIMSEntities())
+                using (OrmocIMSEntities context = new OrmocIMSEntities())
                 {
                     var selectedSub = context.SubCategories.Where(x => x.Id == subCategoryId && x.IsActive == true).FirstOrDefault();
 
-                    if(selectedSub != null)
+                    if (selectedSub != null)
                     {
                         selectedSub.IsActive = false;
                         selectedSub.UpdateUserName = "ADMIN";
@@ -129,7 +129,7 @@ namespace IMSRepository.Utilities
                         context.Entry(selectedSub).State = EntityState.Modified;
                         var result = context.SaveChanges();
 
-                        if(result > 0)
+                        if (result > 0)
                         {
                             return "SubCategory deleted.";
                         }
@@ -143,7 +143,8 @@ namespace IMSRepository.Utilities
                         return "No record found.";
                     }
                 }
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return "Internal error encountered.";
             }
