@@ -83,7 +83,7 @@ namespace ItemManagementService.BusinessLayer
         /// </summary>
         /// <param name="sub"></param>
         /// <returns></returns>
-        public string InsertNewSubcategory(SubCategoryModel sub)
+        public string InsertNewSubCategory(SubCategoryModel sub)
         {
             SubCategory subToInsert = new SubCategory();
 
