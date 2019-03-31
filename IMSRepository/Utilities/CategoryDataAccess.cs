@@ -14,11 +14,11 @@ namespace IMSRepository.Utilities
         /// <returns></returns>
         public List<Category> GetCategories()
         {
-            List<Category> cats = new List<Category>();
+            ////list<category> cats = new list<category>();
 
-            using(OrmocIMSEntities context = new OrmocIMSEntities())
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
             {
-                cats = context.Categories.Where(x => x.IsActive == true).ToList();
+                var cats = context.Categories.Where(x => x.IsActive == true).ToList();
                 return cats;
             }
         }
@@ -49,7 +49,7 @@ namespace IMSRepository.Utilities
                     return result > 0 ? "Category successfully added." : "No Category added.";
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return "Error while saving Category.";
             }
@@ -68,7 +68,7 @@ namespace IMSRepository.Utilities
                 {
                     Category updateCat = context.Categories.Where(x => x.Id == cat.Id && x.IsActive == true).FirstOrDefault();
 
-                    if(updateCat == null)
+                    if (updateCat == null)
                     {
                         return "No record found.";
                     }
@@ -104,7 +104,7 @@ namespace IMSRepository.Utilities
                 {
                     var selectedCat = context.Categories.Where(x => x.Id == categoryId && x.IsActive == true).FirstOrDefault();
 
-                    if(selectedCat != null)
+                    if (selectedCat != null)
                     {
                         selectedCat.IsActive = false;
                         selectedCat.UpdateUserName = "ADMIN";
@@ -114,7 +114,7 @@ namespace IMSRepository.Utilities
                         context.Entry(selectedCat).State = System.Data.Entity.EntityState.Modified;
                         var result = context.SaveChanges();
 
-                        if(result > 0)
+                        if (result > 0)
                         {
                             return "Category deleted.";
                         }
@@ -129,7 +129,7 @@ namespace IMSRepository.Utilities
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return "Internal error encountered.";
             }
