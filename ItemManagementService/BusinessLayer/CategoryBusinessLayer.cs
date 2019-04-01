@@ -11,7 +11,7 @@ namespace ItemManagementService.BusinessLayer
 {
     public class CategoryBusinessLayer : ICategoryBusinessLayer
     {
-        ICategoryDataAccess _CategoryDataAccess;
+        readonly ICategoryDataAccess _CategoryDataAccess;
 
         public CategoryBusinessLayer(ICategoryDataAccess CategoryDataAccess)
         {
