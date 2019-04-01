@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdvancedSearch_SP_Result.cs">
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Brand.cs">
       <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
@@ -77,6 +80,8 @@
     <Compile Include="Location.cs">
       <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ItemSearchModel.cs" />
+    <Compile Include="Models\ItemSearchResult.cs" />
     <Compile Include="OrmocIMSEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -124,8 +129,10 @@
       <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Utilities\ICategoryDataAccess.cs" />
+    <Compile Include="Utilities\IItemDataAccess.cs" />
     <Compile Include="Utilities\ISubCategoryDataAccess.cs" />
     <Compile Include="Utilities\CategoryDataAccess.cs" />
+    <Compile Include="Utilities\ItemDataAccess.cs" />
     <Compile Include="Utilities\SubCategoryDataAccess.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -142,9 +149,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="OrmocIMSEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -38,6 +38,7 @@ namespace IMSRepository
         public System.DateTime CreateDttm { get; set; }
         public string UpdateUserName { get; set; }
         public System.DateTime UpdateDttm { get; set; }
+        public string Sku { get; set; }
     
         public virtual Brand Brand { get; set; }
         public virtual Category Category { get; set; }

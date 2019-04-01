@@ -11,7 +11,7 @@ namespace ItemManagementService.BusinessLayer
 {
     public class SubCategoryBusinessLayer : ISubCategoryBusinessLayer
     {
-        ISubCategoryDataAccess _subCategoryDataAccess;
+        readonly ISubCategoryDataAccess _subCategoryDataAccess;
 
         public SubCategoryBusinessLayer(ISubCategoryDataAccess subCategoryDataAccess)
         {

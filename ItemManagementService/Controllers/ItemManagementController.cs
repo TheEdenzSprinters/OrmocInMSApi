@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using IMSRepository.Models;
 using ItemManagementService.Interfaces;
 using ItemManagementService.Models;
 using System;
@@ -186,6 +187,56 @@ namespace ItemManagementService.Controllers
                 var result = app.DeleteSubCategory(id);
 
                 return Json(new { Result = result });
+            }
+        }
+
+        [Route("api/ItemManagement/GetItemById")]
+        [HttpPost]
+        public IHttpActionResult GetItemById([FromBody]int id)
+        {
+            var container = ContainerConfig.Configure();
+
+            using(var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemBusinessLayer>();
+
+                var result = app.GetItemById(id);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        [Route("api/ItemManagement/ItemsByAdvancedSearch")]
+        [HttpPost]
+        public IHttpActionResult ItemsByAdvancedSearch([FromBody]ItemSearchQueryModel item)
+        {
+            var container = ContainerConfig.Configure();
+
+            using(var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemBusinessLayer>();
+
+                var result = app.ItemAdvancedSearch(item);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        [Route("api/ItemManagement/ItemAutoComplete")]
+        [HttpPost]
+        public IHttpActionResult ItemAutoComplete([FromBody]string word)
+        {
+            if (word.Length < 3) return Json(new { });
+
+            var container = ContainerConfig.Configure();
+
+            using(var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemBusinessLayer>();
+
+                var result = app.ItemAutoComplete(word);
+
+                return Json(new {Result = result });
             }
         }
     }
