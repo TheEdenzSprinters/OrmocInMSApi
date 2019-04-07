@@ -251,7 +251,7 @@ namespace ItemManagementService.Controllers
         [HttpPost]
         public IHttpActionResult ItemAutoComplete([FromBody]string word)
         {
-            if (word.Length < 3) return Json(new { Result = "" });
+            if (word.Length < 3) { return Json(new { Result = "" }); };
 
             var container = ContainerConfig.Configure();
 
@@ -367,6 +367,8 @@ namespace ItemManagementService.Controllers
         [HttpPost]
         public IHttpActionResult TagsAutoComplete([FromBody]string word)
         {
+            if(word.Length < 3) { return Json(new { Result = "" }); }
+
             var container = ContainerConfig.Configure();
 
             using (var scope = container.BeginLifetimeScope())
