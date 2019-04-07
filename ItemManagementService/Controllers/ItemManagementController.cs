@@ -126,7 +126,7 @@ namespace ItemManagementService.Controllers
         {
             var container = ContainerConfig.Configure();
 
-            using(var scope = container.BeginLifetimeScope())
+            using (var scope = container.BeginLifetimeScope())
             {
                 var app = scope.Resolve<ISubCategoryBusinessLayer>();
 
@@ -148,7 +148,7 @@ namespace ItemManagementService.Controllers
         {
             var container = ContainerConfig.Configure();
 
-            using(var scope = container.BeginLifetimeScope())
+            using (var scope = container.BeginLifetimeScope())
             {
                 var app = scope.Resolve<ISubCategoryBusinessLayer>();
 
@@ -158,29 +158,39 @@ namespace ItemManagementService.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subcategory"></param>
+        /// <returns></returns>
         [Route("api/ItemManagement/UpdateSubCategory")]
         [HttpPost]
         public IHttpActionResult UpdateSubCategory([FromBody]SubCategoryUpdateModel subcategory)
         {
             var container = ContainerConfig.Configure();
 
-            using(var scope = container.BeginLifetimeScope())
+            using (var scope = container.BeginLifetimeScope())
             {
                 var app = scope.Resolve<ISubCategoryBusinessLayer>();
 
                 var result = app.UpdateSubCategoryDetail(subcategory);
 
-                return Json(new { Result = result }); 
+                return Json(new { Result = result });
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Route("api/ItemManagement/DeleteSubCategory")]
         [HttpPost]
         public IHttpActionResult DeleteSubCategory([FromBody]int id)
         {
             var container = ContainerConfig.Configure();
 
-            using(var scope = container.BeginLifetimeScope())
+            using (var scope = container.BeginLifetimeScope())
             {
                 var app = scope.Resolve<ISubCategoryBusinessLayer>();
 
@@ -190,13 +200,18 @@ namespace ItemManagementService.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Route("api/ItemManagement/GetItemById")]
         [HttpPost]
         public IHttpActionResult GetItemById([FromBody]int id)
         {
             var container = ContainerConfig.Configure();
 
-            using(var scope = container.BeginLifetimeScope())
+            using (var scope = container.BeginLifetimeScope())
             {
                 var app = scope.Resolve<IItemBusinessLayer>();
 
@@ -206,13 +221,18 @@ namespace ItemManagementService.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         [Route("api/ItemManagement/ItemsByAdvancedSearch")]
         [HttpPost]
         public IHttpActionResult ItemsByAdvancedSearch([FromBody]ItemSearchQueryModel item)
         {
             var container = ContainerConfig.Configure();
 
-            using(var scope = container.BeginLifetimeScope())
+            using (var scope = container.BeginLifetimeScope())
             {
                 var app = scope.Resolve<IItemBusinessLayer>();
 
@@ -222,21 +242,156 @@ namespace ItemManagementService.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
         [Route("api/ItemManagement/ItemAutoComplete")]
         [HttpPost]
         public IHttpActionResult ItemAutoComplete([FromBody]string word)
         {
-            if (word.Length < 3) return Json(new { });
+            if (word.Length < 3) return Json(new { Result = "" });
 
             var container = ContainerConfig.Configure();
 
-            using(var scope = container.BeginLifetimeScope())
+            using (var scope = container.BeginLifetimeScope())
             {
                 var app = scope.Resolve<IItemBusinessLayer>();
 
                 var result = app.ItemAutoComplete(word);
 
-                return Json(new {Result = result });
+                return Json(new { Result = result });
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/ItemManagement/GetAllLocations")]
+        [HttpGet]
+        public IHttpActionResult GetAllLocations()
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemBusinessLayer>();
+
+                var result = app.GetAllLocations();
+
+                return Json(new { Result = result });
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/ItemManagement/GetAllItemStatus")]
+        [HttpGet]
+        public IHttpActionResult GetAllItemStatus()
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemBusinessLayer>();
+
+                var result = app.GetAllItemStatus();
+
+                return Json(new { Result = result });
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("api/ItemManagement/GetItemDetailBySubCategoryId")]
+        [HttpPost]
+        public IHttpActionResult GetItemDetailBySubCategoryId([FromBody]int id)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemBusinessLayer>();
+
+                var result = app.GetItemDetailBySubCategoryId(id);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        [Route("api/ItemManagement/InsertNewItem")]
+        [HttpPost]
+        public IHttpActionResult InsertNewItem([FromBody]InsertItemModel item)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemBusinessLayer>();
+
+                var result = app.InsertNewItem(item);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        [Route("api/ItemManagement/UpdateItemStatusById")]
+        [HttpPost]
+        public IHttpActionResult UpdateItemStatusById([FromBody]UpdateItemStatusModel status)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemBusinessLayer>();
+
+                var result = app.UpdateItemStatusById(status);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        [Route("api/ItemManagement/TagsAutoComplete")]
+        [HttpPost]
+        public IHttpActionResult TagsAutoComplete([FromBody]string word)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemBusinessLayer>();
+
+                var result = app.TagsAutoComplete(word);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        [Route("api/ItemManagement/AddNewTagging")]
+        [HttpPost]
+        public IHttpActionResult AddNewTagging([FromBody]TagsMappingModel tags)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemBusinessLayer>();
+
+                var result = app.AddNewTagToItem(tags);
+
+                return Json(new { Result = result });
             }
         }
     }

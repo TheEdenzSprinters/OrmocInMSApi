@@ -35,7 +35,19 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CodeValue" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ModuleType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CodeHeaderId" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDttm" Type="datetime" Nullable="false" />
+          <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CodeHeader">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodeHeaderName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="CreateDttm" Type="datetime" Nullable="false" />
@@ -48,6 +60,8 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SubCategoryID" Type="int" Nullable="false" />
+          <Property Name="ShowUnitsOfMeasure" Type="bit" Nullable="false" />
+          <Property Name="UnitsOfMeasureID" Type="int" Nullable="false" />
           <Property Name="ItemDetailName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
@@ -62,7 +76,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ItemID" Type="int" Nullable="false" />
           <Property Name="ItemDetailID" Type="int" Nullable="false" />
-          <Property Name="ShowUnitsOfMeasure" Type="bit" Nullable="false" />
+          <Property Name="ItemDetailValue" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="CreateDttm" Type="datetime" Nullable="false" />
@@ -104,8 +118,9 @@
           <Property Name="SubCategoryID" Type="int" Nullable="false" />
           <Property Name="LocationID" Type="int" Nullable="false" />
           <Property Name="BrandID" Type="int" Nullable="false" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="StatusCd" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" />
+          <Property Name="ThresholdQty" Type="int" />
           <Property Name="MeasuredBy" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Sku" Type="varchar" MaxLength="50" />
           <Property Name="Notes" Type="varchar" MaxLength="500" />
@@ -236,6 +251,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ItemID" Type="int" Nullable="false" />
           <Property Name="TagID" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="CreateDttm" Type="datetime" Nullable="false" />
           <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
@@ -246,7 +262,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ItemDetailID" Type="int" Nullable="false" />
           <Property Name="UnitOfMeasure" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
@@ -268,6 +283,18 @@
           <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
         </EntityType>
+        <Association Name="FK_CodeHeaderIdCodeHeader_CodeDetail">
+          <End Role="CodeHeader" Type="Self.CodeHeader" Multiplicity="1" />
+          <End Role="CodeDetail" Type="Self.CodeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeHeader">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CodeDetail">
+              <PropertyRef Name="CodeHeaderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_IRFIDItemRequest_ItemRequest">
           <End Role="ItemRequestForm" Type="Self.ItemRequestForm" Multiplicity="1" />
           <End Role="ItemRequestFormMapping" Type="Self.ItemRequestFormMapping" Multiplicity="*" />
@@ -352,15 +379,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ItemDetailUOM_ItemDetail">
-          <End Role="ItemDetail" Type="Self.ItemDetail" Multiplicity="1" />
-          <End Role="UnitsOfMeasure" Type="Self.UnitsOfMeasure" Multiplicity="*" />
+        <Association Name="FK_ItemDetailUnitsOfMeasure_UnitsOfMeasure">
+          <End Role="UnitsOfMeasure" Type="Self.UnitsOfMeasure" Multiplicity="1" />
+          <End Role="ItemDetail" Type="Self.ItemDetail" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ItemDetail">
+            <Principal Role="UnitsOfMeasure">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="UnitsOfMeasure">
-              <PropertyRef Name="ItemDetailID" />
+            <Dependent Role="ItemDetail">
+              <PropertyRef Name="UnitsOfMeasureID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -484,6 +511,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StatusCdItems_CodeDetail">
+          <End Role="CodeDetail" Type="Self.CodeDetail" Multiplicity="1" />
+          <End Role="Items" Type="Self.Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="StatusCd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_StatusCdPurchaseOrders_CodeDetail">
           <End Role="CodeDetail" Type="Self.CodeDetail" Multiplicity="1" />
           <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="*" />
@@ -572,6 +611,7 @@
           <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CodeDetail" EntityType="Self.CodeDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CodeHeader" EntityType="Self.CodeHeader" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemDetail" EntityType="Self.ItemDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemDetailMapping" EntityType="Self.ItemDetailMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemRequestForm" EntityType="Self.ItemRequestForm" Schema="dbo" store:Type="Tables" />
@@ -588,6 +628,10 @@
           <EntitySet Name="TagsMapping" EntityType="Self.TagsMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnitsOfMeasure" EntityType="Self.UnitsOfMeasure" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CodeHeaderIdCodeHeader_CodeDetail" Association="Self.FK_CodeHeaderIdCodeHeader_CodeDetail">
+            <End Role="CodeHeader" EntitySet="CodeHeader" />
+            <End Role="CodeDetail" EntitySet="CodeDetail" />
+          </AssociationSet>
           <AssociationSet Name="FK_IRFIDItemRequest_ItemRequest" Association="Self.FK_IRFIDItemRequest_ItemRequest">
             <End Role="ItemRequestForm" EntitySet="ItemRequestForm" />
             <End Role="ItemRequestFormMapping" EntitySet="ItemRequestFormMapping" />
@@ -616,9 +660,9 @@
             <End Role="SubCategory" EntitySet="SubCategory" />
             <End Role="ItemDetail" EntitySet="ItemDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_ItemDetailUOM_ItemDetail" Association="Self.FK_ItemDetailUOM_ItemDetail">
-            <End Role="ItemDetail" EntitySet="ItemDetail" />
+          <AssociationSet Name="FK_ItemDetailUnitsOfMeasure_UnitsOfMeasure" Association="Self.FK_ItemDetailUnitsOfMeasure_UnitsOfMeasure">
             <End Role="UnitsOfMeasure" EntitySet="UnitsOfMeasure" />
+            <End Role="ItemDetail" EntitySet="ItemDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_ItemID_Item" Association="Self.FK_ItemID_Item">
             <End Role="Items" EntitySet="Items" />
@@ -660,6 +704,10 @@
             <End Role="CodeDetail" EntitySet="CodeDetail" />
             <End Role="ItemRequestForm" EntitySet="ItemRequestForm" />
           </AssociationSet>
+          <AssociationSet Name="FK_StatusCdItems_CodeDetail" Association="Self.FK_StatusCdItems_CodeDetail">
+            <End Role="CodeDetail" EntitySet="CodeDetail" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
           <AssociationSet Name="FK_StatusCdPurchaseOrders_CodeDetail" Association="Self.FK_StatusCdPurchaseOrders_CodeDetail">
             <End Role="CodeDetail" EntitySet="CodeDetail" />
             <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
@@ -700,7 +748,7 @@
           <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Items" Relationship="Self.FK_ItemBrand_Brand" FromRole="Brand" ToRole="Items" />
+          <NavigationProperty Name="Items" Relationship="OrmocIMSModel.FK_ItemBrand_Brand" FromRole="Brand" ToRole="Item" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -713,56 +761,8 @@
           <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Items" Relationship="Self.FK_ItemCategory_Category" FromRole="Category" ToRole="Items" />
           <NavigationProperty Name="SubCategories" Relationship="Self.FK_SubCategoryCategory_Category" FromRole="Category" ToRole="SubCategory" />
-        </EntityType>
-        <EntityType Name="CodeDetail">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CodeValue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ModuleType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="ItemRequestForms" Relationship="Self.FK_StatusCdItemRequests_CodeDetail" FromRole="CodeDetail" ToRole="ItemRequestForm" />
-          <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK_StatusCdPurchaseOrders_CodeDetail" FromRole="CodeDetail" ToRole="PurchaseOrders" />
-          <NavigationProperty Name="Quotations" Relationship="Self.FK_StatusCdQuotations_CodeDetail" FromRole="CodeDetail" ToRole="Quotations" />
-        </EntityType>
-        <EntityType Name="ItemDetail">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SubCategoryID" Type="Int32" Nullable="false" />
-          <Property Name="ItemDetailName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="ItemDetailMappings" Relationship="Self.FK_ItemDetailID_ItemDetail" FromRole="ItemDetail" ToRole="ItemDetailMapping" />
-          <NavigationProperty Name="SubCategory" Relationship="Self.FK_ItemDetaiLSubCategory_SubCategory" FromRole="ItemDetail" ToRole="SubCategory" />
-          <NavigationProperty Name="UnitsOfMeasures" Relationship="Self.FK_ItemDetailUOM_ItemDetail" FromRole="ItemDetail" ToRole="UnitsOfMeasure" />
-        </EntityType>
-        <EntityType Name="ItemDetailMapping">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ItemID" Type="Int32" Nullable="false" />
-          <Property Name="ItemDetailID" Type="Int32" Nullable="false" />
-          <Property Name="ShowUnitsOfMeasure" Type="Boolean" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="ItemDetail" Relationship="Self.FK_ItemDetailID_ItemDetail" FromRole="ItemDetailMapping" ToRole="ItemDetail" />
-          <NavigationProperty Name="Item" Relationship="Self.FK_ItemID_Item" FromRole="ItemDetailMapping" ToRole="Items" />
+          <NavigationProperty Name="Items" Relationship="OrmocIMSModel.FK_ItemCategory_Category" FromRole="Category" ToRole="Item" />
         </EntityType>
         <EntityType Name="ItemRequestForm">
           <Key>
@@ -776,9 +776,9 @@
           <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="CodeDetail" Relationship="Self.FK_StatusCdItemRequests_CodeDetail" FromRole="ItemRequestForm" ToRole="CodeDetail" />
           <NavigationProperty Name="ItemRequestFormMappings" Relationship="Self.FK_IRFIDItemRequest_ItemRequest" FromRole="ItemRequestForm" ToRole="ItemRequestFormMapping" />
           <NavigationProperty Name="Quotations" Relationship="Self.FK_IRFIDQoutations_ItemRequests" FromRole="ItemRequestForm" ToRole="Quotations" />
+          <NavigationProperty Name="CodeDetail" Relationship="OrmocIMSModel.FK_StatusCdItemRequests_CodeDetail" FromRole="ItemRequestForm" ToRole="CodeDetail" />
         </EntityType>
         <EntityType Name="ItemRequestFormMapping">
           <Key>
@@ -792,36 +792,7 @@
           <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="ItemRequestForm" Relationship="Self.FK_IRFIDItemRequest_ItemRequest" FromRole="ItemRequestFormMapping" ToRole="ItemRequestForm" />
-          <NavigationProperty Name="Item" Relationship="Self.FK_ItemIDItemRequest_Items" FromRole="ItemRequestFormMapping" ToRole="Items" />
-        </EntityType>
-        <EntityType Name="Item">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ItemName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CategoryID" Type="Int32" Nullable="false" />
-          <Property Name="SubCategoryID" Type="Int32" Nullable="false" />
-          <Property Name="LocationID" Type="Int32" Nullable="false" />
-          <Property Name="BrandID" Type="Int32" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="Quantity" Type="Int32" />
-          <Property Name="MeasuredBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Brand" Relationship="Self.FK_ItemBrand_Brand" FromRole="Items" ToRole="Brand" />
-          <NavigationProperty Name="Category" Relationship="Self.FK_ItemCategory_Category" FromRole="Items" ToRole="Category" />
-          <NavigationProperty Name="ItemDetailMappings" Relationship="Self.FK_ItemID_Item" FromRole="Items" ToRole="ItemDetailMapping" />
-          <NavigationProperty Name="ItemRequestFormMappings" Relationship="Self.FK_ItemIDItemRequest_Items" FromRole="Items" ToRole="ItemRequestFormMapping" />
-          <NavigationProperty Name="PurchaseOrderMappings" Relationship="Self.FK_ItemIDPurchaseOrders_Items" FromRole="Items" ToRole="PurchaseOrderMapping" />
-          <NavigationProperty Name="QuotationsMappings" Relationship="Self.FK_ItemIDQoutations_Items" FromRole="Items" ToRole="QuotationsMapping" />
-          <NavigationProperty Name="TagsMappings" Relationship="Self.FK_ItemIDTags_Items" FromRole="Items" ToRole="TagsMapping" />
-          <NavigationProperty Name="Location" Relationship="Self.FK_ItemLocation_Locations" FromRole="Items" ToRole="Locations" />
-          <NavigationProperty Name="SubCategory" Relationship="Self.FK_ItemSubCategory_SubCategory" FromRole="Items" ToRole="SubCategory" />
-          <Property Name="Sku" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Item" Relationship="OrmocIMSModel.FK_ItemIDItemRequest_Items" FromRole="ItemRequestFormMapping" ToRole="Item" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
@@ -834,7 +805,7 @@
           <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Items" Relationship="Self.FK_ItemLocation_Locations" FromRole="Locations" ToRole="Items" />
+          <NavigationProperty Name="Items" Relationship="OrmocIMSModel.FK_ItemLocation_Locations" FromRole="Location" ToRole="Item" />
         </EntityType>
         <EntityType Name="PurchaseOrderMapping">
           <Key>
@@ -851,8 +822,8 @@
           <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Item" Relationship="Self.FK_ItemIDPurchaseOrders_Items" FromRole="PurchaseOrderMapping" ToRole="Items" />
           <NavigationProperty Name="PurchaseOrder" Relationship="Self.FK_POID_PurchaseOrders" FromRole="PurchaseOrderMapping" ToRole="PurchaseOrders" />
+          <NavigationProperty Name="Item" Relationship="OrmocIMSModel.FK_ItemIDPurchaseOrders_Items" FromRole="PurchaseOrderMapping" ToRole="Item" />
         </EntityType>
         <EntityType Name="PurchaseOrder">
           <Key>
@@ -869,10 +840,10 @@
           <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="CodeDetail" Relationship="Self.FK_StatusCdPurchaseOrders_CodeDetail" FromRole="PurchaseOrders" ToRole="CodeDetail" />
           <NavigationProperty Name="PurchaseOrderMappings" Relationship="Self.FK_POID_PurchaseOrders" FromRole="PurchaseOrders" ToRole="PurchaseOrderMapping" />
           <NavigationProperty Name="Quotation" Relationship="Self.FK_IRFIDQoutations_PurchaseOrders" FromRole="PurchaseOrders" ToRole="Quotations" />
           <NavigationProperty Name="Supplier" Relationship="Self.FK_SupplierIDPurchaseOrders_Suppliers" FromRole="PurchaseOrders" ToRole="Suppliers" />
+          <NavigationProperty Name="CodeDetail" Relationship="OrmocIMSModel.FK_StatusCdPurchaseOrders_CodeDetail" FromRole="PurchaseOrder" ToRole="CodeDetail" />
         </EntityType>
         <EntityType Name="Quotation">
           <Key>
@@ -888,11 +859,11 @@
           <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="CodeDetail" Relationship="Self.FK_StatusCdQuotations_CodeDetail" FromRole="Quotations" ToRole="CodeDetail" />
           <NavigationProperty Name="ItemRequestForm" Relationship="Self.FK_IRFIDQoutations_ItemRequests" FromRole="Quotations" ToRole="ItemRequestForm" />
           <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK_IRFIDQoutations_PurchaseOrders" FromRole="Quotations" ToRole="PurchaseOrders" />
           <NavigationProperty Name="QuotationsMappings" Relationship="Self.FK_QuotationID_Quotations" FromRole="Quotations" ToRole="QuotationsMapping" />
           <NavigationProperty Name="Supplier" Relationship="Self.FK_SupplierIDQuotations_Suppliers" FromRole="Quotations" ToRole="Suppliers" />
+          <NavigationProperty Name="CodeDetail" Relationship="OrmocIMSModel.FK_StatusCdQuotations_CodeDetail" FromRole="Quotation" ToRole="CodeDetail" />
         </EntityType>
         <EntityType Name="QuotationsMapping">
           <Key>
@@ -909,8 +880,8 @@
           <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Item" Relationship="Self.FK_ItemIDQoutations_Items" FromRole="QuotationsMapping" ToRole="Items" />
           <NavigationProperty Name="Quotation" Relationship="Self.FK_QuotationID_Quotations" FromRole="QuotationsMapping" ToRole="Quotations" />
+          <NavigationProperty Name="Item" Relationship="OrmocIMSModel.FK_ItemIDQoutations_Items" FromRole="QuotationsMapping" ToRole="Item" />
         </EntityType>
         <EntityType Name="SubCategory">
           <Key>
@@ -925,8 +896,8 @@
           <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Category" Relationship="Self.FK_SubCategoryCategory_Category" FromRole="SubCategory" ToRole="Category" />
-          <NavigationProperty Name="ItemDetails" Relationship="Self.FK_ItemDetaiLSubCategory_SubCategory" FromRole="SubCategory" ToRole="ItemDetail" />
-          <NavigationProperty Name="Items" Relationship="Self.FK_ItemSubCategory_SubCategory" FromRole="SubCategory" ToRole="Items" />
+          <NavigationProperty Name="Items" Relationship="OrmocIMSModel.FK_ItemSubCategory_SubCategory" FromRole="SubCategory" ToRole="Item" />
+          <NavigationProperty Name="ItemDetails" Relationship="OrmocIMSModel.FK_ItemDetaiLSubCategory_SubCategory" FromRole="SubCategory" ToRole="ItemDetail" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -969,22 +940,9 @@
           <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Item" Relationship="Self.FK_ItemIDTags_Items" FromRole="TagsMapping" ToRole="Items" />
           <NavigationProperty Name="Tag" Relationship="Self.FK_TagID_Tags" FromRole="TagsMapping" ToRole="Tags" />
-        </EntityType>
-        <EntityType Name="UnitsOfMeasure">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ItemDetailID" Type="Int32" Nullable="false" />
-          <Property Name="UnitOfMeasure" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="OrmocIMSModel.FK_ItemIDTags_Items" FromRole="TagsMapping" ToRole="Item" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="ItemDetail" Relationship="Self.FK_ItemDetailUOM_ItemDetail" FromRole="UnitsOfMeasure" ToRole="ItemDetail" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1000,30 +958,6 @@
           <Property Name="UpdateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <Association Name="FK_ItemBrand_Brand">
-          <End Role="Brand" Type="Self.Brand" Multiplicity="1" />
-          <End Role="Items" Type="Self.Item" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Brand">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Items">
-              <PropertyRef Name="BrandID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemCategory_Category">
-          <End Role="Category" Type="Self.Category" Multiplicity="1" />
-          <End Role="Items" Type="Self.Item" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Items">
-              <PropertyRef Name="CategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SubCategoryCategory_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
           <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="*" />
@@ -1033,90 +967,6 @@
             </Principal>
             <Dependent Role="SubCategory">
               <PropertyRef Name="CategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StatusCdItemRequests_CodeDetail">
-          <End Role="CodeDetail" Type="Self.CodeDetail" Multiplicity="1" />
-          <End Role="ItemRequestForm" Type="Self.ItemRequestForm" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CodeDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ItemRequestForm">
-              <PropertyRef Name="StatusCd" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StatusCdPurchaseOrders_CodeDetail">
-          <End Role="CodeDetail" Type="Self.CodeDetail" Multiplicity="1" />
-          <End Role="PurchaseOrders" Type="Self.PurchaseOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CodeDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseOrders">
-              <PropertyRef Name="StatusCd" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StatusCdQuotations_CodeDetail">
-          <End Role="CodeDetail" Type="Self.CodeDetail" Multiplicity="1" />
-          <End Role="Quotations" Type="Self.Quotation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CodeDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Quotations">
-              <PropertyRef Name="StatusCd" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemDetailID_ItemDetail">
-          <End Role="ItemDetail" Type="Self.ItemDetail" Multiplicity="1" />
-          <End Role="ItemDetailMapping" Type="Self.ItemDetailMapping" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ItemDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ItemDetailMapping">
-              <PropertyRef Name="ItemDetailID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemDetaiLSubCategory_SubCategory">
-          <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="1" />
-          <End Role="ItemDetail" Type="Self.ItemDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SubCategory">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ItemDetail">
-              <PropertyRef Name="SubCategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemDetailUOM_ItemDetail">
-          <End Role="ItemDetail" Type="Self.ItemDetail" Multiplicity="1" />
-          <End Role="UnitsOfMeasure" Type="Self.UnitsOfMeasure" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ItemDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UnitsOfMeasure">
-              <PropertyRef Name="ItemDetailID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemID_Item">
-          <End Role="Items" Type="Self.Item" Multiplicity="1" />
-          <End Role="ItemDetailMapping" Type="Self.ItemDetailMapping" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Items">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ItemDetailMapping">
-              <PropertyRef Name="ItemID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1141,78 +991,6 @@
             </Principal>
             <Dependent Role="Quotations">
               <PropertyRef Name="IRFID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemIDItemRequest_Items">
-          <End Role="Items" Type="Self.Item" Multiplicity="1" />
-          <End Role="ItemRequestFormMapping" Type="Self.ItemRequestFormMapping" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Items">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ItemRequestFormMapping">
-              <PropertyRef Name="ItemID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemIDPurchaseOrders_Items">
-          <End Role="Items" Type="Self.Item" Multiplicity="1" />
-          <End Role="PurchaseOrderMapping" Type="Self.PurchaseOrderMapping" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Items">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseOrderMapping">
-              <PropertyRef Name="ItemID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemIDQoutations_Items">
-          <End Role="Items" Type="Self.Item" Multiplicity="1" />
-          <End Role="QuotationsMapping" Type="Self.QuotationsMapping" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Items">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="QuotationsMapping">
-              <PropertyRef Name="ItemID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemIDTags_Items">
-          <End Role="Items" Type="Self.Item" Multiplicity="1" />
-          <End Role="TagsMapping" Type="Self.TagsMapping" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Items">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TagsMapping">
-              <PropertyRef Name="ItemID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemLocation_Locations">
-          <End Role="Locations" Type="Self.Location" Multiplicity="1" />
-          <End Role="Items" Type="Self.Item" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Locations">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Items">
-              <PropertyRef Name="LocationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemSubCategory_SubCategory">
-          <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="1" />
-          <End Role="Items" Type="Self.Item" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SubCategory">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Items">
-              <PropertyRef Name="SubCategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1291,12 +1069,8 @@
         <EntityContainer Name="OrmocIMSEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Brands" EntityType="Self.Brand" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
-          <EntitySet Name="CodeDetails" EntityType="Self.CodeDetail" />
-          <EntitySet Name="ItemDetails" EntityType="Self.ItemDetail" />
-          <EntitySet Name="ItemDetailMappings" EntityType="Self.ItemDetailMapping" />
           <EntitySet Name="ItemRequestForms" EntityType="Self.ItemRequestForm" />
           <EntitySet Name="ItemRequestFormMappings" EntityType="Self.ItemRequestFormMapping" />
-          <EntitySet Name="Items" EntityType="Self.Item" />
           <EntitySet Name="Locations" EntityType="Self.Location" />
           <EntitySet Name="PurchaseOrderMappings" EntityType="Self.PurchaseOrderMapping" />
           <EntitySet Name="PurchaseOrders" EntityType="Self.PurchaseOrder" />
@@ -1306,47 +1080,10 @@
           <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
           <EntitySet Name="Tags" EntityType="Self.Tag" />
           <EntitySet Name="TagsMappings" EntityType="Self.TagsMapping" />
-          <EntitySet Name="UnitsOfMeasures" EntityType="Self.UnitsOfMeasure" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK_ItemBrand_Brand" Association="Self.FK_ItemBrand_Brand">
-            <End Role="Brand" EntitySet="Brands" />
-            <End Role="Items" EntitySet="Items" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemCategory_Category" Association="Self.FK_ItemCategory_Category">
-            <End Role="Category" EntitySet="Categories" />
-            <End Role="Items" EntitySet="Items" />
-          </AssociationSet>
           <AssociationSet Name="FK_SubCategoryCategory_Category" Association="Self.FK_SubCategoryCategory_Category">
             <End Role="Category" EntitySet="Categories" />
             <End Role="SubCategory" EntitySet="SubCategories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StatusCdItemRequests_CodeDetail" Association="Self.FK_StatusCdItemRequests_CodeDetail">
-            <End Role="CodeDetail" EntitySet="CodeDetails" />
-            <End Role="ItemRequestForm" EntitySet="ItemRequestForms" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StatusCdPurchaseOrders_CodeDetail" Association="Self.FK_StatusCdPurchaseOrders_CodeDetail">
-            <End Role="CodeDetail" EntitySet="CodeDetails" />
-            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StatusCdQuotations_CodeDetail" Association="Self.FK_StatusCdQuotations_CodeDetail">
-            <End Role="CodeDetail" EntitySet="CodeDetails" />
-            <End Role="Quotations" EntitySet="Quotations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemDetailID_ItemDetail" Association="Self.FK_ItemDetailID_ItemDetail">
-            <End Role="ItemDetail" EntitySet="ItemDetails" />
-            <End Role="ItemDetailMapping" EntitySet="ItemDetailMappings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemDetaiLSubCategory_SubCategory" Association="Self.FK_ItemDetaiLSubCategory_SubCategory">
-            <End Role="SubCategory" EntitySet="SubCategories" />
-            <End Role="ItemDetail" EntitySet="ItemDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemDetailUOM_ItemDetail" Association="Self.FK_ItemDetailUOM_ItemDetail">
-            <End Role="ItemDetail" EntitySet="ItemDetails" />
-            <End Role="UnitsOfMeasure" EntitySet="UnitsOfMeasures" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemID_Item" Association="Self.FK_ItemID_Item">
-            <End Role="Items" EntitySet="Items" />
-            <End Role="ItemDetailMapping" EntitySet="ItemDetailMappings" />
           </AssociationSet>
           <AssociationSet Name="FK_IRFIDItemRequest_ItemRequest" Association="Self.FK_IRFIDItemRequest_ItemRequest">
             <End Role="ItemRequestForm" EntitySet="ItemRequestForms" />
@@ -1355,30 +1092,6 @@
           <AssociationSet Name="FK_IRFIDQoutations_ItemRequests" Association="Self.FK_IRFIDQoutations_ItemRequests">
             <End Role="ItemRequestForm" EntitySet="ItemRequestForms" />
             <End Role="Quotations" EntitySet="Quotations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemIDItemRequest_Items" Association="Self.FK_ItemIDItemRequest_Items">
-            <End Role="Items" EntitySet="Items" />
-            <End Role="ItemRequestFormMapping" EntitySet="ItemRequestFormMappings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemIDPurchaseOrders_Items" Association="Self.FK_ItemIDPurchaseOrders_Items">
-            <End Role="Items" EntitySet="Items" />
-            <End Role="PurchaseOrderMapping" EntitySet="PurchaseOrderMappings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemIDQoutations_Items" Association="Self.FK_ItemIDQoutations_Items">
-            <End Role="Items" EntitySet="Items" />
-            <End Role="QuotationsMapping" EntitySet="QuotationsMappings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemIDTags_Items" Association="Self.FK_ItemIDTags_Items">
-            <End Role="Items" EntitySet="Items" />
-            <End Role="TagsMapping" EntitySet="TagsMappings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemLocation_Locations" Association="Self.FK_ItemLocation_Locations">
-            <End Role="Locations" EntitySet="Locations" />
-            <End Role="Items" EntitySet="Items" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemSubCategory_SubCategory" Association="Self.FK_ItemSubCategory_SubCategory">
-            <End Role="SubCategory" EntitySet="SubCategories" />
-            <End Role="Items" EntitySet="Items" />
           </AssociationSet>
           <AssociationSet Name="FK_POID_PurchaseOrders" Association="Self.FK_POID_PurchaseOrders">
             <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
@@ -1404,6 +1117,80 @@
             <End Role="Tags" EntitySet="Tags" />
             <End Role="TagsMapping" EntitySet="TagsMappings" />
           </AssociationSet>
+          <EntitySet Name="CodeHeaders" EntityType="OrmocIMSModel.CodeHeader" />
+          <EntitySet Name="CodeDetails" EntityType="OrmocIMSModel.CodeDetail" />
+          <EntitySet Name="Items" EntityType="OrmocIMSModel.Item" />
+          <AssociationSet Name="FK_ItemBrand_Brand" Association="OrmocIMSModel.FK_ItemBrand_Brand">
+            <End Role="Brand" EntitySet="Brands" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemCategory_Category" Association="OrmocIMSModel.FK_ItemCategory_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CodeHeaderIdCodeHeader_CodeDetail" Association="OrmocIMSModel.FK_CodeHeaderIdCodeHeader_CodeDetail">
+            <End Role="CodeHeader" EntitySet="CodeHeaders" />
+            <End Role="CodeDetail" EntitySet="CodeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatusCdItemRequests_CodeDetail" Association="OrmocIMSModel.FK_StatusCdItemRequests_CodeDetail">
+            <End Role="CodeDetail" EntitySet="CodeDetails" />
+            <End Role="ItemRequestForm" EntitySet="ItemRequestForms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatusCdItems_CodeDetail" Association="OrmocIMSModel.FK_StatusCdItems_CodeDetail">
+            <End Role="CodeDetail" EntitySet="CodeDetails" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatusCdPurchaseOrders_CodeDetail" Association="OrmocIMSModel.FK_StatusCdPurchaseOrders_CodeDetail">
+            <End Role="CodeDetail" EntitySet="CodeDetails" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatusCdQuotations_CodeDetail" Association="OrmocIMSModel.FK_StatusCdQuotations_CodeDetail">
+            <End Role="CodeDetail" EntitySet="CodeDetails" />
+            <End Role="Quotation" EntitySet="Quotations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemIDItemRequest_Items" Association="OrmocIMSModel.FK_ItemIDItemRequest_Items">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="ItemRequestFormMapping" EntitySet="ItemRequestFormMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemIDPurchaseOrders_Items" Association="OrmocIMSModel.FK_ItemIDPurchaseOrders_Items">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="PurchaseOrderMapping" EntitySet="PurchaseOrderMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemIDQoutations_Items" Association="OrmocIMSModel.FK_ItemIDQoutations_Items">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="QuotationsMapping" EntitySet="QuotationsMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemIDTags_Items" Association="OrmocIMSModel.FK_ItemIDTags_Items">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="TagsMapping" EntitySet="TagsMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemLocation_Locations" Association="OrmocIMSModel.FK_ItemLocation_Locations">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemSubCategory_SubCategory" Association="OrmocIMSModel.FK_ItemSubCategory_SubCategory">
+            <End Role="SubCategory" EntitySet="SubCategories" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <EntitySet Name="UnitsOfMeasures" EntityType="OrmocIMSModel.UnitsOfMeasure" />
+          <EntitySet Name="ItemDetails" EntityType="OrmocIMSModel.ItemDetail" />
+          <EntitySet Name="ItemDetailMappings" EntityType="OrmocIMSModel.ItemDetailMapping" />
+          <AssociationSet Name="FK_ItemDetailID_ItemDetail" Association="OrmocIMSModel.FK_ItemDetailID_ItemDetail">
+            <End Role="ItemDetail" EntitySet="ItemDetails" />
+            <End Role="ItemDetailMapping" EntitySet="ItemDetailMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemDetaiLSubCategory_SubCategory" Association="OrmocIMSModel.FK_ItemDetaiLSubCategory_SubCategory">
+            <End Role="SubCategory" EntitySet="SubCategories" />
+            <End Role="ItemDetail" EntitySet="ItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemDetailUnitsOfMeasure_UnitsOfMeasure" Association="OrmocIMSModel.FK_ItemDetailUnitsOfMeasure_UnitsOfMeasure">
+            <End Role="UnitsOfMeasure" EntitySet="UnitsOfMeasures" />
+            <End Role="ItemDetail" EntitySet="ItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemID_Item" Association="OrmocIMSModel.FK_ItemID_Item">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="ItemDetailMapping" EntitySet="ItemDetailMappings" />
+          </AssociationSet>
           <FunctionImport Name="AdvancedSearch_SP" ReturnType="Collection(OrmocIMSModel.AdvancedSearch_SP_Result)">
             <Parameter Name="ModuleNm" Mode="In" Type="String" />
             <Parameter Name="param1" Mode="In" Type="String" />
@@ -1416,7 +1203,320 @@
             <Parameter Name="param8" Mode="In" Type="String" />
             <Parameter Name="param9" Mode="In" Type="String" />
           </FunctionImport>
-        </EntityContainer>
+          </EntityContainer>
+        <EntityType Name="CodeHeader">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodeHeaderName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CodeDetails" Relationship="OrmocIMSModel.FK_CodeHeaderIdCodeHeader_CodeDetail" FromRole="CodeHeader" ToRole="CodeDetail" />
+        </EntityType>
+        <EntityType Name="CodeDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodeValue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CodeHeaderId" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CodeHeader" Relationship="OrmocIMSModel.FK_CodeHeaderIdCodeHeader_CodeDetail" FromRole="CodeDetail" ToRole="CodeHeader" />
+          <NavigationProperty Name="ItemRequestForms" Relationship="OrmocIMSModel.FK_StatusCdItemRequests_CodeDetail" FromRole="CodeDetail" ToRole="ItemRequestForm" />
+          <NavigationProperty Name="Items" Relationship="OrmocIMSModel.FK_StatusCdItems_CodeDetail" FromRole="CodeDetail" ToRole="Item" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="OrmocIMSModel.FK_StatusCdPurchaseOrders_CodeDetail" FromRole="CodeDetail" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="Quotations" Relationship="OrmocIMSModel.FK_StatusCdQuotations_CodeDetail" FromRole="CodeDetail" ToRole="Quotation" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="SubCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="BrandID" Type="Int32" Nullable="false" />
+          <Property Name="StatusCd" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="MeasuredBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sku" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Brand" Relationship="OrmocIMSModel.FK_ItemBrand_Brand" FromRole="Item" ToRole="Brand" />
+          <NavigationProperty Name="Category" Relationship="OrmocIMSModel.FK_ItemCategory_Category" FromRole="Item" ToRole="Category" />
+          <NavigationProperty Name="CodeDetail" Relationship="OrmocIMSModel.FK_StatusCdItems_CodeDetail" FromRole="Item" ToRole="CodeDetail" />
+          <NavigationProperty Name="ItemRequestFormMappings" Relationship="OrmocIMSModel.FK_ItemIDItemRequest_Items" FromRole="Item" ToRole="ItemRequestFormMapping" />
+          <NavigationProperty Name="PurchaseOrderMappings" Relationship="OrmocIMSModel.FK_ItemIDPurchaseOrders_Items" FromRole="Item" ToRole="PurchaseOrderMapping" />
+          <NavigationProperty Name="QuotationsMappings" Relationship="OrmocIMSModel.FK_ItemIDQoutations_Items" FromRole="Item" ToRole="QuotationsMapping" />
+          <NavigationProperty Name="TagsMappings" Relationship="OrmocIMSModel.FK_ItemIDTags_Items" FromRole="Item" ToRole="TagsMapping" />
+          <NavigationProperty Name="Location" Relationship="OrmocIMSModel.FK_ItemLocation_Locations" FromRole="Item" ToRole="Location" />
+          <NavigationProperty Name="SubCategory" Relationship="OrmocIMSModel.FK_ItemSubCategory_SubCategory" FromRole="Item" ToRole="SubCategory" />
+          <Property Name="ThresholdQty" Type="Int32" />
+          <NavigationProperty Name="ItemDetailMappings" Relationship="OrmocIMSModel.FK_ItemID_Item" FromRole="Item" ToRole="ItemDetailMapping" />
+        </EntityType>
+        <Association Name="FK_ItemBrand_Brand">
+          <End Type="OrmocIMSModel.Brand" Role="Brand" Multiplicity="1" />
+          <End Type="OrmocIMSModel.Item" Role="Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="BrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemCategory_Category">
+          <End Type="OrmocIMSModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="OrmocIMSModel.Item" Role="Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CodeHeaderIdCodeHeader_CodeDetail">
+          <End Type="OrmocIMSModel.CodeHeader" Role="CodeHeader" Multiplicity="1" />
+          <End Type="OrmocIMSModel.CodeDetail" Role="CodeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeHeader">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CodeDetail">
+              <PropertyRef Name="CodeHeaderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatusCdItemRequests_CodeDetail">
+          <End Type="OrmocIMSModel.CodeDetail" Role="CodeDetail" Multiplicity="1" />
+          <End Type="OrmocIMSModel.ItemRequestForm" Role="ItemRequestForm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemRequestForm">
+              <PropertyRef Name="StatusCd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatusCdItems_CodeDetail">
+          <End Type="OrmocIMSModel.CodeDetail" Role="CodeDetail" Multiplicity="1" />
+          <End Type="OrmocIMSModel.Item" Role="Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="StatusCd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatusCdPurchaseOrders_CodeDetail">
+          <End Type="OrmocIMSModel.CodeDetail" Role="CodeDetail" Multiplicity="1" />
+          <End Type="OrmocIMSModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="StatusCd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatusCdQuotations_CodeDetail">
+          <End Type="OrmocIMSModel.CodeDetail" Role="CodeDetail" Multiplicity="1" />
+          <End Type="OrmocIMSModel.Quotation" Role="Quotation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Quotation">
+              <PropertyRef Name="StatusCd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemIDItemRequest_Items">
+          <End Type="OrmocIMSModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="OrmocIMSModel.ItemRequestFormMapping" Role="ItemRequestFormMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemRequestFormMapping">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemIDPurchaseOrders_Items">
+          <End Type="OrmocIMSModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="OrmocIMSModel.PurchaseOrderMapping" Role="PurchaseOrderMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrderMapping">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemIDQoutations_Items">
+          <End Type="OrmocIMSModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="OrmocIMSModel.QuotationsMapping" Role="QuotationsMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuotationsMapping">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemIDTags_Items">
+          <End Type="OrmocIMSModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="OrmocIMSModel.TagsMapping" Role="TagsMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TagsMapping">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemLocation_Locations">
+          <End Type="OrmocIMSModel.Location" Role="Location" Multiplicity="1" />
+          <End Type="OrmocIMSModel.Item" Role="Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemSubCategory_SubCategory">
+          <End Type="OrmocIMSModel.SubCategory" Role="SubCategory" Multiplicity="1" />
+          <End Type="OrmocIMSModel.Item" Role="Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="SubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UnitsOfMeasure">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UnitOfMeasure" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemDetails" Relationship="OrmocIMSModel.FK_ItemDetailUnitsOfMeasure_UnitsOfMeasure" FromRole="UnitsOfMeasure" ToRole="ItemDetail" />
+        </EntityType>
+        <EntityType Name="ItemDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="ShowUnitsOfMeasure" Type="Boolean" Nullable="false" />
+          <Property Name="UnitsOfMeasureID" Type="Int32" Nullable="false" />
+          <Property Name="ItemDetailName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemDetailMappings" Relationship="OrmocIMSModel.FK_ItemDetailID_ItemDetail" FromRole="ItemDetail" ToRole="ItemDetailMapping" />
+          <NavigationProperty Name="SubCategory" Relationship="OrmocIMSModel.FK_ItemDetaiLSubCategory_SubCategory" FromRole="ItemDetail" ToRole="SubCategory" />
+          <NavigationProperty Name="UnitsOfMeasure" Relationship="OrmocIMSModel.FK_ItemDetailUnitsOfMeasure_UnitsOfMeasure" FromRole="ItemDetail" ToRole="UnitsOfMeasure" />
+        </EntityType>
+        <EntityType Name="ItemDetailMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="ItemDetailID" Type="Int32" Nullable="false" />
+          <Property Name="ItemDetailValue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemDetail" Relationship="OrmocIMSModel.FK_ItemDetailID_ItemDetail" FromRole="ItemDetailMapping" ToRole="ItemDetail" />
+          <NavigationProperty Name="Item" Relationship="OrmocIMSModel.FK_ItemID_Item" FromRole="ItemDetailMapping" ToRole="Item" />
+        </EntityType>
+        <Association Name="FK_ItemDetailID_ItemDetail">
+          <End Type="OrmocIMSModel.ItemDetail" Role="ItemDetail" Multiplicity="1" />
+          <End Type="OrmocIMSModel.ItemDetailMapping" Role="ItemDetailMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemDetailMapping">
+              <PropertyRef Name="ItemDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemDetaiLSubCategory_SubCategory">
+          <End Type="OrmocIMSModel.SubCategory" Role="SubCategory" Multiplicity="1" />
+          <End Type="OrmocIMSModel.ItemDetail" Role="ItemDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemDetail">
+              <PropertyRef Name="SubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemDetailUnitsOfMeasure_UnitsOfMeasure">
+          <End Type="OrmocIMSModel.UnitsOfMeasure" Role="UnitsOfMeasure" Multiplicity="1" />
+          <End Type="OrmocIMSModel.ItemDetail" Role="ItemDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitsOfMeasure">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemDetail">
+              <PropertyRef Name="UnitsOfMeasureID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemID_Item">
+          <End Type="OrmocIMSModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="OrmocIMSModel.ItemDetailMapping" Role="ItemDetailMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemDetailMapping">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <ComplexType Name="AdvancedSearch_SP_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="ItemName" Nullable="false" MaxLength="100" />
@@ -1424,8 +1524,9 @@
           <Property Type="Int32" Name="SubCategoryID" Nullable="false" />
           <Property Type="Int32" Name="LocationID" Nullable="false" />
           <Property Type="Int32" Name="BrandID" Nullable="false" />
-          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Int32" Name="StatusCd" Nullable="false" />
           <Property Type="Int32" Name="Quantity" Nullable="true" />
+          <Property Type="Int32" Name="ThresholdQty" Nullable="true" />
           <Property Type="String" Name="MeasuredBy" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Sku" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="Notes" Nullable="true" MaxLength="500" />
@@ -1435,7 +1536,7 @@
           <Property Type="DateTime" Name="UpdateDttm" Nullable="false" Precision="23" />
           <Property Type="String" Name="BrandName" Nullable="false" MaxLength="100" />
         </ComplexType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1467,49 +1568,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CodeDetails">
-            <EntityTypeMapping TypeName="OrmocIMSModel.CodeDetail">
-              <MappingFragment StoreEntitySet="CodeDetail">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CodeValue" ColumnName="CodeValue" />
-                <ScalarProperty Name="ModuleType" ColumnName="ModuleType" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
-                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
-                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
-                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ItemDetails">
-            <EntityTypeMapping TypeName="OrmocIMSModel.ItemDetail">
-              <MappingFragment StoreEntitySet="ItemDetail">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
-                <ScalarProperty Name="ItemDetailName" ColumnName="ItemDetailName" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
-                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
-                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
-                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ItemDetailMappings">
-            <EntityTypeMapping TypeName="OrmocIMSModel.ItemDetailMapping">
-              <MappingFragment StoreEntitySet="ItemDetailMapping">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
-                <ScalarProperty Name="ItemDetailID" ColumnName="ItemDetailID" />
-                <ScalarProperty Name="ShowUnitsOfMeasure" ColumnName="ShowUnitsOfMeasure" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
-                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
-                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
-                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ItemRequestForms">
             <EntityTypeMapping TypeName="OrmocIMSModel.ItemRequestForm">
               <MappingFragment StoreEntitySet="ItemRequestForm">
@@ -1530,27 +1588,6 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="IRFID" ColumnName="IRFID" />
-                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
-                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
-                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
-                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Items">
-            <EntityTypeMapping TypeName="OrmocIMSModel.Item">
-              <MappingFragment StoreEntitySet="Items">
-                <ScalarProperty Name="Sku" ColumnName="Sku" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
-                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
-                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="MeasuredBy" ColumnName="MeasuredBy" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
                 <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
                 <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
@@ -1684,23 +1721,10 @@
           <EntitySetMapping Name="TagsMappings">
             <EntityTypeMapping TypeName="OrmocIMSModel.TagsMapping">
               <MappingFragment StoreEntitySet="TagsMapping">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="TagID" ColumnName="TagID" />
-                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
-                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
-                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
-                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UnitsOfMeasures">
-            <EntityTypeMapping TypeName="OrmocIMSModel.UnitsOfMeasure">
-              <MappingFragment StoreEntitySet="UnitsOfMeasure">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ItemDetailID" ColumnName="ItemDetailID" />
-                <ScalarProperty Name="UnitOfMeasure" ColumnName="UnitOfMeasure" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
                 <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
                 <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
@@ -1723,6 +1747,99 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CodeHeaders">
+            <EntityTypeMapping TypeName="OrmocIMSModel.CodeHeader">
+              <MappingFragment StoreEntitySet="CodeHeader">
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CodeHeaderName" ColumnName="CodeHeaderName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CodeDetails">
+            <EntityTypeMapping TypeName="OrmocIMSModel.CodeDetail">
+              <MappingFragment StoreEntitySet="CodeDetail">
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CodeHeaderId" ColumnName="CodeHeaderId" />
+                <ScalarProperty Name="CodeValue" ColumnName="CodeValue" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="OrmocIMSModel.Item">
+              <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="ThresholdQty" ColumnName="ThresholdQty" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Sku" ColumnName="Sku" />
+                <ScalarProperty Name="MeasuredBy" ColumnName="MeasuredBy" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="StatusCd" ColumnName="StatusCd" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnitsOfMeasures">
+            <EntityTypeMapping TypeName="OrmocIMSModel.UnitsOfMeasure">
+              <MappingFragment StoreEntitySet="UnitsOfMeasure">
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UnitOfMeasure" ColumnName="UnitOfMeasure" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemDetails">
+            <EntityTypeMapping TypeName="OrmocIMSModel.ItemDetail">
+              <MappingFragment StoreEntitySet="ItemDetail">
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ItemDetailName" ColumnName="ItemDetailName" />
+                <ScalarProperty Name="UnitsOfMeasureID" ColumnName="UnitsOfMeasureID" />
+                <ScalarProperty Name="ShowUnitsOfMeasure" ColumnName="ShowUnitsOfMeasure" />
+                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemDetailMappings">
+            <EntityTypeMapping TypeName="OrmocIMSModel.ItemDetailMapping">
+              <MappingFragment StoreEntitySet="ItemDetailMapping">
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ItemDetailValue" ColumnName="ItemDetailValue" />
+                <ScalarProperty Name="ItemDetailID" ColumnName="ItemDetailID" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="AdvancedSearch_SP" FunctionName="OrmocIMSModel.Store.AdvancedSearch_SP">
             <ResultMapping>
               <ComplexTypeMapping TypeName="OrmocIMSModel.AdvancedSearch_SP_Result">
@@ -1732,8 +1849,9 @@
                 <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
                 <ScalarProperty Name="LocationID" ColumnName="LocationID" />
                 <ScalarProperty Name="BrandID" ColumnName="BrandID" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="StatusCd" ColumnName="StatusCd" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ThresholdQty" ColumnName="ThresholdQty" />
                 <ScalarProperty Name="MeasuredBy" ColumnName="MeasuredBy" />
                 <ScalarProperty Name="Sku" ColumnName="Sku" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />

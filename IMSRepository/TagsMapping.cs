@@ -21,8 +21,9 @@ namespace IMSRepository
         public System.DateTime CreateDttm { get; set; }
         public string UpdateUserName { get; set; }
         public System.DateTime UpdateDttm { get; set; }
+        public bool IsActive { get; set; }
     
-        public virtual Item Item { get; set; }
         public virtual Tag Tag { get; set; }
+        public virtual Item Item { get; set; }
     }
 }

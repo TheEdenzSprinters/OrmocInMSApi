@@ -62,6 +62,9 @@
     <Compile Include="CodeDetail.cs">
       <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="CodeHeader.cs">
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Item.cs">
       <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>

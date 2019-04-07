@@ -12,6 +12,6 @@ namespace IMSRepository.Models
         public string ItemName { get; set; }
         public string Brand { get; set; }
         public DateTime CreateDttm { get; set; }
-        public string Status { get; set; }
+        public int Status { get; set; }
     }
 }

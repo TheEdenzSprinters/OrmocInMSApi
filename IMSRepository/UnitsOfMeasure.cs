@@ -14,8 +14,13 @@ namespace IMSRepository
     
     public partial class UnitsOfMeasure
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public UnitsOfMeasure()
+        {
+            this.ItemDetails = new HashSet<ItemDetail>();
+        }
+    
         public int Id { get; set; }
-        public int ItemDetailID { get; set; }
         public string UnitOfMeasure { get; set; }
         public bool IsActive { get; set; }
         public string CreateUserName { get; set; }
@@ -23,6 +28,7 @@ namespace IMSRepository
         public string UpdateUserName { get; set; }
         public System.DateTime UpdateDttm { get; set; }
     
-        public virtual ItemDetail ItemDetail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ItemDetail> ItemDetails { get; set; }
     }
 }

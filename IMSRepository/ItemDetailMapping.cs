@@ -17,7 +17,7 @@ namespace IMSRepository
         public int Id { get; set; }
         public int ItemID { get; set; }
         public int ItemDetailID { get; set; }
-        public bool ShowUnitsOfMeasure { get; set; }
+        public string ItemDetailValue { get; set; }
         public bool IsActive { get; set; }
         public string CreateUserName { get; set; }
         public System.DateTime CreateDttm { get; set; }

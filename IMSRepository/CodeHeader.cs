@@ -10,25 +10,25 @@
 namespace IMSRepository
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class AdvancedSearch_SP_Result
+    public partial class CodeHeader
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public CodeHeader()
+        {
+            this.CodeDetails = new HashSet<CodeDetail>();
+        }
+    
         public int Id { get; set; }
-        public string ItemName { get; set; }
-        public int CategoryID { get; set; }
-        public int SubCategoryID { get; set; }
-        public int LocationID { get; set; }
-        public int BrandID { get; set; }
-        public int StatusCd { get; set; }
-        public Nullable<int> Quantity { get; set; }
-        public Nullable<int> ThresholdQty { get; set; }
-        public string MeasuredBy { get; set; }
-        public string Sku { get; set; }
-        public string Notes { get; set; }
+        public string CodeHeaderName { get; set; }
+        public bool IsActive { get; set; }
         public string CreateUserName { get; set; }
         public System.DateTime CreateDttm { get; set; }
         public string UpdateUserName { get; set; }
         public System.DateTime UpdateDttm { get; set; }
-        public string BrandName { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CodeDetail> CodeDetails { get; set; }
     }
 }

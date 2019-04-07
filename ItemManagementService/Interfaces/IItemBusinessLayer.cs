@@ -13,5 +13,12 @@ namespace ItemManagementService.Interfaces
         ItemSingleModel GetItemById(int id);
         List<ItemSearchResultModel> ItemAdvancedSearch(ItemSearchQueryModel item);
         List<string> ItemAutoComplete(string word);
+        List<LocationModel> GetAllLocations();
+        List<ItemStatus> GetAllItemStatus();
+        List<ItemDetailModel> GetItemDetailBySubCategoryId(int Id);
+        int InsertNewItem(InsertItemModel item);
+        string UpdateItemStatusById(UpdateItemStatusModel status);
+        List<TagsModel> TagsAutoComplete(string word);
+        TagsModel AddNewTagToItem(TagsMappingModel tag);
     }
 }
