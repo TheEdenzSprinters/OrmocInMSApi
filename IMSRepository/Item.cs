@@ -17,11 +17,11 @@ namespace IMSRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Item()
         {
-            this.ItemDetailMappings = new HashSet<ItemDetailMapping>();
             this.ItemRequestFormMappings = new HashSet<ItemRequestFormMapping>();
             this.PurchaseOrderMappings = new HashSet<PurchaseOrderMapping>();
             this.QuotationsMappings = new HashSet<QuotationsMapping>();
             this.TagsMappings = new HashSet<TagsMapping>();
+            this.ItemDetailMappings = new HashSet<ItemDetailMapping>();
         }
     
         public int Id { get; set; }
@@ -30,19 +30,20 @@ namespace IMSRepository
         public int SubCategoryID { get; set; }
         public int LocationID { get; set; }
         public int BrandID { get; set; }
-        public bool IsActive { get; set; }
+        public int StatusCd { get; set; }
         public Nullable<int> Quantity { get; set; }
         public string MeasuredBy { get; set; }
+        public string Sku { get; set; }
         public string Notes { get; set; }
         public string CreateUserName { get; set; }
         public System.DateTime CreateDttm { get; set; }
         public string UpdateUserName { get; set; }
         public System.DateTime UpdateDttm { get; set; }
+        public Nullable<int> ThresholdQty { get; set; }
     
         public virtual Brand Brand { get; set; }
         public virtual Category Category { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ItemDetailMapping> ItemDetailMappings { get; set; }
+        public virtual CodeDetail CodeDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemRequestFormMapping> ItemRequestFormMappings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -53,5 +54,7 @@ namespace IMSRepository
         public virtual ICollection<TagsMapping> TagsMappings { get; set; }
         public virtual Location Location { get; set; }
         public virtual SubCategory SubCategory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ItemDetailMapping> ItemDetailMappings { get; set; }
     }
 }

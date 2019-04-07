@@ -18,21 +18,25 @@ namespace IMSRepository
         public CodeDetail()
         {
             this.ItemRequestForms = new HashSet<ItemRequestForm>();
+            this.Items = new HashSet<Item>();
             this.PurchaseOrders = new HashSet<PurchaseOrder>();
             this.Quotations = new HashSet<Quotation>();
         }
     
         public int Id { get; set; }
         public string CodeValue { get; set; }
-        public string ModuleType { get; set; }
+        public int CodeHeaderId { get; set; }
         public bool IsActive { get; set; }
         public string CreateUserName { get; set; }
         public System.DateTime CreateDttm { get; set; }
         public string UpdateUserName { get; set; }
         public System.DateTime UpdateDttm { get; set; }
     
+        public virtual CodeHeader CodeHeader { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemRequestForm> ItemRequestForms { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Item> Items { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

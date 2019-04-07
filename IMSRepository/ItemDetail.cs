@@ -18,11 +18,12 @@ namespace IMSRepository
         public ItemDetail()
         {
             this.ItemDetailMappings = new HashSet<ItemDetailMapping>();
-            this.UnitsOfMeasures = new HashSet<UnitsOfMeasure>();
         }
     
         public int Id { get; set; }
         public int SubCategoryID { get; set; }
+        public bool ShowUnitsOfMeasure { get; set; }
+        public int UnitsOfMeasureID { get; set; }
         public string ItemDetailName { get; set; }
         public bool IsActive { get; set; }
         public string CreateUserName { get; set; }
@@ -33,7 +34,6 @@ namespace IMSRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemDetailMapping> ItemDetailMappings { get; set; }
         public virtual SubCategory SubCategory { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UnitsOfMeasure> UnitsOfMeasures { get; set; }
+        public virtual UnitsOfMeasure UnitsOfMeasure { get; set; }
     }
 }
