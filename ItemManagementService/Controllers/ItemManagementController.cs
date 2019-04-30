@@ -249,9 +249,9 @@ namespace ItemManagementService.Controllers
         /// <returns></returns>
         [Route("api/ItemManagement/ItemAutoComplete")]
         [HttpPost]
-        public IHttpActionResult ItemAutoComplete([FromBody]string word)
+        public IHttpActionResult ItemAutoComplete([FromBody]InputQueryModel query)
         {
-            if (word.Length < 3) { return Json(new { Result = "" }); };
+            if (query.SearchString == "" || query.SearchString.Length < 3) { return Json(new { Result = "" }); };
 
             var container = ContainerConfig.Configure();
 
@@ -259,7 +259,7 @@ namespace ItemManagementService.Controllers
             {
                 var app = scope.Resolve<IItemBusinessLayer>();
 
-                var result = app.ItemAutoComplete(word);
+                var result = app.ItemAutoComplete(query.SearchString);
 
                 return Json(new { Result = result });
             }
