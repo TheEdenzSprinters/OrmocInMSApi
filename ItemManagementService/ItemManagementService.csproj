@@ -120,6 +120,7 @@
     <Compile Include="Models\ItemDetailModel.cs" />
     <Compile Include="Models\ItemSearchQueryModel.cs" />
     <Compile Include="Models\ItemSearchResultModel.cs" />
+    <Compile Include="Models\ItemSimpleSearchModel.cs" />
     <Compile Include="Models\ItemSingleModel.cs" />
     <Compile Include="Models\ItemStatus.cs" />
     <Compile Include="Models\LocationModel.cs" />

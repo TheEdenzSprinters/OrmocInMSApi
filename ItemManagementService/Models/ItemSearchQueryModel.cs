@@ -15,5 +15,6 @@ namespace ItemManagementService.Models
         public string Tag { get; set; }
         public string Sku { get; set; }
         public int? Location { get; set; }
+        public int? StatusCd { get; set; }
     }
 }

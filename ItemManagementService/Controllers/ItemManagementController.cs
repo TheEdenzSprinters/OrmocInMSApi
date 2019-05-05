@@ -245,6 +245,27 @@ namespace ItemManagementService.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        [Route("api/ItemManagement/ItemsBySimpleSearch")]
+        [HttpPost]
+        public IHttpActionResult ItemsBySimpleSearch([FromBody]ItemSimpleSearchModel item)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemBusinessLayer>();
+
+                var result = app.ItemBySimpleSearch(item);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="word"></param>
         /// <returns></returns>
         [Route("api/ItemManagement/ItemAutoComplete")]
