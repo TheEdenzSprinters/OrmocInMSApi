@@ -131,6 +131,7 @@ namespace ItemManagementService.BusinessLayer
             searchTerm.Location = item.Location;
             searchTerm.Tag = item.Tag;
             searchTerm.Sku = item.Sku;
+            searchTerm.StatusCd = item.StatusCd;
 
             var query = _itemDataAccess.AdvancedSearchItems(searchTerm);
             var codeDetail = _itemDataAccess.GetAllItemStatus();
@@ -264,6 +265,29 @@ namespace ItemManagementService.BusinessLayer
                 }
             }
             return null;
+        }
+
+        public List<ItemSearchResultModel> ItemBySimpleSearch(ItemSimpleSearchModel item)
+        {
+            ItemSearchResultModel singleItem = new ItemSearchResultModel();
+            List<ItemSearchResultModel> result = new List<ItemSearchResultModel>();
+
+            var query = _itemDataAccess.SimpleSearchItems(item.ItemName);
+            var codeDetail = _itemDataAccess.GetAllItemStatus();
+
+            for (int i = 0; i < query.Count; i++)
+            {
+                singleItem.Id = query[i].Id;
+                singleItem.ItemName = query[i].ItemName;
+                singleItem.Brand = query[i].Brand;
+                singleItem.Status = codeDetail.Where(x => x.Id == query[i].Status).Select(x => x.CodeValue).FirstOrDefault();
+                singleItem.CreateDttm = query[i].CreateDttm;
+
+                result.Add(singleItem);
+                singleItem = new ItemSearchResultModel();
+            }
+
+            return result;
         }
     }
 }

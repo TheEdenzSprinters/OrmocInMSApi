@@ -20,5 +20,6 @@ namespace ItemManagementService.Interfaces
         string UpdateItemStatusById(UpdateItemStatusModel status);
         List<TagsModel> TagsAutoComplete(string word);
         TagsModel AddNewTagToItem(TagsMappingModel tag);
+        List<ItemSearchResultModel> ItemBySimpleSearch(ItemSimpleSearchModel item);
     }
 }

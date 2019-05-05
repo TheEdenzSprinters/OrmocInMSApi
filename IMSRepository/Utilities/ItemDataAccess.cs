@@ -33,7 +33,9 @@ namespace IMSRepository.Utilities
                     item.SubCategoryId.HasValue ? item.SubCategoryId.Value.ToString() : null,
                     item.Location.HasValue ? item.Location.Value.ToString() : null,
                     string.IsNullOrEmpty(item.Tag) ? null : item.Tag,
-                    string.IsNullOrEmpty(item.Sku) ? null : item.Sku)
+                    string.IsNullOrEmpty(item.Sku) ? null : item.Sku,
+                    item.StatusCd.HasValue ? item.StatusCd.Value.ToString() : null
+                    )
                     .Select(x => new ItemSearchResult
                     {
                         Id = x.Id,
@@ -51,7 +53,7 @@ namespace IMSRepository.Utilities
         {
             using (OrmocIMSEntities context = new OrmocIMSEntities())
             {
-                var result = context.Items.Where(x => x.ItemName.Contains(word)).Select(x => x.ItemName).Take(10).ToList();
+                var result = context.Items.Where(x => x.ItemName.Contains(word)).Select(x => x.ItemName).Distinct().Take(10).ToList();
                 return result;
             }
         }
@@ -314,6 +316,24 @@ namespace IMSRepository.Utilities
             {
                 var result = context.Tags.Where(x => x.TagValue.Contains(word)).Take(10).ToList();
                 return result;
+            }
+        }
+
+        public List<ItemSearchResult> SimpleSearchItems(string itemName)
+        {
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
+            {
+                var result = context.Items.Include("Brands").Where(x => x.ItemName.Contains(itemName))
+                    .Select(x => new ItemSearchResult
+                    {
+                        Id = x.Id,
+                        ItemName = x.ItemName,
+                        Brand = x.Brand.BrandName,
+                        Status = x.StatusCd,
+                        CreateDttm = x.CreateDttm
+                    }).ToList();
+
+                    return result;
             }
         }
     }

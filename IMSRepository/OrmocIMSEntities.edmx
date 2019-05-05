@@ -606,6 +606,7 @@
           <Parameter Name="param7" Type="varchar" Mode="In" />
           <Parameter Name="param8" Type="varchar" Mode="In" />
           <Parameter Name="param9" Type="varchar" Mode="In" />
+          <Parameter Name="param10" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="OrmocIMSModelStoreContainer">
           <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
@@ -1202,6 +1203,7 @@
             <Parameter Name="param7" Mode="In" Type="String" />
             <Parameter Name="param8" Mode="In" Type="String" />
             <Parameter Name="param9" Mode="In" Type="String" />
+            <Parameter Name="param10" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="CodeHeader">
