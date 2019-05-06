@@ -336,5 +336,15 @@ namespace IMSRepository.Utilities
                     return result;
             }
         }
+
+        public Brand GetBrandByName(string brandName)
+        {
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
+            {
+                var result = context.Brands.Where(x => x.BrandName.Contains(brandName)).FirstOrDefault();
+
+                return result;
+            }
+        }
     }
 }

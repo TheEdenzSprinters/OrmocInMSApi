@@ -25,12 +25,14 @@ namespace ItemManagementService.BusinessLayer
             List<ItemDetailMapping> detail = new List<ItemDetailMapping>();
             ItemDetailMapping singleDetail = new ItemDetailMapping();
 
+            var brandName = _itemDataAccess.GetBrandByName(item.BrandName);
+
             newItem.ItemName = item.ItemName;
             newItem.CategoryID = item.CategoryId;
             newItem.SubCategoryID = item.SubCategoryId;
             newItem.StatusCd = item.StatusCd;
             newItem.LocationID = item.LocationId;
-            newItem.BrandID = item.BrandId;
+            newItem.BrandID = brandName.Id;
             newItem.Quantity = item.Quantity;
             newItem.MeasuredBy = item.MeasuredBy;
             newItem.ThresholdQty = item.ThresholdQty;
@@ -85,7 +87,7 @@ namespace ItemManagementService.BusinessLayer
             result.ItemName = query.ItemName;
             result.CategoryId = query.CategoryID;
             result.SubCategoryId = query.SubCategoryID;
-            result.BrandId = query.BrandID;
+            result.BrandName = query.Brand.BrandName;
             result.LocationId = query.LocationID;
             result.Quantity = query.Quantity.HasValue ? query.Quantity.Value : 0;
             result.ThresholdQty = query.ThresholdQty.HasValue ? query.ThresholdQty.Value : 0;

@@ -23,5 +23,6 @@ namespace IMSRepository.Utilities
         bool AddTaggingByItemId(int tagId, int itemId);
         List<Tag> TagsAutoComplete(string word);
         List<ItemSearchResult> SimpleSearchItems(string itemName);
+        Brand GetBrandByName(string brandName);
     }
 }
