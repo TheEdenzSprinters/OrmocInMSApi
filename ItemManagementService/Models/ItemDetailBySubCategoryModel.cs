@@ -5,9 +5,8 @@ using System.Web;
 
 namespace ItemManagementService.Models
 {
-    public class UpdateItemStatusModel
+    public class ItemDetailBySubCategoryModel
     {
-        public int Id { get; set; }
-        public string StatusCd { get; set; }
+        public int SubCategoryId { get; set; }
     }
 }

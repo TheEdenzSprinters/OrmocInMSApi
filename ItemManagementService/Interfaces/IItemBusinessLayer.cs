@@ -16,7 +16,8 @@ namespace ItemManagementService.Interfaces
         List<LocationModel> GetAllLocations();
         List<ItemStatus> GetAllItemStatus();
         List<ItemDetailModel> GetItemDetailBySubCategoryId(int Id);
-        int InsertNewItem(InsertItemModel item);
+        ItemSingleModel InsertNewItem(InsertItemModel item);
+        bool UpdateExistingItem(UpdateItemModel item);
         string UpdateItemStatusById(UpdateItemStatusModel status);
         List<TagsModel> TagsAutoComplete(string word);
         TagsModel AddNewTagToItem(TagsMappingModel tag);

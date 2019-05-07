@@ -30,10 +30,10 @@ namespace IMSRepository
         public string UpdateUserName { get; set; }
         public System.DateTime UpdateDttm { get; set; }
     
+        public virtual CodeDetail CodeDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemRequestFormMapping> ItemRequestFormMappings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Quotation> Quotations { get; set; }
-        public virtual CodeDetail CodeDetail { get; set; }
     }
 }

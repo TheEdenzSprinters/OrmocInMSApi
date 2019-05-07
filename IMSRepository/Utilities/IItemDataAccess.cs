@@ -15,13 +15,14 @@ namespace IMSRepository.Utilities
         List<ItemDetail> GetItemDetailBySubCategoryId(int id);
         Item InsertNewItem(Item item);
         bool InsertNewItemDetailMapping(List<ItemDetailMapping> itemDetail);
-        bool UpdateItemStatusById(int id, int StatusCd);
+        bool UpdateItemStatusById(int id, string StatusCd);
         bool UpdateItemById(Item item);
-        bool UpdateItemDetailMappingByItemId(List<ItemDetailMapping> item);
+        bool UpdateItemDetailMappingByItemId(ItemDetailMapping item);
         bool RemoveTaggingByItemId(int itemId, int tagId);
         int AddNewTag(Tag tag);
         bool AddTaggingByItemId(int tagId, int itemId);
         List<Tag> TagsAutoComplete(string word);
         List<ItemSearchResult> SimpleSearchItems(string itemName);
+        Brand GetBrandByName(string brandName);
     }
 }

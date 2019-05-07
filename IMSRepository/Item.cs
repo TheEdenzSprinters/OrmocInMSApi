@@ -32,6 +32,7 @@ namespace IMSRepository
         public int BrandID { get; set; }
         public int StatusCd { get; set; }
         public Nullable<int> Quantity { get; set; }
+        public Nullable<int> ThresholdQty { get; set; }
         public string MeasuredBy { get; set; }
         public string Sku { get; set; }
         public string Notes { get; set; }
@@ -39,7 +40,6 @@ namespace IMSRepository
         public System.DateTime CreateDttm { get; set; }
         public string UpdateUserName { get; set; }
         public System.DateTime UpdateDttm { get; set; }
-        public Nullable<int> ThresholdQty { get; set; }
     
         public virtual Brand Brand { get; set; }
         public virtual Category Category { get; set; }
