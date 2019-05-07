@@ -12,7 +12,7 @@ namespace ItemManagementService.Models
         public int SubCategoryId { get; set; }
         public int LocationId { get; set; }
         public string BrandName { get; set; }
-        public int StatusCd { get; set; }
+        public string StatusCd { get; set; }
         public int Quantity { get; set; }
         public int ThresholdQty { get; set; }
         public string MeasuredBy { get; set; }

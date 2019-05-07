@@ -368,6 +368,20 @@ namespace ItemManagementService.Controllers
             }
         }
 
+        public IHttpActionResult UpdateExistingItem([FromBody]UpdateItemModel item)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemBusinessLayer>();
+
+                var result = app.UpdateExistingItem(item);
+
+                return Json(new { Result = result });
+            }
+        }
+
         [Route("api/ItemManagement/UpdateItemStatusById")]
         [HttpPost]
         public IHttpActionResult UpdateItemStatusById([FromBody]UpdateItemStatusModel status)

@@ -5,9 +5,9 @@ using System.Web;
 
 namespace ItemManagementService.Models
 {
-    public class UpdateItemStatusModel
+    public class UpdateItemModel : BaseItemModel
     {
         public int Id { get; set; }
-        public string StatusCd { get; set; }
+        public List<ItemDetailModel> ItemDetail { get; set; }
     }
 }

@@ -133,6 +133,7 @@
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\TagsMappingModel.cs" />
     <Compile Include="Models\TagsModel.cs" />
+    <Compile Include="Models\UpdateItemModel.cs" />
     <Compile Include="Models\UpdateItemStatusModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
