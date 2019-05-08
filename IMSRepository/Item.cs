@@ -43,7 +43,6 @@ namespace IMSRepository
     
         public virtual Brand Brand { get; set; }
         public virtual Category Category { get; set; }
-        public virtual CodeDetail CodeDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemRequestFormMapping> ItemRequestFormMappings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -56,5 +55,6 @@ namespace IMSRepository
         public virtual SubCategory SubCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemDetailMapping> ItemDetailMappings { get; set; }
+        public virtual CodeDetail CodeDetail { get; set; }
     }
 }

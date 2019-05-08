@@ -7,7 +7,6 @@
       <Diagram DiagramId="2df87e6c7117481a8203f2263cba6efc" Name="Diagram1">
         <EntityTypeShape EntityType="OrmocIMSModel.Brand" Width="1.5" PointX="2.75" PointY="21.125" />
         <EntityTypeShape EntityType="OrmocIMSModel.Category" Width="1.5" PointX="0.5" PointY="9.75" />
-        <EntityTypeShape EntityType="OrmocIMSModel.CodeDetail" Width="1.5" PointX="2.75" PointY="4.625" />
         <EntityTypeShape EntityType="OrmocIMSModel.CodeHeader" Width="1.5" PointX="0.5" PointY="5.125" />
         <EntityTypeShape EntityType="OrmocIMSModel.ItemDetail" Width="1.5" PointX="5" PointY="19.125" />
         <EntityTypeShape EntityType="OrmocIMSModel.ItemRequestForm" Width="1.5" PointX="5" PointY="7.125" />
@@ -27,11 +26,6 @@
         <AssociationConnector Association="OrmocIMSModel.FK_ItemBrand_Brand" />
         <AssociationConnector Association="OrmocIMSModel.FK_ItemCategory_Category" />
         <AssociationConnector Association="OrmocIMSModel.FK_SubCategoryCategory_Category" />
-        <AssociationConnector Association="OrmocIMSModel.FK_CodeHeaderIdCodeHeader_CodeDetail" />
-        <AssociationConnector Association="OrmocIMSModel.FK_StatusCdItemRequests_CodeDetail" />
-        <AssociationConnector Association="OrmocIMSModel.FK_StatusCdItems_CodeDetail" />
-        <AssociationConnector Association="OrmocIMSModel.FK_StatusCdPurchaseOrders_CodeDetail" />
-        <AssociationConnector Association="OrmocIMSModel.FK_StatusCdQuotations_CodeDetail" />
         <AssociationConnector Association="OrmocIMSModel.FK_ItemDetaiLSubCategory_SubCategory" />
         <AssociationConnector Association="OrmocIMSModel.FK_ItemDetailUnitsOfMeasure_UnitsOfMeasure" />
         <AssociationConnector Association="OrmocIMSModel.FK_IRFIDItemRequest_ItemRequest" />
@@ -51,6 +45,12 @@
         <EntityTypeShape EntityType="OrmocIMSModel.ItemDetailMapping" Width="1.5" PointX="7.25" PointY="17.625" />
         <AssociationConnector Association="OrmocIMSModel.FK_ItemDetailID_ItemDetail" />
         <AssociationConnector Association="OrmocIMSModel.FK_ItemID_Item" />
+        <EntityTypeShape EntityType="OrmocIMSModel.CodeDetail" Width="1.5" PointX="2.75" PointY="4.5" />
+        <AssociationConnector Association="OrmocIMSModel.FK_CodeHeaderIdCodeHeader_CodeDetail" />
+        <AssociationConnector Association="OrmocIMSModel.FK_StatusCdItemRequests_CodeDetail" />
+        <AssociationConnector Association="OrmocIMSModel.FK_StatusCdItems_CodeDetail" />
+        <AssociationConnector Association="OrmocIMSModel.FK_StatusCdPurchaseOrders_CodeDetail" />
+        <AssociationConnector Association="OrmocIMSModel.FK_StatusCdQuotations_CodeDetail" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

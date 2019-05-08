@@ -32,12 +32,12 @@ namespace IMSRepository
         public string UpdateUserName { get; set; }
         public System.DateTime UpdateDttm { get; set; }
     
-        public virtual CodeDetail CodeDetail { get; set; }
         public virtual ItemRequestForm ItemRequestForm { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QuotationsMapping> QuotationsMappings { get; set; }
         public virtual Supplier Supplier { get; set; }
+        public virtual CodeDetail CodeDetail { get; set; }
     }
 }
