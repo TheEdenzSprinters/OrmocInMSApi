@@ -26,6 +26,7 @@ namespace IMSRepository
         public int Id { get; set; }
         public string CodeValue { get; set; }
         public int CodeHeaderId { get; set; }
+        public string CodeDesc { get; set; }
         public bool IsActive { get; set; }
         public string CreateUserName { get; set; }
         public System.DateTime CreateDttm { get; set; }
