@@ -83,9 +83,10 @@ namespace ItemManagementService.BusinessLayer
         /// </summary>
         /// <param name="sub"></param>
         /// <returns></returns>
-        public string InsertNewSubCategory(SubCategoryModel sub)
+        public SubCategory InsertNewSubCategory(SubCategoryModel sub)
         {
             SubCategory subToInsert = new SubCategory();
+            SubCategory result = new SubCategory();
 
             subToInsert.CategoryID = sub.CategoryId;
             subToInsert.SubCategoryName = sub.SubCategoryName;
@@ -95,8 +96,13 @@ namespace ItemManagementService.BusinessLayer
             subToInsert.UpdateUserName = "ADMIN";
             subToInsert.UpdateDttm = DateTime.UtcNow;
 
-            string insertSub = _subCategoryDataAccess.InsertNewSubCategory(subToInsert);
-            return insertSub;
+            var insertSub = _subCategoryDataAccess.InsertNewSubCategory(subToInsert);
+
+            result.Id = insertSub.Id;
+            result.SubCategoryName = insertSub.SubCategoryName;
+            result.CategoryID = insertSub.CategoryID;
+
+            return result;
         }
 
         /// <summary>
