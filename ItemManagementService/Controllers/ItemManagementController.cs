@@ -122,7 +122,7 @@ namespace ItemManagementService.Controllers
         /// <returns></returns>
         [Route("api/ItemManagement/GetAllSubCategoriesByCategory")]
         [HttpPost]
-        public IHttpActionResult GetAllSubCategoriesByCategory([FromBody]int categoryId)
+        public IHttpActionResult GetAllSubCategoriesByCategory([FromBody]SubCategoryByCategoryIdModel categoryId)
         {
             var container = ContainerConfig.Configure();
 
@@ -130,7 +130,7 @@ namespace ItemManagementService.Controllers
             {
                 var app = scope.Resolve<ISubCategoryBusinessLayer>();
 
-                var result = app.GetAllSubCategoriesByCategory(categoryId);
+                var result = app.GetAllSubCategoriesByCategory(categoryId.CategoryId);
 
                 return Json(result);
             }
@@ -207,7 +207,7 @@ namespace ItemManagementService.Controllers
         /// <returns></returns>
         [Route("api/ItemManagement/GetItemById")]
         [HttpPost]
-        public IHttpActionResult GetItemById([FromBody]int id)
+        public IHttpActionResult GetItemById([FromBody]SearchItemByIdModel item)
         {
             var container = ContainerConfig.Configure();
 
@@ -215,7 +215,7 @@ namespace ItemManagementService.Controllers
             {
                 var app = scope.Resolve<IItemBusinessLayer>();
 
-                var result = app.GetItemById(id);
+                var result = app.GetItemById(item.Id);
 
                 return Json(new { Result = result });
             }
@@ -245,13 +245,34 @@ namespace ItemManagementService.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        [Route("api/ItemManagement/ItemsBySimpleSearch")]
+        [HttpPost]
+        public IHttpActionResult ItemsBySimpleSearch([FromBody]ItemSimpleSearchModel item)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemBusinessLayer>();
+
+                var result = app.ItemBySimpleSearch(item);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="word"></param>
         /// <returns></returns>
         [Route("api/ItemManagement/ItemAutoComplete")]
         [HttpPost]
-        public IHttpActionResult ItemAutoComplete([FromBody]string word)
+        public IHttpActionResult ItemAutoComplete([FromBody]InputQueryModel query)
         {
-            if (word.Length < 3) { return Json(new { Result = "" }); };
+            if (query.SearchString == "" || query.SearchString.Length < 3) { return Json(new { Result = "" }); };
 
             var container = ContainerConfig.Configure();
 
@@ -259,7 +280,7 @@ namespace ItemManagementService.Controllers
             {
                 var app = scope.Resolve<IItemBusinessLayer>();
 
-                var result = app.ItemAutoComplete(word);
+                var result = app.ItemAutoComplete(query.SearchString);
 
                 return Json(new { Result = result });
             }
@@ -312,7 +333,7 @@ namespace ItemManagementService.Controllers
         /// <returns></returns>
         [Route("api/ItemManagement/GetItemDetailBySubCategoryId")]
         [HttpPost]
-        public IHttpActionResult GetItemDetailBySubCategoryId([FromBody]int id)
+        public IHttpActionResult GetItemDetailBySubCategoryId([FromBody]ItemDetailBySubCategoryModel subCategory)
         {
             var container = ContainerConfig.Configure();
 
@@ -320,7 +341,7 @@ namespace ItemManagementService.Controllers
             {
                 var app = scope.Resolve<IItemBusinessLayer>();
 
-                var result = app.GetItemDetailBySubCategoryId(id);
+                var result = app.GetItemDetailBySubCategoryId(subCategory.SubCategoryId);
 
                 return Json(new { Result = result });
             }
@@ -342,6 +363,20 @@ namespace ItemManagementService.Controllers
                 var app = scope.Resolve<IItemBusinessLayer>();
 
                 var result = app.InsertNewItem(item);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        public IHttpActionResult UpdateExistingItem([FromBody]UpdateItemModel item)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemBusinessLayer>();
+
+                var result = app.UpdateExistingItem(item);
 
                 return Json(new { Result = result });
             }

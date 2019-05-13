@@ -32,6 +32,7 @@ namespace IMSRepository
         public int BrandID { get; set; }
         public int StatusCd { get; set; }
         public Nullable<int> Quantity { get; set; }
+        public Nullable<int> ThresholdQty { get; set; }
         public string MeasuredBy { get; set; }
         public string Sku { get; set; }
         public string Notes { get; set; }
@@ -39,11 +40,9 @@ namespace IMSRepository
         public System.DateTime CreateDttm { get; set; }
         public string UpdateUserName { get; set; }
         public System.DateTime UpdateDttm { get; set; }
-        public Nullable<int> ThresholdQty { get; set; }
     
         public virtual Brand Brand { get; set; }
         public virtual Category Category { get; set; }
-        public virtual CodeDetail CodeDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemRequestFormMapping> ItemRequestFormMappings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -56,5 +55,6 @@ namespace IMSRepository
         public virtual SubCategory SubCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemDetailMapping> ItemDetailMappings { get; set; }
+        public virtual CodeDetail CodeDetail { get; set; }
     }
 }

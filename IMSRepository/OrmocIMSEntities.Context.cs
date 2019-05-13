@@ -29,8 +29,11 @@ namespace IMSRepository
     
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<CodeHeader> CodeHeaders { get; set; }
+        public virtual DbSet<ItemDetail> ItemDetails { get; set; }
         public virtual DbSet<ItemRequestForm> ItemRequestForms { get; set; }
         public virtual DbSet<ItemRequestFormMapping> ItemRequestFormMappings { get; set; }
+        public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<PurchaseOrderMapping> PurchaseOrderMappings { get; set; }
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
@@ -40,15 +43,12 @@ namespace IMSRepository
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<TagsMapping> TagsMappings { get; set; }
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<CodeHeader> CodeHeaders { get; set; }
-        public virtual DbSet<CodeDetail> CodeDetails { get; set; }
-        public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<UnitsOfMeasure> UnitsOfMeasures { get; set; }
-        public virtual DbSet<ItemDetail> ItemDetails { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<ItemDetailMapping> ItemDetailMappings { get; set; }
+        public virtual DbSet<CodeDetail> CodeDetails { get; set; }
     
-        public virtual ObjectResult<AdvancedSearch_SP_Result> AdvancedSearch_SP(string moduleNm, string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
+        public virtual ObjectResult<AdvancedSearch_SP_Result> AdvancedSearch_SP(string moduleNm, string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9, string param10)
         {
             var moduleNmParameter = moduleNm != null ?
                 new ObjectParameter("ModuleNm", moduleNm) :
@@ -90,7 +90,11 @@ namespace IMSRepository
                 new ObjectParameter("param9", param9) :
                 new ObjectParameter("param9", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AdvancedSearch_SP_Result>("AdvancedSearch_SP", moduleNmParameter, param1Parameter, param2Parameter, param3Parameter, param4Parameter, param5Parameter, param6Parameter, param7Parameter, param8Parameter, param9Parameter);
+            var param10Parameter = param10 != null ?
+                new ObjectParameter("param10", param10) :
+                new ObjectParameter("param10", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AdvancedSearch_SP_Result>("AdvancedSearch_SP", moduleNmParameter, param1Parameter, param2Parameter, param3Parameter, param4Parameter, param5Parameter, param6Parameter, param7Parameter, param8Parameter, param9Parameter, param10Parameter);
         }
     }
 }

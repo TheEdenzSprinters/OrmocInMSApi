@@ -5,9 +5,8 @@ using System.Web;
 
 namespace ItemManagementService.Models
 {
-    public class UpdateItemStatusModel
+    public class ItemSimpleSearchModel
     {
-        public int Id { get; set; }
-        public string StatusCd { get; set; }
+        public string ItemName { get; set; }
     }
 }

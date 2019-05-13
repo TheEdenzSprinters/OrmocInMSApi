@@ -33,7 +33,9 @@ namespace IMSRepository.Utilities
                     item.SubCategoryId.HasValue ? item.SubCategoryId.Value.ToString() : null,
                     item.Location.HasValue ? item.Location.Value.ToString() : null,
                     string.IsNullOrEmpty(item.Tag) ? null : item.Tag,
-                    string.IsNullOrEmpty(item.Sku) ? null : item.Sku)
+                    string.IsNullOrEmpty(item.Sku) ? null : item.Sku,
+                    item.StatusCd.HasValue ? item.StatusCd.Value.ToString() : null
+                    )
                     .Select(x => new ItemSearchResult
                     {
                         Id = x.Id,
@@ -51,7 +53,7 @@ namespace IMSRepository.Utilities
         {
             using (OrmocIMSEntities context = new OrmocIMSEntities())
             {
-                var result = context.Items.Where(x => x.ItemName.Contains(word)).Select(x => x.ItemName).Take(10).ToList();
+                var result = context.Items.Where(x => x.ItemName.Contains(word)).Select(x => x.ItemName).Distinct().Take(10).ToList();
                 return result;
             }
         }
@@ -142,13 +144,14 @@ namespace IMSRepository.Utilities
             }
         }
 
-        public bool UpdateItemStatusById(int id, int StatusCd)
+        public bool UpdateItemStatusById(int id, string StatusCd)
         {
             using (OrmocIMSEntities context = new OrmocIMSEntities())
             {
                 var item = context.Items.Where(x => x.Id == id).FirstOrDefault();
+                var codeDetail = context.CodeDetails.Where(x => x.CodeValue.ToLower().Equals(StatusCd)).FirstOrDefault();
 
-                item.StatusCd = StatusCd;
+                item.StatusCd = codeDetail.Id;
                 item.UpdateUserName = "ADMIN";
                 item.UpdateDttm = DateTime.UtcNow;
 
@@ -172,7 +175,6 @@ namespace IMSRepository.Utilities
                     query.CategoryID = item.CategoryID;
                     query.SubCategoryID = item.SubCategoryID;
                     query.BrandID = item.BrandID;
-                    query.StatusCd = item.StatusCd;
                     query.Quantity = item.Quantity;
                     query.MeasuredBy = item.MeasuredBy;
                     query.ThresholdQty = item.ThresholdQty;
@@ -181,6 +183,11 @@ namespace IMSRepository.Utilities
                     query.UpdateUserName = item.UpdateUserName;
                     query.UpdateDttm = item.UpdateDttm;
 
+                    //for(int i = 0; i < query.ItemDetailMappings.Count; i++)
+                    //{
+                    //    query.ItemDetailMappings = item.ItemDetailMappings;
+                    //}
+                    
                     context.Entry(query).State = EntityState.Modified;
                     int result = context.SaveChanges();
 
@@ -191,26 +198,25 @@ namespace IMSRepository.Utilities
             return false;
         }
 
-        public bool UpdateItemDetailMappingByItemId(List<ItemDetailMapping> item)
+        public bool UpdateItemDetailMappingByItemId(ItemDetailMapping item)
         {
             using (OrmocIMSEntities context = new OrmocIMSEntities())
             {
                 int result = 0;
+                
+                int itemDetailMappingId = item.Id;
 
-                for (int i = 0; i < item.Count; i++)
-                {
-                    var query = context.ItemDetailMappings.Where(x => x.Id == item[i].Id).FirstOrDefault();
+                var query = context.ItemDetailMappings.Where(x => x.Id == itemDetailMappingId).FirstOrDefault();
 
-                    query.ItemDetailValue = item[i].ItemDetailValue;
-                    query.IsActive = item[i].IsActive;
-                    query.UpdateUserName = item[i].UpdateUserName;
-                    query.UpdateDttm = item[i].UpdateDttm;
+                query.ItemDetailValue = item.ItemDetailValue;
+                query.IsActive = item.IsActive;
+                query.UpdateUserName = item.UpdateUserName;
+                query.UpdateDttm = item.UpdateDttm;
 
-                    context.Entry(query).State = EntityState.Modified;
-                    result = result + context.SaveChanges();
-                }
+                context.Entry(query).State = EntityState.Modified;
+                result = result + context.SaveChanges();
 
-                return result == item.Count ? true : false;
+                return result > 0 ? true : false;
             }
         }
 
@@ -313,6 +319,34 @@ namespace IMSRepository.Utilities
             using (OrmocIMSEntities context = new OrmocIMSEntities())
             {
                 var result = context.Tags.Where(x => x.TagValue.Contains(word)).Take(10).ToList();
+                return result;
+            }
+        }
+
+        public List<ItemSearchResult> SimpleSearchItems(string itemName)
+        {
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
+            {
+                var result = context.Items.Include("Brands").Where(x => x.ItemName.Contains(itemName))
+                    .Select(x => new ItemSearchResult
+                    {
+                        Id = x.Id,
+                        ItemName = x.ItemName,
+                        Brand = x.Brand.BrandName,
+                        Status = x.StatusCd,
+                        CreateDttm = x.CreateDttm
+                    }).ToList();
+
+                    return result;
+            }
+        }
+
+        public Brand GetBrandByName(string brandName)
+        {
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
+            {
+                var result = context.Brands.Where(x => x.BrandName.Contains(brandName)).FirstOrDefault();
+
                 return result;
             }
         }

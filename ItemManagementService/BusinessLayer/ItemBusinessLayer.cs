@@ -19,18 +19,22 @@ namespace ItemManagementService.BusinessLayer
             _itemDataAccess = itemDataAccess;
         }
 
-        public int InsertNewItem(InsertItemModel item)
+        public ItemSingleModel InsertNewItem(InsertItemModel item)
         {
             Item newItem = new Item();
             List<ItemDetailMapping> detail = new List<ItemDetailMapping>();
             ItemDetailMapping singleDetail = new ItemDetailMapping();
+            ItemSingleModel result = new ItemSingleModel();
+
+            var brandName = _itemDataAccess.GetBrandByName(item.BrandName);
+            var codeDetail = _itemDataAccess.GetAllItemStatus();
 
             newItem.ItemName = item.ItemName;
             newItem.CategoryID = item.CategoryId;
             newItem.SubCategoryID = item.SubCategoryId;
-            newItem.StatusCd = item.StatusCd;
+            newItem.StatusCd = codeDetail.Where(x => x.CodeValue.Equals("Active")).Select(x => x.Id).FirstOrDefault();
             newItem.LocationID = item.LocationId;
-            newItem.BrandID = item.BrandId;
+            newItem.BrandID = brandName.Id;
             newItem.Quantity = item.Quantity;
             newItem.MeasuredBy = item.MeasuredBy;
             newItem.ThresholdQty = item.ThresholdQty;
@@ -63,12 +67,81 @@ namespace ItemManagementService.BusinessLayer
 
                 var insertedDetail = _itemDataAccess.InsertNewItemDetailMapping(detail);
 
+                result.Id = insertedItem.Id;
+                result.ItemName = insertedItem.ItemName;
+                result.CategoryId = insertedItem.CategoryID;
+                result.SubCategoryId = insertedItem.SubCategoryID;
+                result.BrandName = item.BrandName;
+                result.LocationId = insertedItem.LocationID;
+                result.Quantity = insertedItem.Quantity.HasValue ? insertedItem.Quantity.Value : 0;
+                result.ThresholdQty = insertedItem.ThresholdQty.HasValue ? insertedItem.ThresholdQty.Value : 0;
+                result.MeasuredBy = insertedItem.MeasuredBy;
+                result.Sku = insertedItem.Sku;
+                result.Notes = insertedItem.Notes;
+                result.StatusCd = codeDetail.Where(x => x.Id == insertedItem.StatusCd).Select(x => x.CodeValue).FirstOrDefault();
+                result.CreateUserName = insertedItem.CreateUserName;
+                result.CreateDttm = insertedItem.CreateDttm;
+                result.UpdateUserName = insertedItem.UpdateUserName;
+                result.UpdateDttm = insertedItem.UpdateDttm;
+
                 if (insertedDetail)
                 {
-                    return insertedItem.Id;
+                    return result;
                 }
             }
-            return 0;
+            return new ItemSingleModel();
+        }
+
+        public bool UpdateExistingItem(UpdateItemModel item)
+        {
+            Item editItem = new Item();
+            ItemDetailMapping singleDetail = new ItemDetailMapping();
+            ItemSingleModel result = new ItemSingleModel();
+            bool updateDetailMapping = false;
+
+            var brandName = _itemDataAccess.GetBrandByName(item.BrandName);
+            var codeDetail = _itemDataAccess.GetAllItemStatus();
+
+            editItem.Id = item.Id;
+            editItem.ItemName = item.ItemName;
+            editItem.CategoryID = item.CategoryId;
+            editItem.SubCategoryID = item.SubCategoryId;
+            editItem.LocationID = item.LocationId;
+            editItem.BrandID = brandName.Id;
+            editItem.Quantity = item.Quantity;
+            editItem.MeasuredBy = item.MeasuredBy;
+            editItem.ThresholdQty = item.ThresholdQty;
+            editItem.Notes = item.Notes;
+            editItem.Sku = item.Sku;
+            editItem.UpdateUserName = "ADMIN";
+            editItem.UpdateDttm = DateTime.UtcNow;
+
+            for(int i = 0; i < item.ItemDetail.Count; i++)
+            {
+                singleDetail.Id = item.ItemDetail[i].Id;
+                singleDetail.ItemID = item.Id;
+                singleDetail.ItemDetailID = item.ItemDetail[i].ItemDetailId;
+                singleDetail.ItemDetailValue = item.ItemDetail[i].ItemDetailValue;
+                singleDetail.IsActive = true;
+                singleDetail.UpdateUserName = "ADMIN";
+                singleDetail.UpdateDttm = DateTime.Now;
+
+                updateDetailMapping = _itemDataAccess.UpdateItemDetailMappingByItemId(singleDetail);
+                if(!updateDetailMapping)
+                {
+                    break;
+                }
+            }
+            
+            var updateItem = _itemDataAccess.UpdateItemById(editItem);
+
+
+            if (updateItem && updateDetailMapping)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public ItemSingleModel GetItemById(int id)
@@ -85,14 +158,14 @@ namespace ItemManagementService.BusinessLayer
             result.ItemName = query.ItemName;
             result.CategoryId = query.CategoryID;
             result.SubCategoryId = query.SubCategoryID;
-            result.BrandId = query.BrandID;
+            result.BrandName = query.Brand.BrandName;
             result.LocationId = query.LocationID;
             result.Quantity = query.Quantity.HasValue ? query.Quantity.Value : 0;
             result.ThresholdQty = query.ThresholdQty.HasValue ? query.ThresholdQty.Value : 0;
             result.MeasuredBy = query.MeasuredBy;
             result.Sku = query.Sku;
             result.Notes = query.Notes;
-            result.StatusCd = query.StatusCd;
+            result.StatusCd = query.CodeDetail.CodeValue;
             result.CreateUserName = query.CreateUserName;
             result.CreateDttm = query.CreateDttm;
             result.UpdateUserName = query.UpdateUserName;
@@ -100,6 +173,7 @@ namespace ItemManagementService.BusinessLayer
 
             for (int i = 0; i < itemDetailQuery.Count; i++)
             {
+                singleItemDetail.Id = itemDetailQuery[i].Id;
                 singleItemDetail.ItemDetailId = itemDetailQuery[i].ItemDetail.Id;
                 singleItemDetail.ShowUnitsOfMeasure = itemDetailQuery[i].ItemDetail.ShowUnitsOfMeasure;
                 singleItemDetail.ItemDetailName = itemDetailQuery[i].ItemDetail.ItemDetailName;
@@ -131,6 +205,7 @@ namespace ItemManagementService.BusinessLayer
             searchTerm.Location = item.Location;
             searchTerm.Tag = item.Tag;
             searchTerm.Sku = item.Sku;
+            searchTerm.StatusCd = item.StatusCd;
 
             var query = _itemDataAccess.AdvancedSearchItems(searchTerm);
             var codeDetail = _itemDataAccess.GetAllItemStatus();
@@ -264,6 +339,29 @@ namespace ItemManagementService.BusinessLayer
                 }
             }
             return null;
+        }
+
+        public List<ItemSearchResultModel> ItemBySimpleSearch(ItemSimpleSearchModel item)
+        {
+            ItemSearchResultModel singleItem = new ItemSearchResultModel();
+            List<ItemSearchResultModel> result = new List<ItemSearchResultModel>();
+
+            var query = _itemDataAccess.SimpleSearchItems(item.ItemName);
+            var codeDetail = _itemDataAccess.GetAllItemStatus();
+
+            for (int i = 0; i < query.Count; i++)
+            {
+                singleItem.Id = query[i].Id;
+                singleItem.ItemName = query[i].ItemName;
+                singleItem.Brand = query[i].Brand;
+                singleItem.Status = codeDetail.Where(x => x.Id == query[i].Status).Select(x => x.CodeValue).FirstOrDefault();
+                singleItem.CreateDttm = query[i].CreateDttm;
+
+                result.Add(singleItem);
+                singleItem = new ItemSearchResultModel();
+            }
+
+            return result;
         }
     }
 }

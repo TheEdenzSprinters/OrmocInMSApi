@@ -15,7 +15,7 @@ namespace ItemManagementService
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            var cors = new EnableCorsAttribute("http://localhost:4200", "*", "*");
+            var cors = new EnableCorsAttribute("http://localhost:8080", "*", "*");
             config.EnableCors(cors);
 
             config.Routes.MapHttpRoute(
