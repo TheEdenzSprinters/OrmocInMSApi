@@ -31,9 +31,9 @@ namespace IMSRepository
         public string UpdateUserName { get; set; }
         public System.DateTime UpdateDttm { get; set; }
     
-        public virtual SubCategory SubCategory { get; set; }
-        public virtual UnitsOfMeasure UnitsOfMeasure { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemDetailMapping> ItemDetailMappings { get; set; }
+        public virtual SubCategory SubCategory { get; set; }
+        public virtual UnitsOfMeasure UnitsOfMeasure { get; set; }
     }
 }

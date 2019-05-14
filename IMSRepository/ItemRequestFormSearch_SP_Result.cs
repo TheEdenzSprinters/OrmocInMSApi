@@ -11,24 +11,16 @@ namespace IMSRepository
 {
     using System;
     
-    public partial class AdvancedSearch_SP_Result
+    public partial class ItemRequestFormSearch_SP_Result
     {
         public int Id { get; set; }
-        public string ItemName { get; set; }
-        public int CategoryID { get; set; }
-        public int SubCategoryID { get; set; }
-        public int LocationID { get; set; }
-        public int BrandID { get; set; }
+        public string Title { get; set; }
         public int StatusCd { get; set; }
-        public Nullable<int> Quantity { get; set; }
-        public Nullable<int> ThresholdQty { get; set; }
-        public string MeasuredBy { get; set; }
-        public string Sku { get; set; }
-        public string Notes { get; set; }
+        public bool IsActive { get; set; }
         public string CreateUserName { get; set; }
         public System.DateTime CreateDttm { get; set; }
         public string UpdateUserName { get; set; }
         public System.DateTime UpdateDttm { get; set; }
-        public string BrandName { get; set; }
+        public string CodeValue { get; set; }
     }
 }

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Reflection;
+using PurchaseOrderManagementService.Interfaces;
+using PurchaseOrderManagementService.BusinessLayer;
 
 namespace PurchaseOrderManagementService
 {
@@ -12,6 +14,8 @@ namespace PurchaseOrderManagementService
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();
+
+            builder.RegisterType<ItemRequestFormBusinessLayer>().As<IItemRequestFormBusinessLayer>();
 
             builder.RegisterAssemblyTypes(Assembly.Load(nameof(IMSRepository)))
                 .Where(t => t.Namespace.Contains("Utilities"))
