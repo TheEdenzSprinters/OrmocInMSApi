@@ -26,7 +26,7 @@ namespace IMSRepository.Utilities
         {
             using (OrmocIMSEntities context = new OrmocIMSEntities())
             {
-                var result = context.AdvancedSearch_SP(item.ModuleName, item.Id.HasValue ? item.Id.Value.ToString() : null,
+                var result = context.ItemAdvancedSearch_SP(item.ModuleName, item.Id.HasValue ? item.Id.Value.ToString() : null,
                     null, string.IsNullOrEmpty(item.ItemName) ? null : item.ItemName,
                     string.IsNullOrEmpty(item.Brand) ? null : item.Brand,
                     item.CategoryId.HasValue ? item.CategoryId.Value.ToString() : null,
