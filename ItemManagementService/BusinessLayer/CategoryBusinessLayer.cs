@@ -51,9 +51,10 @@ namespace ItemManagementService.BusinessLayer
         /// </summary>
         /// <param name="cat"></param>
         /// <returns></returns>
-        public string InsertNewCategory(CategoryModel cat)
+        public Category InsertNewCategory(CategoryModel cat)
         {
             Category catToInsert = new Category();
+            Category result = new Category();
 
             catToInsert.CategoryName = cat.CategoryName;
             catToInsert.IsActive = true;
@@ -62,8 +63,12 @@ namespace ItemManagementService.BusinessLayer
             catToInsert.UpdateUserName = "ADMIN";
             catToInsert.UpdateDttm = DateTime.UtcNow;
 
-            string insertCat = _CategoryDataAccess.InsertNewCategory(catToInsert);
-            return insertCat;
+            var insertCat = _CategoryDataAccess.InsertNewCategory(catToInsert);
+
+            result.Id = insertCat.Id;
+            result.CategoryName = insertCat.CategoryName;
+
+            return result;
         }
 
         /// <summary>
