@@ -41,7 +41,7 @@ namespace IMSRepository.Utilities
         /// </summary>
         /// <param name="sub"></param>
         /// <returns></returns>
-        public string InsertNewSubCategory(SubCategory sub)
+        public SubCategory InsertNewSubCategory(SubCategory sub)
         {
             try
             {
@@ -60,12 +60,12 @@ namespace IMSRepository.Utilities
                     context.SubCategories.Add(insertSub);
                     int result = context.SaveChanges();
 
-                    return result > 0 ? "SubCategory successfully added." : "No SubCategory added.";
+                    return result > 0 ? insertSub : new SubCategory();
                 }
             }
             catch (Exception ex)
             {
-                return "Error while saving SubCategory.";
+                return new SubCategory();
             }
         }
 

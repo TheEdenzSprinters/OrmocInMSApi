@@ -28,7 +28,7 @@ namespace IMSRepository.Utilities
         /// </summary>
         /// <param name="cat"></param>
         /// <returns></returns>
-        public string InsertNewCategory(Category cat)
+        public Category InsertNewCategory(Category cat)
         {
             try
             {
@@ -46,12 +46,12 @@ namespace IMSRepository.Utilities
                     context.Categories.Add(insertCat);
                     int result = context.SaveChanges();
 
-                    return result > 0 ? "Category successfully added." : "No Category added.";
+                    return result > 0 ? insertCat : new Category();
                 }
             }
             catch (Exception ex)
             {
-                return "Error while saving Category.";
+                return new Category();
             }
         }
 
