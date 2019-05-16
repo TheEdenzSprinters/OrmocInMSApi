@@ -65,8 +65,10 @@ namespace ItemManagementService.BusinessLayer
 
             var insertCat = _CategoryDataAccess.InsertNewCategory(catToInsert);
 
-            result.Id = insertCat.Id;
-            result.CategoryName = insertCat.CategoryName;
+            //result.Id = insertCat.Id;
+            //result.CategoryName = insertCat.CategoryName;
+
+            result = insertCat;
 
             return result;
         }
