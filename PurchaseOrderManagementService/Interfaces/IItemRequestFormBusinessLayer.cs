@@ -12,5 +12,7 @@ namespace PurchaseOrderManagementService.Interfaces
         ItemRequestFormModel GetItemRequestFormById(int id);
         List<ItemRequestSearchResultModel> ItemRequestFormSearch(ItemRequestSearchQueryModel itemRequestForm);
         List<ItemRequestSearchResultModel> GetItemRequestFormDelinquents();
+        ItemRequestFormModel InsertNewItemRequest(InsertItemRequestModel itemRequest);
+        bool UpdateItemRequestById(UpdateItemRequestModel itemRequest);
     }
 }

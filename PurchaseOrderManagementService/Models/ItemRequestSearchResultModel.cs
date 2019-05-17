@@ -8,5 +8,6 @@ namespace PurchaseOrderManagementService.Models
     public class ItemRequestSearchResultModel : BaseItemRequestModel
     {
         public string Status { get; set; }
+        public DateTime DateCreated { get; set; }
     }
 }

@@ -122,5 +122,49 @@ namespace PurchaseOrderManagementService.BusinessLayer
 
             return result;
         }
+
+        public ItemRequestFormModel InsertNewItemRequest(InsertItemRequestModel itemRequest)
+        {
+            ItemRequestForm newItemRequest = new ItemRequestForm();
+            ItemRequestFormModel result = new ItemRequestFormModel();
+            var ticketStatusQuery = _itemRequestFormDataAccess.GetAllTicketStatus();
+
+            int ticketStatusNew = ticketStatusQuery.CodeDetails.Where(x => x.CodeValue.Contains("New"))
+                                    .Select(x => x.Id).FirstOrDefault();
+
+            newItemRequest.Title = itemRequest.Title;
+            newItemRequest.StatusCd = ticketStatusNew;
+            newItemRequest.IsActive = true;
+            newItemRequest.CreateUserName = "ADMIN";
+            newItemRequest.CreateDttm = DateTime.UtcNow;
+            newItemRequest.UpdateUserName = "ADMIN";
+            newItemRequest.UpdateDttm = DateTime.UtcNow;
+
+            var insertedItem = _itemRequestFormDataAccess.InsertNewItemRequest(newItemRequest);
+
+            result.Id = insertedItem.Id;
+            result.Title = insertedItem.Title;
+            result.Notes = insertedItem.Notes;
+            result.DateCreated = insertedItem.CreateDttm;
+            result.RequestFormItems = new List<ItemList>();
+            result.RequestFormQuotations = new List<QuotationList>();
+
+            return result;
+        }
+
+        public bool UpdateItemRequestById(UpdateItemRequestModel itemRequest)
+        {
+            ItemRequestForm query = new ItemRequestForm();
+
+            query.Id = itemRequest.Id;
+            query.Title = itemRequest.Title;
+            query.Notes = itemRequest.Notes;
+            query.UpdateDttm = DateTime.UtcNow;
+            query.UpdateUserName = "ADMIN";
+
+            var result = _itemRequestFormDataAccess.UpdateItemRequestById(query);
+
+            return result;
+        }
     }
 }

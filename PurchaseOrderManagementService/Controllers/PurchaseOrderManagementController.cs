@@ -59,5 +59,37 @@ namespace PurchaseOrderManagementService.Controllers
                 return Json(result);
             }
         }
+
+        [Route("api/PurchaseOrderManagement/InsertNewItemRequest")]
+        [HttpPost]
+        public IHttpActionResult InsertNewItemRequest([FromBody]InsertItemRequestModel itemRequest)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemRequestFormBusinessLayer>();
+
+                var result = app.InsertNewItemRequest(itemRequest);
+
+                return Json(result);
+            }
+        }
+
+        [Route("api/PurchaseOrderManagement/UpdateItemRequestById")]
+        [HttpPost]
+        public IHttpActionResult UpdateItemRequestById([FromBody]UpdateItemRequestModel itemRequest)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemRequestFormBusinessLayer>();
+
+                var result = app.UpdateItemRequestById(itemRequest);
+
+                return Json(result);
+            }
+        }
     }
 }

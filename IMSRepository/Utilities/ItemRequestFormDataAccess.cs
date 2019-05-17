@@ -86,5 +86,35 @@ namespace IMSRepository.Utilities
                 return result;
             }
         }
+
+        public ItemRequestForm InsertNewItemRequest(ItemRequestForm itemRequest)
+        {
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
+            {
+                context.ItemRequestForms.Add(itemRequest);
+                context.Entry(itemRequest).State = EntityState.Added;
+                int result = context.SaveChanges();
+
+                return result > 0 ? itemRequest : new ItemRequestForm();
+            }
+        }
+
+        public bool UpdateItemRequestById(ItemRequestForm itemRequest)
+        {
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
+            {
+                var item = context.ItemRequestForms.Where(x => x.Id == itemRequest.Id).FirstOrDefault();
+
+                item.Id = itemRequest.Id;
+                item.Title = itemRequest.Title;
+                item.UpdateDttm = itemRequest.UpdateDttm;
+                item.UpdateUserName = itemRequest.UpdateUserName;
+
+                context.Entry(item).State = EntityState.Modified;
+                int result = context.SaveChanges();
+
+                return result > 0 ? true : false;
+            }
+        }
     }
 }

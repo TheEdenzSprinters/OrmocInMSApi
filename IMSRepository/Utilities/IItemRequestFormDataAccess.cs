@@ -10,5 +10,7 @@ namespace IMSRepository.Utilities
         CodeHeader GetAllFollowupDetails();
         List<ItemRequestFormSearchResultModel> GetItemRequestFormDelinquents(ItemRequestDelinquentQueryModel query);
         CodeHeader GetAllTicketStatus();
+        ItemRequestForm InsertNewItemRequest(ItemRequestForm itemRequest);
+        bool UpdateItemRequestById(ItemRequestForm itemRequest);
     }
 }
