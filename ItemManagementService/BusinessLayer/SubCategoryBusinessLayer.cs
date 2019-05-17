@@ -98,9 +98,7 @@ namespace ItemManagementService.BusinessLayer
 
             var insertSub = _subCategoryDataAccess.InsertNewSubCategory(subToInsert);
 
-            result.Id = insertSub.Id;
-            result.SubCategoryName = insertSub.SubCategoryName;
-            result.CategoryID = insertSub.CategoryID;
+            result = insertSub;
 
             return result;
         }
