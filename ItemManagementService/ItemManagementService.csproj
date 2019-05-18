@@ -103,6 +103,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BusinessLayer\CategoryBusinessLayer.cs" />
+    <Compile Include="BusinessLayer\BrandBusinessLayer.cs" />
     <Compile Include="BusinessLayer\ItemBusinessLayer.cs" />
     <Compile Include="BusinessLayer\SubCategoryBusinessLayer.cs" />
     <Compile Include="ContainerConfig.cs" />
@@ -110,10 +111,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IBrandBusinessLayer.cs" />
     <Compile Include="Interfaces\ICategoryBusinessLayer.cs" />
     <Compile Include="Interfaces\IItemBusinessLayer.cs" />
     <Compile Include="Interfaces\ISubCategoryBusinessLayer.cs" />
     <Compile Include="Models\BaseItemModel.cs" />
+    <Compile Include="Models\BrandModel.cs" />
+    <Compile Include="Models\BrandUpdateModel.cs" />
     <Compile Include="Models\InputQueryModel.cs" />
     <Compile Include="Models\InsertItemDetailMappingModel.cs" />
     <Compile Include="Models\InsertItemModel.cs" />
