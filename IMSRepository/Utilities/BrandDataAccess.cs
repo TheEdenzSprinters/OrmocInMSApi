@@ -16,7 +16,7 @@ namespace IMSRepository.Utilities
         {
             using (OrmocIMSEntities context = new OrmocIMSEntities())
             {
-                var brands = context.Brands.Where(x => x.IsActive == true).ToList();
+                var brands = context.Brands.ToList();
                 return brands;
             }
         }
@@ -65,7 +65,7 @@ namespace IMSRepository.Utilities
             {
                 using (OrmocIMSEntities context = new OrmocIMSEntities())
                 {
-                    Brand updateBrand = context.Brands.Where(x => x.Id == brand.Id && x.IsActive == true).FirstOrDefault();
+                    Brand updateBrand = context.Brands.Where(x => x.Id == brand.Id).FirstOrDefault();
 
                     if (updateBrand == null)
                     {
