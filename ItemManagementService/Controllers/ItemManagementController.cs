@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using IMSRepository.Models;
+using ItemManagementService.BusinessLayer;
 using ItemManagementService.Interfaces;
 using ItemManagementService.Models;
 using System;
@@ -429,6 +430,115 @@ namespace ItemManagementService.Controllers
                 var result = app.AddNewTagToItem(tags);
 
                 return Json(new { Result = result });
+            }
+        }
+
+        [Route("api/ItemManagement/GetAllSuppliers")]
+        [HttpGet]
+        public IHttpActionResult GetAllSuppliers()
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<ISupplierBusinessLayer>();
+
+                var result = app.GetAllSuppliers();
+
+                return Json(result);
+            }
+        }
+        [Route("api/ItemManagement/CreateNewSupplier")]
+        [HttpPost]
+        public IHttpActionResult CreateNewSupplier([FromBody]SupplierModel supplier)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<ISupplierBusinessLayer>();
+
+                var result = app.CreateNewSupplier(supplier);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        [Route("api/ItemManagement/SuppliersSearch")]
+        [HttpPost]
+        public IHttpActionResult SuppliersSearch([FromBody]SupplierSimpleSearchModel item)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<SupplierBusinessLayer>();
+
+                var result = app.SuppliersSearch(item);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        [Route("api/ItemManagement/UpdateSupplier")]
+        [HttpPost]
+        public IHttpActionResult UpdateSupplier([FromBody]SupplierUpdateModel supplierUpdate)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<ISupplierBusinessLayer>();
+
+                var result = app.UpdateSupplier(supplierUpdate);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        [Route("api/ItemManagement/ViewSupplierById")]
+        [HttpPost]
+        public IHttpActionResult ViewSupplierById([FromBody]SearchSupplierByIdModel sup)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<ISupplierBusinessLayer>();
+
+                var result = app.ViewSupplierById(sup.Id);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        public IHttpActionResult DeleteSupplier([FromBody]int id)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<ISupplierBusinessLayer>();
+
+                var result = app.DeleteSupplier(id);
+
+                return Json(new { Result = result });
+            }
+        }
+               
+        [Route("api/ItemManagement/GetRedLevelItems")]
+        [HttpGet]
+        public IHttpActionResult GetRedLevelItems()
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemBusinessLayer>();
+
+                var result = app.GetRedLevelItems();
+
+                return Json(result);
             }
         }
     }

@@ -14,6 +14,8 @@ namespace IMSRepository
     
     public partial class Supplier
     {
+        internal readonly int SupplierID;
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Supplier()
         {

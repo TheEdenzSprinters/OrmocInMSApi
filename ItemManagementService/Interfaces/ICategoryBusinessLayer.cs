@@ -10,7 +10,7 @@ namespace ItemManagementService.Interfaces
     public interface ICategoryBusinessLayer
     {
         List<Category> GetAllCategories();
-        string InsertNewCategory(CategoryModel cat);
+        Category InsertNewCategory(CategoryModel cat);
         string UpdateCategoryDetail(CategoryUpdateModel cat);
         string DeleteCategory(int Id);
     }

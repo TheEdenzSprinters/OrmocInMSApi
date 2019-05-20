@@ -129,7 +129,7 @@ namespace IMSRepository.Utilities
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return "Internal error encountered.";
             }
