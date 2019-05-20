@@ -514,5 +514,22 @@ namespace ItemManagementService.Controllers
                 return Json(new { Result = result });
             }
         }
+
+
+        [Route("api/ItemManagement/SearchBrand")]
+        [HttpPost]
+        public IHttpActionResult SearchBrand([FromBody]string brandName)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IBrandBusinessLayer>();
+
+                var result = app.SearchBrand(brandName);
+
+                return Json(new { Result = result });
+            }
+        }
     }
 }

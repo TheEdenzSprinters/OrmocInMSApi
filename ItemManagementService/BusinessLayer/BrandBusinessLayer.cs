@@ -11,11 +11,11 @@ namespace ItemManagementService.BusinessLayer
 {
     public class BrandBusinessLayer : IBrandBusinessLayer
     {
-        readonly IBrandDataAccess _BrandDataAccess;
+        readonly IBrandDataAccess _brandDataAccess;
 
         public BrandBusinessLayer(IBrandDataAccess BrandDataAccess)
         {
-            _BrandDataAccess = BrandDataAccess;
+            _brandDataAccess = BrandDataAccess;
         }
 
         /// <summary>
@@ -27,9 +27,9 @@ namespace ItemManagementService.BusinessLayer
             List<Brand> result = new List<Brand>();
             Brand singleBrand = new Brand();
 
-            var brands = _BrandDataAccess.GetBrands();
+            var brands = _brandDataAccess.GetBrands();
 
-            for(int i = 0; i < brands.Count; i++)
+            for (int i = 0; i < brands.Count; i++)
             {
                 singleBrand.Id = brands[i].Id;
                 singleBrand.BrandName = brands[i].BrandName;
@@ -65,7 +65,7 @@ namespace ItemManagementService.BusinessLayer
             brandToInsert.UpdateUserName = "ADMIN";
             brandToInsert.UpdateDttm = DateTime.UtcNow;
 
-            var insertBrand = _BrandDataAccess.InsertNewBrand(brandToInsert);
+            var insertBrand = _brandDataAccess.InsertNewBrand(brandToInsert);
 
             result = insertBrand;
 
@@ -88,7 +88,7 @@ namespace ItemManagementService.BusinessLayer
             brandToUpdate.UpdateUserName = "ADMIN";
             brandToUpdate.UpdateDttm = DateTime.UtcNow;
 
-            string result = _BrandDataAccess.UpdateBrandDetails(brandToUpdate);
+            string result = _brandDataAccess.UpdateBrandDetails(brandToUpdate);
 
             return result;
         }
@@ -100,7 +100,7 @@ namespace ItemManagementService.BusinessLayer
         /// <returns></returns>
         public string DeleteBrand(int Id)
         {
-            string result = _BrandDataAccess.DeleteBrand(Id);
+            string result = _brandDataAccess.DeleteBrand(Id);
             return result;
         }
     }
