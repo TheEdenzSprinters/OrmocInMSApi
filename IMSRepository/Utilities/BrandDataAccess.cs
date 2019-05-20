@@ -134,5 +134,14 @@ namespace IMSRepository.Utilities
                 return "Internal error encountered.";
             }
         }
+
+        public List<Brand> SearchBrands(Brand brandName)
+        {
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
+            { 
+                var search = context.Brands.Where(x => x.BrandName.Contains("brandName")).ToList();
+                return search;
+            }
+        }
     }
 }

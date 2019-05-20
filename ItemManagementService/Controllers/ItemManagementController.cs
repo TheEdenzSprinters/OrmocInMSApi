@@ -515,10 +515,14 @@ namespace ItemManagementService.Controllers
             }
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="brandName"></param>
+        /// <returns></returns>
         [Route("api/ItemManagement/SearchBrand")]
         [HttpPost]
-        public IHttpActionResult SearchBrand([FromBody]string brandName)
+        public IHttpActionResult SearchBrands([FromBody]string brandName)
         {
             var container = ContainerConfig.Configure();
 
@@ -526,7 +530,7 @@ namespace ItemManagementService.Controllers
             {
                 var app = scope.Resolve<IBrandBusinessLayer>();
 
-                var result = app.SearchBrand(brandName);
+                var result = app.SearchBrands(brandName);
 
                 return Json(new { Result = result });
             }

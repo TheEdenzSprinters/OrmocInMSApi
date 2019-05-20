@@ -103,5 +103,28 @@ namespace ItemManagementService.BusinessLayer
             string result = _brandDataAccess.DeleteBrand(Id);
             return result;
         }
+
+
+        public List<BrandModel> SearchBrands(string brandName)
+        {
+            List<BrandModel> result = new List<BrandModel>();
+            BrandModel search = new BrandModel();
+
+            var brands = _brandDataAccess.SearchBrands(brands);
+
+            for (int i = 0; i < brands.Count; i++)
+            {
+                search.Id = brands[i].Id;
+                search.BrandName = brands[i].BrandName;
+                search.Notes = brands[i].Notes;
+                search.IsActive = brands[i].IsActive;
+                search.CreateDttm = brands[i].CreateDttm;
+
+                result.Add(search);
+                search = new BrandModel();
+            }
+
+            return result;
+        }
     }
 }

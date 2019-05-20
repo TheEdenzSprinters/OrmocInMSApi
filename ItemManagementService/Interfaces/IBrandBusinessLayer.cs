@@ -13,5 +13,6 @@ namespace ItemManagementService.Interfaces
         Brand InsertNewBrand(BrandModel brand);
         string UpdateBrandDetail(BrandUpdateModel brand);
         string DeleteBrand(int Id);
+        List<BrandModel> SearchBrands(string brandName);
     }
 }
