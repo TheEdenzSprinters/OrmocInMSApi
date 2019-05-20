@@ -34,6 +34,7 @@ namespace PurchaseOrderManagementService.BusinessLayer
             result.Title = query.Title;
             result.DateCreated = query.CreateDttm;
             result.FollowupDttm = query.FollowupStartDttm.Value;
+            result.StatusCd = query.StatusCd;
             result.Notes = query.Notes;
 
             for(int i = 0; i < query.Quotations.Count; i++)
@@ -90,12 +91,12 @@ namespace PurchaseOrderManagementService.BusinessLayer
             return result;
         }
 
-        public List<ItemRequestSearchResultModel> GetItemRequestFormDelinquents()
+        public List<ItemRequestDelinquentResultModel> GetItemRequestFormDelinquents()
         {
             ItemRequestFormSearchQueryModel query = new ItemRequestFormSearchQueryModel();
             ItemRequestDelinquentQueryModel delinquentQuery = new ItemRequestDelinquentQueryModel();
-            ItemRequestSearchResultModel singleItem = new ItemRequestSearchResultModel();
-            List<ItemRequestSearchResultModel> result = new List<ItemRequestSearchResultModel>();
+            ItemRequestDelinquentResultModel singleItem = new ItemRequestDelinquentResultModel();
+            List<ItemRequestDelinquentResultModel> result = new List<ItemRequestDelinquentResultModel>();
 
             var followupDays = _itemRequestFormDataAccess.GetAllFollowupDetails().CodeDetails.ToList();
 
@@ -108,16 +109,35 @@ namespace PurchaseOrderManagementService.BusinessLayer
             delinquentQuery.SecondFollowupDate = SecondFollowup;
             delinquentQuery.ThirdFollowupDate = ThirdFollowup;
 
-            var items = _itemRequestFormDataAccess.GetItemRequestFormDelinquents(delinquentQuery);
+            var items = _itemRequestFormDataAccess.GetItemRequestFormDelinquents(delinquentQuery).OrderBy(x => x.Status).ToList();
 
             for (int i = 0; i < items.Count; i++)
             {
                 singleItem.Id = items[i].Id;
                 singleItem.Title = items[i].Title;
                 singleItem.DateCreated = items[i].DateCreated;
+                singleItem.Status = items[i].Status;
 
+                switch (items[i].TicketStatus.ToLower())
+                {
+                    case "other":
+                        singleItem.TicketStatus = "Incomplete ticket";
+                        break;
+                    case "first":
+                        singleItem.TicketStatus = "First follow-up";
+                        break;
+                    case "second":
+                        singleItem.TicketStatus = "Second follow-up";
+                        break;
+                    case "third":
+                        singleItem.TicketStatus = "Third follow-up";
+                        break;
+                    default: singleItem.TicketStatus = "";
+                        break;
+                }
+                
                 result.Add(singleItem);
-                singleItem = new ItemRequestSearchResultModel();
+                singleItem = new ItemRequestDelinquentResultModel();
             }
 
             return result;
@@ -135,6 +155,8 @@ namespace PurchaseOrderManagementService.BusinessLayer
             newItemRequest.Title = itemRequest.Title;
             newItemRequest.StatusCd = ticketStatusNew;
             newItemRequest.IsActive = true;
+            newItemRequest.Notes = itemRequest.Notes;
+            newItemRequest.FollowupStartDttm = DateTime.UtcNow;
             newItemRequest.CreateUserName = "ADMIN";
             newItemRequest.CreateDttm = DateTime.UtcNow;
             newItemRequest.UpdateUserName = "ADMIN";
@@ -146,6 +168,7 @@ namespace PurchaseOrderManagementService.BusinessLayer
             result.Title = insertedItem.Title;
             result.Notes = insertedItem.Notes;
             result.DateCreated = insertedItem.CreateDttm;
+            result.StatusCd = insertedItem.StatusCd;
             result.RequestFormItems = new List<ItemList>();
             result.RequestFormQuotations = new List<QuotationList>();
 
@@ -161,8 +184,66 @@ namespace PurchaseOrderManagementService.BusinessLayer
             query.Notes = itemRequest.Notes;
             query.UpdateDttm = DateTime.UtcNow;
             query.UpdateUserName = "ADMIN";
+            query.FollowupStartDttm = DateTime.UtcNow;
 
             var result = _itemRequestFormDataAccess.UpdateItemRequestById(query);
+
+            return result;
+        }
+
+        public string ValidateStatusChangeItemRequest (UpdateItemRequestModel itemRequest)
+        {
+            string result = "";
+
+            var selectedCodeDetail = _itemRequestFormDataAccess.GetAllTicketStatus()
+                                        .CodeDetails.Where(x => x.Id == itemRequest.StatusCd)
+                                        .Select(x => x.CodeValue).FirstOrDefault();
+
+            var quotationSentCd = _itemRequestFormDataAccess.GetAllTicketStatus()
+                                        .CodeDetails.Where(x => x.CodeValue.Equals("Quotations Sent"))
+                                        .Select(x => x.Id).FirstOrDefault();
+
+            var quotationCompleteCd = _itemRequestFormDataAccess.GetAllTicketStatus()
+                                        .CodeDetails.Where(x => x.CodeValue.Equals("Completed"))
+                                        .Select(x => x.Id).FirstOrDefault();
+
+            var selectedItemRequest = _itemRequestFormDataAccess.GetItemRequestFormById(itemRequest.Id);
+
+            switch (selectedCodeDetail)
+            {
+                case "Supervisor Review":
+                    int quotationCount = selectedItemRequest.Quotations.Count;
+                    result = quotationCount > 0 ? "Success" : "Item Request does not have Quotations for review.";
+                    break;
+                case "Quotations Sent":
+                    int quotesSent = selectedItemRequest.Quotations.Where(x => x.StatusCd == quotationSentCd).Count();
+                    result = quotesSent > 0 ? "Success" : "Item Request has Quotations not set to Quotations Sent status.";
+                    break;
+                case "Completed":
+                    int quotesComplete = selectedItemRequest.Quotations.Where(x => x.StatusCd == quotationCompleteCd).Count();
+                    result = quotesComplete > 0 ? "Success" : "Item Request has Quotations not set to Completed status.";
+                    break;
+                default: break;
+            }
+
+            return result;
+        }
+
+        public List<ItemRequestStatusModel> GetGetItemRequestTicketSatus()
+        {
+            ItemRequestStatusModel singleItem = new ItemRequestStatusModel();
+            List<ItemRequestStatusModel> result = new List<ItemRequestStatusModel>();
+
+            var query = _itemRequestFormDataAccess.GetAllTicketStatus();
+
+            for(int i = 0; i < query.CodeDetails.Count; i++)
+            {
+                singleItem.Id = query.CodeDetails.ToList()[i].Id;
+                singleItem.Status = query.CodeDetails.ToList()[i].CodeValue;
+
+                result.Add(singleItem);
+                singleItem = new ItemRequestStatusModel();
+            }
 
             return result;
         }

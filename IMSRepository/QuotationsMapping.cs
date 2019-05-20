@@ -26,7 +26,7 @@ namespace IMSRepository
         public string UpdateUserName { get; set; }
         public System.DateTime UpdateDttm { get; set; }
     
-        public virtual Item Item { get; set; }
         public virtual Quotation Quotation { get; set; }
+        public virtual Item Item { get; set; }
     }
 }

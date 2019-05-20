@@ -7,6 +7,7 @@ namespace PurchaseOrderManagementService.Models
 {
     public class ItemRequestFormModel : BaseItemRequestModel
     {
+        public string Notes { get; set; }
         public DateTime FollowupDttm { get; set; }
         public DateTime DateCreated { get; set; }
         public List<ItemList> RequestFormItems { get; set; }

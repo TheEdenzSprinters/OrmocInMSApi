@@ -7,6 +7,6 @@ namespace PurchaseOrderManagementService.Models
 {
     public class UpdateItemRequestModel : BaseItemRequestModel
     {
-
+        public string Notes { get; set; }
     }
 }

@@ -38,6 +38,7 @@ namespace ItemManagementService.BusinessLayer
             newItem.Quantity = item.Quantity;
             newItem.MeasuredBy = item.MeasuredBy;
             newItem.ThresholdQty = item.ThresholdQty;
+            newItem.WarningThresholdQty = item.WarningThresholdQty;
             newItem.Notes = item.Notes;
             newItem.Sku = item.Sku;
             newItem.CreateUserName = "ADMIN";
@@ -75,6 +76,7 @@ namespace ItemManagementService.BusinessLayer
                 result.LocationId = insertedItem.LocationID;
                 result.Quantity = insertedItem.Quantity.HasValue ? insertedItem.Quantity.Value : 0;
                 result.ThresholdQty = insertedItem.ThresholdQty.HasValue ? insertedItem.ThresholdQty.Value : 0;
+                result.WarningThresholdQty = insertedItem.WarningThresholdQty.HasValue ? insertedItem.WarningThresholdQty.Value : 0;
                 result.MeasuredBy = insertedItem.MeasuredBy;
                 result.Sku = insertedItem.Sku;
                 result.Notes = insertedItem.Notes;
@@ -111,6 +113,7 @@ namespace ItemManagementService.BusinessLayer
             editItem.Quantity = item.Quantity;
             editItem.MeasuredBy = item.MeasuredBy;
             editItem.ThresholdQty = item.ThresholdQty;
+            editItem.WarningThresholdQty = item.WarningThresholdQty;
             editItem.Notes = item.Notes;
             editItem.Sku = item.Sku;
             editItem.UpdateUserName = "ADMIN";
@@ -162,6 +165,7 @@ namespace ItemManagementService.BusinessLayer
             result.LocationId = query.LocationID;
             result.Quantity = query.Quantity.HasValue ? query.Quantity.Value : 0;
             result.ThresholdQty = query.ThresholdQty.HasValue ? query.ThresholdQty.Value : 0;
+            result.WarningThresholdQty = query.WarningThresholdQty.HasValue ? query.WarningThresholdQty.Value : 0;
             result.MeasuredBy = query.MeasuredBy;
             result.Sku = query.Sku;
             result.Notes = query.Notes;

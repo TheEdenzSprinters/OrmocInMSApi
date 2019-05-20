@@ -17,10 +17,13 @@ namespace IMSRepository
         public string Title { get; set; }
         public int StatusCd { get; set; }
         public bool IsActive { get; set; }
+        public string Notes { get; set; }
+        public Nullable<System.DateTime> FollowupStartDttm { get; set; }
         public string CreateUserName { get; set; }
         public System.DateTime CreateDttm { get; set; }
         public string UpdateUserName { get; set; }
         public System.DateTime UpdateDttm { get; set; }
         public string CodeValue { get; set; }
+        public string TicketStatus { get; set; }
     }
 }

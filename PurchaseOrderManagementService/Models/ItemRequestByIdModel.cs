@@ -5,9 +5,8 @@ using System.Web;
 
 namespace PurchaseOrderManagementService.Models
 {
-    public class InsertItemRequestModel
+    public class ItemRequestByIdModel
     {
-        public string Title { get; set; }
-        public string Notes { get; set; }
+        public int Id { get; set; }
     }
 }
