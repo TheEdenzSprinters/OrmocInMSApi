@@ -35,7 +35,6 @@ namespace IMSRepository
         public virtual DbSet<ItemDetailMapping> ItemDetailMappings { get; set; }
         public virtual DbSet<ItemRequestForm> ItemRequestForms { get; set; }
         public virtual DbSet<ItemRequestFormMapping> ItemRequestFormMappings { get; set; }
-        public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<PurchaseOrderMapping> PurchaseOrderMappings { get; set; }
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
@@ -47,6 +46,7 @@ namespace IMSRepository
         public virtual DbSet<UnitsOfMeasure> UnitsOfMeasures { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Quotation> Quotations { get; set; }
+        public virtual DbSet<Item> Items { get; set; }
     
         public virtual ObjectResult<ItemAdvancedSearch_SP_Result> ItemAdvancedSearch_SP(string moduleNm, string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9, string param10)
         {

@@ -272,8 +272,6 @@ namespace IMSRepository.Utilities
                     return query.Id;
                 }
             }
-
-            return 0;
         }
 
         public bool AddTaggingByItemId(int tagId, int itemId)

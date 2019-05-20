@@ -24,7 +24,7 @@ namespace IMSRepository.Utilities
                     .Include(x => x.ItemRequestFormMappings.Select(y => y.Item))
                     .Include(x => x.ItemRequestFormMappings.Select(z => z.Item.Brand))
                     .Include(x => x.CodeDetail)
-                    .Include(x => x.ItemRequestFormMappings)
+                    .Include(x => x.ItemRequestFormMappings).Where(x => x.Id == Id)
                     .FirstOrDefault();
 
                 return result;
@@ -59,16 +59,19 @@ namespace IMSRepository.Utilities
             }
         }
 
-        public List<ItemRequestFormSearchResultModel> GetItemRequestFormDelinquents(ItemRequestDelinquentQueryModel query)
+        public List<ItemRequestDelinquentQueryResultModel> GetItemRequestFormDelinquents(ItemRequestDelinquentQueryModel query)
         {
             using (OrmocIMSEntities context = new OrmocIMSEntities())
             {
                 var result = context.ItemRequestFormSearch_SP(query.ModuleNm, null, null,
                             query.FirstFollowupDate.ToString(), query.SecondFollowupDate.ToString(),
                             query.ThirdFollowupDate.ToString())
-                            .Select(x => new ItemRequestFormSearchResultModel {
+                            .Select(x => new ItemRequestDelinquentQueryResultModel
+                            {
                                 Id = x.Id,
                                 Title = x.Title,
+                                Status = x.CodeValue,
+                                TicketStatus = x.TicketStatus,
                                 DateCreated = x.CreateDttm
                             })
                             .ToList();
@@ -84,6 +87,36 @@ namespace IMSRepository.Utilities
                 var result = context.CodeHeaders.Include("CodeDetails").Where(x => x.CodeHeaderName.Equals("Ticket Status")).FirstOrDefault();
 
                 return result;
+            }
+        }
+
+        public ItemRequestForm InsertNewItemRequest(ItemRequestForm itemRequest)
+        {
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
+            {
+                context.ItemRequestForms.Add(itemRequest);
+                context.Entry(itemRequest).State = EntityState.Added;
+                int result = context.SaveChanges();
+
+                return result > 0 ? itemRequest : new ItemRequestForm();
+            }
+        }
+
+        public bool UpdateItemRequestById(ItemRequestForm itemRequest)
+        {
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
+            {
+                var item = context.ItemRequestForms.Where(x => x.Id == itemRequest.Id).FirstOrDefault();
+
+                item.Id = itemRequest.Id;
+                item.Title = itemRequest.Title;
+                item.UpdateDttm = itemRequest.UpdateDttm;
+                item.UpdateUserName = itemRequest.UpdateUserName;
+
+                context.Entry(item).State = EntityState.Modified;
+                int result = context.SaveChanges();
+
+                return result > 0 ? true : false;
             }
         }
     }

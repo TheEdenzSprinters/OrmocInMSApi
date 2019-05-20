@@ -18,9 +18,9 @@ namespace IMSRepository
         public CodeDetail()
         {
             this.ItemRequestForms = new HashSet<ItemRequestForm>();
-            this.Items = new HashSet<Item>();
             this.PurchaseOrders = new HashSet<PurchaseOrder>();
             this.Quotations = new HashSet<Quotation>();
+            this.Items = new HashSet<Item>();
         }
     
         public int Id { get; set; }
@@ -37,10 +37,10 @@ namespace IMSRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemRequestForm> ItemRequestForms { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Item> Items { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Quotation> Quotations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Item> Items { get; set; }
     }
 }
