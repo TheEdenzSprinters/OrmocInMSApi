@@ -5,9 +5,9 @@ using System.Web;
 
 namespace PurchaseOrderManagementService.Models
 {
-    public class ItemRequestSearchResultModel : BaseItemRequestModel
+    public class ItemRequestStatusModel
     {
+        public int Id { get; set; }
         public string Status { get; set; }
-        public DateTime DateCreated { get; set; }
     }
 }

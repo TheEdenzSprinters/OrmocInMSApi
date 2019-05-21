@@ -15,6 +15,7 @@ namespace ItemManagementService.Models
         public string StatusCd { get; set; }
         public int Quantity { get; set; }
         public int ThresholdQty { get; set; }
+        public int WarningThresholdQty { get; set; }
         public string MeasuredBy { get; set; }
         public string Sku { get; set; }
         public string Notes { get; set; }

@@ -46,7 +46,7 @@ namespace PurchaseOrderManagementService.Controllers
 
         [Route("api/PurchaseOrderManagement/GetItemRequestFormById")]
         [HttpPost]
-        public IHttpActionResult GetItemRequestFormById([FromBody]int id)
+        public IHttpActionResult GetItemRequestFormById([FromBody]ItemRequestByIdModel itemRequest)
         {
             var container = ContainerConfig.Configure();
 
@@ -54,7 +54,71 @@ namespace PurchaseOrderManagementService.Controllers
             {
                 var app = scope.Resolve<IItemRequestFormBusinessLayer>();
 
-                var result = app.GetItemRequestFormById(id);
+                var result = app.GetItemRequestFormById(itemRequest.Id);
+
+                return Json(result);
+            }
+        }
+
+        [Route("api/PurchaseOrderManagement/InsertNewItemRequest")]
+        [HttpPost]
+        public IHttpActionResult InsertNewItemRequest([FromBody]InsertItemRequestModel itemRequest)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemRequestFormBusinessLayer>();
+
+                var result = app.InsertNewItemRequest(itemRequest);
+
+                return Json(result);
+            }
+        }
+
+        [Route("api/PurchaseOrderManagement/UpdateItemRequestById")]
+        [HttpPost]
+        public IHttpActionResult UpdateItemRequestById([FromBody]UpdateItemRequestModel itemRequest)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemRequestFormBusinessLayer>();
+
+                var result = app.UpdateItemRequestById(itemRequest);
+
+                return Json(result);
+            }
+        }
+
+        [Route("api/PurchaseOrderManagement/ValidateStatusChangeItemRequest")]
+        [HttpPost]
+        public IHttpActionResult ValidateStatusChangeItemRequest([FromBody]UpdateItemRequestModel itemRequest)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemRequestFormBusinessLayer>();
+
+                var result = app.ValidateStatusChangeItemRequest(itemRequest);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        [Route("api/PurchaseOrderManagement/GetItemRequestTicketSatus")]
+        [HttpGet]
+        public IHttpActionResult GetItemRequestTicketSatus()
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemRequestFormBusinessLayer>();
+
+                var result = app.GetGetItemRequestTicketSatus();
 
                 return Json(result);
             }
