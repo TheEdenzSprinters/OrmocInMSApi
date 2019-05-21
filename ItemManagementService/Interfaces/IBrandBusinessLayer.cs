@@ -9,9 +9,9 @@ namespace ItemManagementService.Interfaces
 {
     public interface IBrandBusinessLayer
     {
-        List<Brand> GetAllBrands();
+        List<BrandModel> GetAllBrands();
         Brand InsertNewBrand(BrandModel brand);
-        string UpdateBrandDetail(BrandUpdateModel brand);
+        string UpdateBrandDetail(BrandModel brand);
         string DeleteBrand(int Id);
         List<BrandModel> SearchBrands(string brandName);
     }

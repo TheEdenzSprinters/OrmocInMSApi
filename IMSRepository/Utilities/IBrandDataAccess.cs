@@ -8,5 +8,6 @@ namespace IMSRepository.Utilities
         Brand InsertNewBrand(Brand brand);
         string UpdateBrandDetails(Brand brand);
         string DeleteBrand(int brandId);
+        List<Brand> SearchBrands(string brandName);
     }
 }

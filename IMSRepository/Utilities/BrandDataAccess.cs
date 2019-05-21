@@ -135,11 +135,11 @@ namespace IMSRepository.Utilities
             }
         }
 
-        public List<Brand> SearchBrands(Brand brandName)
+        public List<Brand> SearchBrands(string brandName)
         {
             using (OrmocIMSEntities context = new OrmocIMSEntities())
             { 
-                var search = context.Brands.Where(x => x.BrandName.Contains("brandName")).ToList();
+                var search = context.Brands.Where(x => x.BrandName.Contains(brandName)).ToList();
                 return search;
             }
         }

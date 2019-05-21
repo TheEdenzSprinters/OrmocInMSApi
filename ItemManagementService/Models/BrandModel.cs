@@ -7,6 +7,7 @@ namespace ItemManagementService.Models
 {
     public class BrandModel
     {
+        public int Id { get; set; }
         public string BrandName { get; set; }
         public string Notes { get; set; }
         public bool IsActive { get; set; }

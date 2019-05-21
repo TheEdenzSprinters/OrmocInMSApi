@@ -22,29 +22,9 @@ namespace ItemManagementService.BusinessLayer
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<Brand> GetAllBrands()
+        public List<BrandModel> GetAllBrands()
         {
-            List<Brand> result = new List<Brand>();
-            Brand singleBrand = new Brand();
-
-            var brands = _brandDataAccess.GetBrands();
-
-            for (int i = 0; i < brands.Count; i++)
-            {
-                singleBrand.Id = brands[i].Id;
-                singleBrand.BrandName = brands[i].BrandName;
-                singleBrand.Notes = brands[i].Notes;
-                singleBrand.IsActive = brands[i].IsActive;
-                singleBrand.CreateUserName = brands[i].CreateUserName;
-                singleBrand.CreateDttm = brands[i].CreateDttm;
-                singleBrand.UpdateUserName = brands[i].UpdateUserName;
-                singleBrand.UpdateDttm = brands[i].UpdateDttm;
-
-                result.Add(singleBrand);
-                singleBrand = new Brand();
-            }
-
-            return result;
+            return _brandDataAccess.GetBrands().Select(x => MapBrandToBrandModel(x)).ToList(); 
         }
 
         /// <summary>
@@ -77,7 +57,7 @@ namespace ItemManagementService.BusinessLayer
         /// </summary>
         /// <param name="brand"></param>
         /// <returns></returns>
-        public string UpdateBrandDetail(BrandUpdateModel brand)
+        public string UpdateBrandDetail(BrandModel brand)
         {
             Brand brandToUpdate = new Brand();
 
@@ -104,27 +84,33 @@ namespace ItemManagementService.BusinessLayer
             return result;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="brandName"></param>
+        /// <returns></returns>
         public List<BrandModel> SearchBrands(string brandName)
         {
-            List<BrandModel> result = new List<BrandModel>();
-            BrandModel search = new BrandModel();
-
-            var brands = _brandDataAccess.SearchBrands(brands);
-
-            for (int i = 0; i < brands.Count; i++)
-            {
-                search.Id = brands[i].Id;
-                search.BrandName = brands[i].BrandName;
-                search.Notes = brands[i].Notes;
-                search.IsActive = brands[i].IsActive;
-                search.CreateDttm = brands[i].CreateDttm;
-
-                result.Add(search);
-                search = new BrandModel();
-            }
+            var result = _brandDataAccess.SearchBrands(brandName).Select(x => MapBrandToBrandModel(x)).ToList();
 
             return result;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="brand"></param>
+        /// <returns></returns>
+        private BrandModel MapBrandToBrandModel(Brand brand)
+        {
+            return new BrandModel
+            {
+                Id = brand.Id,
+                BrandName = brand.BrandName,
+                Notes = brand.Notes,
+                IsActive = brand.IsActive,
+                CreateDttm = brand.CreateDttm,
+            };
         }
     }
 }

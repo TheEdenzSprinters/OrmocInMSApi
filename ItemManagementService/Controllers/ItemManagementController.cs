@@ -480,7 +480,7 @@ namespace ItemManagementService.Controllers
         /// <returns></returns>
         [Route("api/ItemManagement/UpdateBrand")]
         [HttpPost]
-        public IHttpActionResult UpdateBrand([FromBody]BrandUpdateModel brand)
+        public IHttpActionResult UpdateBrand([FromBody]BrandModel brand)
         {
             var container = ContainerConfig.Configure();
 
@@ -520,9 +520,9 @@ namespace ItemManagementService.Controllers
         /// </summary>
         /// <param name="brandName"></param>
         /// <returns></returns>
-        [Route("api/ItemManagement/SearchBrand")]
+        [Route("api/ItemManagement/SearchBrands")]
         [HttpPost]
-        public IHttpActionResult SearchBrands([FromBody]string brandName)
+        public IHttpActionResult GetSearchBrands([FromBody]string brandName)
         {
             var container = ContainerConfig.Configure();
 
