@@ -448,7 +448,7 @@ namespace ItemManagementService.Controllers
 
                 var result = app.GetAllBrands();
 
-                return Json(result);
+                return Json(new { Result = result });
             }
         }
         
@@ -522,7 +522,7 @@ namespace ItemManagementService.Controllers
         /// <returns></returns>
         [Route("api/ItemManagement/SearchBrands")]
         [HttpPost]
-        public IHttpActionResult GetSearchBrands([FromBody]string brandName)
+        public IHttpActionResult GetSearchBrands([FromBody]Newtonsoft.Json.Linq.JObject brand)
         {
             var container = ContainerConfig.Configure();
 
@@ -530,7 +530,7 @@ namespace ItemManagementService.Controllers
             {
                 var app = scope.Resolve<IBrandBusinessLayer>();
 
-                var result = app.SearchBrands(brandName);
+                var result = app.SearchBrands(brand.GetValue("brandName").ToString());
 
                 return Json(new { Result = result });
             }
