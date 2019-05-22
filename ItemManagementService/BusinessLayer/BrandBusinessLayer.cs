@@ -110,6 +110,7 @@ namespace ItemManagementService.BusinessLayer
                 Notes = brand.Notes,
                 IsActive = brand.IsActive,
                 CreateDttm = brand.CreateDttm,
+                UpdateDttm = brand.UpdateDttm,
             };
         }
     }
