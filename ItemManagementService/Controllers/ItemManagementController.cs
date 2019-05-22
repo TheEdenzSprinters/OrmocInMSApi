@@ -431,5 +431,109 @@ namespace ItemManagementService.Controllers
                 return Json(new { Result = result });
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/ItemManagement/GetAllBrands")]
+        [HttpGet]
+        public IHttpActionResult GetAllBrands()
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IBrandBusinessLayer>();
+
+                var result = app.GetAllBrands();
+
+                return Json(new { Result = result });
+            }
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="brand"></param>
+        /// <returns></returns>
+        [Route("api/ItemManagement/InsertNewBrand")]
+        [HttpPost]
+        public IHttpActionResult InsertNewBrand([FromBody]BrandModel brand)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IBrandBusinessLayer>();
+
+                var result = app.InsertNewBrand(brand);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="brand"></param>
+        /// <returns></returns>
+        [Route("api/ItemManagement/UpdateBrand")]
+        [HttpPost]
+        public IHttpActionResult UpdateBrand([FromBody]BrandModel brand)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IBrandBusinessLayer>();
+
+                var result = app.UpdateBrandDetail(brand);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("api/ItemManagement/DeleteBrand")]
+        [HttpPost]
+        public IHttpActionResult DeleteBrand([FromBody]int id)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IBrandBusinessLayer>();
+
+                var result = app.DeleteBrand(id);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="brandName"></param>
+        /// <returns></returns>
+        [Route("api/ItemManagement/SearchBrands")]
+        [HttpPost]
+        public IHttpActionResult GetSearchBrands([FromBody]Newtonsoft.Json.Linq.JObject brand)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IBrandBusinessLayer>();
+
+                var result = app.SearchBrands(brand.GetValue("brandName").ToString());
+
+                return Json(new { Result = result });
+            }
+        }
     }
 }
