@@ -14,7 +14,7 @@ namespace PurchaseOrderManagementService.Interfaces
         List<ItemRequestDelinquentResultModel> GetItemRequestFormDelinquents();
         ItemRequestFormModel InsertNewItemRequest(InsertItemRequestModel itemRequest);
         bool UpdateItemRequestById(UpdateItemRequestModel itemRequest);
-        StandardRequestResultModel ValidateStatusChangeItemRequest(UpdateItemRequestModel itemRequest);
+        StandardRequestResultModel ValidateStatusChangeItemRequest(ItemRequestStatusChangeModel itemRequest);
         List<ItemRequestStatusModel> GetItemRequestTicketSatus();
         StandardRequestResultModel AttachItemToItemRequest(ItemToItemRequestModel item);
         StandardRequestResultModel DeleteItemFromItemRequest(ItemToItemRequestModel item);

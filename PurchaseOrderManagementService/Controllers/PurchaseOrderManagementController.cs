@@ -94,7 +94,7 @@ namespace PurchaseOrderManagementService.Controllers
 
         [Route("api/PurchaseOrderManagement/ValidateStatusChangeItemRequest")]
         [HttpPost]
-        public IHttpActionResult ValidateStatusChangeItemRequest([FromBody]UpdateItemRequestModel itemRequest)
+        public IHttpActionResult ValidateStatusChangeItemRequest([FromBody]ItemRequestStatusChangeModel itemRequest)
         {
             var container = ContainerConfig.Configure();
 
@@ -104,7 +104,7 @@ namespace PurchaseOrderManagementService.Controllers
 
                 var result = app.ValidateStatusChangeItemRequest(itemRequest);
 
-                return Json(new { Result = result });
+                return Json(result);
             }
         }
 

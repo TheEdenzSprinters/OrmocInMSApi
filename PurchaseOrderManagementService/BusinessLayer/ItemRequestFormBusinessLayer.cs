@@ -194,7 +194,7 @@ namespace PurchaseOrderManagementService.BusinessLayer
             return result;
         }
 
-        public StandardRequestResultModel ValidateStatusChangeItemRequest(UpdateItemRequestModel itemRequest)
+        public StandardRequestResultModel ValidateStatusChangeItemRequest(ItemRequestStatusChangeModel itemRequest)
         {
             StandardRequestResultModel result = new StandardRequestResultModel();
 
@@ -253,9 +253,18 @@ namespace PurchaseOrderManagementService.BusinessLayer
                         result.Message = "Item Request has Quotations not set to Completed status.";
                     }
                     break;
+
                 default:
-                    result.isSuccess = false;
-                    result.Message = "Unknown ticket status.";
+                    if(selectedCodeDetail == selectedItemRequest.CodeDetail.CodeValue)
+                    {
+                        result.isSuccess = true;
+                        result.Message = "";
+                    }
+                    else
+                    {
+                        result.isSuccess = false;
+                        result.Message = "Unknown ticket status.";
+                    }
                     break;
             }
 
