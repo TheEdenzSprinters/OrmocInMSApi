@@ -138,6 +138,8 @@
     <Compile Include="User.cs">
       <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\BrandDataAccess.cs" />
+    <Compile Include="Utilities\IBrandDataAccess.cs" />
     <Compile Include="Utilities\ICategoryDataAccess.cs" />
     <Compile Include="Utilities\IItemDataAccess.cs" />
     <Compile Include="Utilities\IItemRequestFormDataAccess.cs" />

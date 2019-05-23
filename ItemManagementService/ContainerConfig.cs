@@ -18,6 +18,7 @@ namespace ItemManagementService
 
             builder.RegisterType<SubCategoryBusinessLayer>().As<ISubCategoryBusinessLayer>();
             builder.RegisterType<CategoryBusinessLayer>().As<ICategoryBusinessLayer>();
+            builder.RegisterType<BrandBusinessLayer>().As<IBrandBusinessLayer>();
             builder.RegisterType<ItemBusinessLayer>().As<IItemBusinessLayer>();
 
             builder.RegisterAssemblyTypes(Assembly.Load(nameof(IMSRepository)))
