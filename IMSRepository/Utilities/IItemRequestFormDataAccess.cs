@@ -12,5 +12,8 @@ namespace IMSRepository.Utilities
         CodeHeader GetAllTicketStatus();
         ItemRequestForm InsertNewItemRequest(ItemRequestForm itemRequest);
         bool UpdateItemRequestById(ItemRequestForm itemRequest);
+        bool AttachItemToItemRequest(ItemRequestFormMapping item);
+        ItemRequestFormMapping ValidateIfMappingExists(int itemId, int itemRequestId);
+        bool DeleteItemFromItemRequest(int Id);
     }
 }

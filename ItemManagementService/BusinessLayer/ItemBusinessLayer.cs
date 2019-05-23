@@ -360,6 +360,9 @@ namespace ItemManagementService.BusinessLayer
                 singleItem.Brand = query[i].Brand;
                 singleItem.Status = codeDetail.Where(x => x.Id == query[i].Status).Select(x => x.CodeValue).FirstOrDefault();
                 singleItem.CreateDttm = query[i].CreateDttm;
+                singleItem.LocationName = query[i].LocationName;
+                singleItem.StocksLeft = query[i].StockLeft;
+                singleItem.Notes = query[i].Notes;
 
                 result.Add(singleItem);
                 singleItem = new ItemSearchResultModel();

@@ -94,7 +94,7 @@ namespace PurchaseOrderManagementService.Controllers
 
         [Route("api/PurchaseOrderManagement/ValidateStatusChangeItemRequest")]
         [HttpPost]
-        public IHttpActionResult ValidateStatusChangeItemRequest([FromBody]UpdateItemRequestModel itemRequest)
+        public IHttpActionResult ValidateStatusChangeItemRequest([FromBody]ItemRequestStatusChangeModel itemRequest)
         {
             var container = ContainerConfig.Configure();
 
@@ -104,7 +104,7 @@ namespace PurchaseOrderManagementService.Controllers
 
                 var result = app.ValidateStatusChangeItemRequest(itemRequest);
 
-                return Json(new { Result = result });
+                return Json(result);
             }
         }
 
@@ -118,7 +118,39 @@ namespace PurchaseOrderManagementService.Controllers
             {
                 var app = scope.Resolve<IItemRequestFormBusinessLayer>();
 
-                var result = app.GetGetItemRequestTicketSatus();
+                var result = app.GetItemRequestTicketSatus();
+
+                return Json(result);
+            }
+        }
+
+        [Route("api/PurchaseOrderManagement/AttachItemToItemRequest")]
+        [HttpPost]
+        public IHttpActionResult AttachItemToItemRequest([FromBody]ItemToItemRequestModel item)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemRequestFormBusinessLayer>();
+
+                var result = app.AttachItemToItemRequest(item);
+
+                return Json(result);
+            }
+        }
+
+        [Route("api/PurchaseOrderManagement/DeleteItemFromItemRequest")]
+        [HttpPost]
+        public IHttpActionResult DeleteItemFromItemRequest([FromBody]ItemToItemRequestModel item)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemRequestFormBusinessLayer>();
+
+                var result = app.DeleteItemFromItemRequest(item);
 
                 return Json(result);
             }

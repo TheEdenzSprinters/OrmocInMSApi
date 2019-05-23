@@ -12,5 +12,8 @@ namespace ItemManagementService.Models
         public string Brand { get; set; }
         public DateTime CreateDttm { get; set; }
         public string Status { get; set; }
+        public string LocationName { get; set; }
+        public int StocksLeft { get; set; }
+        public string Notes { get; set; }
     }
 }

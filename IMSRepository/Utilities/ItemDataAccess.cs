@@ -72,7 +72,7 @@ namespace IMSRepository.Utilities
             using (OrmocIMSEntities context = new OrmocIMSEntities())
             {
                 int CodeHeaderId = context.CodeHeaders
-                    .Where(x => x.CodeHeaderName.Equals("item status") && x.IsActive == true).
+                    .Where(x => x.CodeHeaderName.ToLower().Equals("item status") && x.IsActive == true).
                     Select(x => x.Id).FirstOrDefault();
 
                 var result = context.CodeDetails.Where(x => x.CodeHeaderId == CodeHeaderId && x.IsActive == true)
@@ -325,14 +325,17 @@ namespace IMSRepository.Utilities
         {
             using (OrmocIMSEntities context = new OrmocIMSEntities())
             {
-                var result = context.Items.Include("Brands").Where(x => x.ItemName.Contains(itemName))
+                var result = context.Items.Include(x => x.Brand).Include(x => x.Location).Where(x => x.ItemName.Contains(itemName))
                     .Select(x => new ItemSearchResult
                     {
                         Id = x.Id,
                         ItemName = x.ItemName,
                         Brand = x.Brand.BrandName,
                         Status = x.StatusCd,
-                        CreateDttm = x.CreateDttm
+                        CreateDttm = x.CreateDttm,
+                        LocationName = x.Location.LocationName,
+                        StockLeft = x.Quantity.HasValue ? x.Quantity.Value : 0,
+                        Notes = x.Notes
                     }).ToList();
 
                     return result;
