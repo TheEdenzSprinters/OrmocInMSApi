@@ -118,7 +118,39 @@ namespace PurchaseOrderManagementService.Controllers
             {
                 var app = scope.Resolve<IItemRequestFormBusinessLayer>();
 
-                var result = app.GetGetItemRequestTicketSatus();
+                var result = app.GetItemRequestTicketSatus();
+
+                return Json(result);
+            }
+        }
+
+        [Route("api/PurchaseOrderManagement/AttachItemToItemRequest")]
+        [HttpPost]
+        public IHttpActionResult AttachItemToItemRequest([FromBody]ItemToItemRequestModel item)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemRequestFormBusinessLayer>();
+
+                var result = app.AttachItemToItemRequest(item);
+
+                return Json(result);
+            }
+        }
+
+        [Route("api/PurchaseOrderManagement/DeleteItemFromItemRequest")]
+        [HttpPost]
+        public IHttpActionResult DeleteItemFromItemRequest([FromBody]ItemToItemRequestModel item)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemRequestFormBusinessLayer>();
+
+                var result = app.DeleteItemFromItemRequest(item);
 
                 return Json(result);
             }

@@ -119,5 +119,44 @@ namespace IMSRepository.Utilities
                 return result > 0 ? true : false;
             }
         }
+
+        public bool AttachItemToItemRequest(ItemRequestFormMapping item)
+        {
+            if(item == null)
+            {
+                return false;
+            }
+
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
+            {
+                context.Entry(item).State = EntityState.Added;
+                int result = context.SaveChanges();
+
+                return result > 0 ? true : false;
+            }
+        }
+
+        public ItemRequestFormMapping ValidateIfMappingExists(int itemId, int itemRequestId)
+        {
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
+            {
+                var result = context.ItemRequestFormMappings.Where(x => x.ItemID == itemId && x.IRFID == itemRequestId).FirstOrDefault();
+
+                return result;
+            }
+        }
+
+        public bool DeleteItemFromItemRequest(int id)
+        {
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
+            {
+                var query = context.ItemRequestFormMappings.Where(x => x.Id == id).FirstOrDefault();
+
+                context.Entry(query).State = EntityState.Deleted;
+                int result = context.SaveChanges();
+
+                return result > 0 ? true : false;
+            }
+        }
     }
 }

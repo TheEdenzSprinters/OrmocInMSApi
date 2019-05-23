@@ -27,7 +27,7 @@ namespace PurchaseOrderManagementService.BusinessLayer
             QuotationList singleQuote = new QuotationList();
             CodeHeader ticketStatus = new CodeHeader();
             ItemList singleItem = new ItemList();
-            
+
             var query = _itemRequestFormDataAccess.GetItemRequestFormById(id);
 
             result.Id = query.Id;
@@ -37,7 +37,7 @@ namespace PurchaseOrderManagementService.BusinessLayer
             result.StatusCd = query.StatusCd;
             result.Notes = query.Notes;
 
-            for(int i = 0; i < query.Quotations.Count; i++)
+            for (int i = 0; i < query.Quotations.Count; i++)
             {
                 singleQuote.Id = query.Quotations.ToList()[i].Id;
                 singleQuote.Status = ticketStatus.CodeDetails.Where(x => x.Id == query.Quotations.ToList()[i].StatusCd)
@@ -47,9 +47,10 @@ namespace PurchaseOrderManagementService.BusinessLayer
                 singleQuote.SupplierName = query.Quotations.ToList()[i].Supplier.SupplierName;
 
                 result.RequestFormQuotations.Add(singleQuote);
+                singleQuote = new QuotationList();
             }
 
-            for(int i = 0; i < query.ItemRequestFormMappings.Count; i++)
+            for (int i = 0; i < query.ItemRequestFormMappings.Count; i++)
             {
                 singleItem.Id = query.ItemRequestFormMappings.ToList()[i].ItemID;
                 singleItem.ItemName = query.ItemRequestFormMappings.ToList()[i].Item.ItemName;
@@ -58,6 +59,7 @@ namespace PurchaseOrderManagementService.BusinessLayer
                 singleItem.Notes = query.ItemRequestFormMappings.ToList()[i].Item.Notes;
 
                 result.RequestFormItems.Add(singleItem);
+                singleItem = new ItemList();
             }
 
             return result;
@@ -77,7 +79,7 @@ namespace PurchaseOrderManagementService.BusinessLayer
 
             var items = _itemRequestFormDataAccess.GetItemRequestFormSearchResults(query);
 
-            for(int i = 0; i < items.Count; i++)
+            for (int i = 0; i < items.Count; i++)
             {
                 singleResult.Id = items[i].Id;
                 singleResult.Title = items[i].Title;
@@ -132,10 +134,11 @@ namespace PurchaseOrderManagementService.BusinessLayer
                     case "third":
                         singleItem.TicketStatus = "Third follow-up";
                         break;
-                    default: singleItem.TicketStatus = "";
+                    default:
+                        singleItem.TicketStatus = "";
                         break;
                 }
-                
+
                 result.Add(singleItem);
                 singleItem = new ItemRequestDelinquentResultModel();
             }
@@ -191,9 +194,9 @@ namespace PurchaseOrderManagementService.BusinessLayer
             return result;
         }
 
-        public string ValidateStatusChangeItemRequest (UpdateItemRequestModel itemRequest)
+        public StandardRequestResultModel ValidateStatusChangeItemRequest(UpdateItemRequestModel itemRequest)
         {
-            string result = "";
+            StandardRequestResultModel result = new StandardRequestResultModel();
 
             var selectedCodeDetail = _itemRequestFormDataAccess.GetAllTicketStatus()
                                         .CodeDetails.Where(x => x.Id == itemRequest.StatusCd)
@@ -213,30 +216,60 @@ namespace PurchaseOrderManagementService.BusinessLayer
             {
                 case "Supervisor Review":
                     int quotationCount = selectedItemRequest.Quotations.Count;
-                    result = quotationCount > 0 ? "Success" : "Item Request does not have Quotations for review.";
+
+                    if (quotationCount > 0)
+                    {
+                        result.isSuccess = true;
+                    }
+                    else
+                    {
+                        result.isSuccess = false;
+                        result.Message = "Item Request does not have Quotations for review.";
+                    }
                     break;
                 case "Quotations Sent":
                     int quotesSent = selectedItemRequest.Quotations.Where(x => x.StatusCd == quotationSentCd).Count();
-                    result = quotesSent > 0 ? "Success" : "Item Request has Quotations not set to Quotations Sent status.";
+
+                    if (quotesSent > 0)
+                    {
+                        result.isSuccess = true;
+                    }
+                    else
+                    {
+                        result.isSuccess = false;
+                        result.Message = "Item Request has Quotations not set to Quotations Sent status.";
+                    }
                     break;
                 case "Completed":
                     int quotesComplete = selectedItemRequest.Quotations.Where(x => x.StatusCd == quotationCompleteCd).Count();
-                    result = quotesComplete > 0 ? "Success" : "Item Request has Quotations not set to Completed status.";
+
+                    if (quotesComplete > 0)
+                    {
+                        result.isSuccess = true;
+                    }
+                    else
+                    {
+                        result.isSuccess = false;
+                        result.Message = "Item Request has Quotations not set to Completed status.";
+                    }
                     break;
-                default: break;
+                default:
+                    result.isSuccess = false;
+                    result.Message = "Unknown ticket status.";
+                    break;
             }
 
             return result;
         }
 
-        public List<ItemRequestStatusModel> GetGetItemRequestTicketSatus()
+        public List<ItemRequestStatusModel> GetItemRequestTicketSatus()
         {
             ItemRequestStatusModel singleItem = new ItemRequestStatusModel();
             List<ItemRequestStatusModel> result = new List<ItemRequestStatusModel>();
 
             var query = _itemRequestFormDataAccess.GetAllTicketStatus();
 
-            for(int i = 0; i < query.CodeDetails.Count; i++)
+            for (int i = 0; i < query.CodeDetails.Count; i++)
             {
                 singleItem.Id = query.CodeDetails.ToList()[i].Id;
                 singleItem.Status = query.CodeDetails.ToList()[i].CodeValue;
@@ -246,6 +279,78 @@ namespace PurchaseOrderManagementService.BusinessLayer
             }
 
             return result;
+        }
+
+        public StandardRequestResultModel AttachItemToItemRequest(ItemToItemRequestModel item)
+        {
+            var checkQuery = _itemRequestFormDataAccess.ValidateIfMappingExists(item.ItemId, item.ItemRequestId);
+            StandardRequestResultModel result = new StandardRequestResultModel();
+
+            if (checkQuery != null)
+            {
+                result.isSuccess = false;
+                result.Message = "Item already exists in Item Request.";
+
+                return result;
+            }
+
+            else
+            {
+                ItemRequestFormMapping query = new ItemRequestFormMapping();
+
+                query.ItemID = item.ItemId;
+                query.IRFID = item.ItemRequestId;
+                query.CreateUserName = "ADMIN";
+                query.CreateDttm = DateTime.UtcNow;
+                query.UpdateUserName = "ADMIN";
+                query.UpdateDttm = DateTime.UtcNow;
+
+                var addQuery = _itemRequestFormDataAccess.AttachItemToItemRequest(query);
+
+
+                if (addQuery)
+                {
+                    result.isSuccess = true;
+                    result.Message = "Item added to Item Request.";
+                }
+                else
+                {
+                    result.isSuccess = false;
+                    result.Message = "Error while adding Item to Item Request.";
+                }
+                return result;
+            }
+        }
+
+        public StandardRequestResultModel DeleteItemFromItemRequest(ItemToItemRequestModel item)
+        {
+            var checkQuery = _itemRequestFormDataAccess.ValidateIfMappingExists(item.ItemId, item.ItemRequestId);
+            StandardRequestResultModel result = new StandardRequestResultModel();
+
+            if (checkQuery == null)
+            {
+                result.isSuccess = false;
+                result.Message = "Item does not exist in Item Request.";
+
+                return result;
+            }
+            else
+            {
+                var deleteQuery = _itemRequestFormDataAccess.DeleteItemFromItemRequest(checkQuery.Id);
+
+                if (deleteQuery)
+                {
+                    result.isSuccess = true;
+                    result.Message = "Item successfully removed from Item Request.";
+                }
+                else
+                {
+                    result.isSuccess = false;
+                    result.Message = "Error occured while removing Item from Item Request.";
+                }
+
+                return result;
+            }
         }
     }
 }

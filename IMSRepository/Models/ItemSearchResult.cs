@@ -13,5 +13,8 @@ namespace IMSRepository.Models
         public string Brand { get; set; }
         public DateTime CreateDttm { get; set; }
         public int Status { get; set; }
+        public string LocationName { get; set; }
+        public int StockLeft { get; set; }
+        public string Notes { get; set; }
     }
 }
