@@ -64,7 +64,7 @@ namespace ItemManagementService.BusinessLayer
             brandToUpdate.Id = brand.Id;
             brandToUpdate.BrandName = brand.BrandName;
             brandToUpdate.Notes = brand.Notes;
-            brandToUpdate.IsActive = true;
+            brandToUpdate.IsActive = brand.IsActive;
             brandToUpdate.UpdateUserName = "ADMIN";
             brandToUpdate.UpdateDttm = DateTime.UtcNow;
 
