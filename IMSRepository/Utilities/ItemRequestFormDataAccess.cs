@@ -158,5 +158,66 @@ namespace IMSRepository.Utilities
                 return result > 0 ? true : false;
             }
         }
+
+        public bool CancelItemRequest(int Id)
+        {
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
+            {
+                int result = 0;
+                var query = context.ItemRequestForms.Where(x => x.Id == Id && x.IsActive == true).FirstOrDefault();
+                var ticketDetails = context.CodeHeaders.Include(x => x.CodeDetails)
+                                    .Where(x => x.CodeHeaderName.Equals("Ticket Status"))
+                                    .FirstOrDefault();
+
+                if(query == null)
+                {
+                    return false;
+                }
+
+                try
+                {
+                    query.StatusCd = ticketDetails.CodeDetails.Where(x => x.CodeValue.Equals("Cancelled")).Select(x => x.Id).FirstOrDefault();
+                    query.IsActive = false;
+                    context.Entry(query).State = EntityState.Modified;
+                    result = context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+
+                return result > 0 ? true : false;
+            }
+        }
+
+        public bool RejectItemRequest(int Id)
+        {
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
+            {
+                int result = 0;
+                var query = context.ItemRequestForms.Where(x => x.Id == Id && x.IsActive == true).FirstOrDefault();
+                var ticketDetails = context.CodeHeaders.Include(x => x.CodeDetails)
+                                    .Where(x => x.CodeHeaderName.Equals("Ticket Status"))
+                                    .FirstOrDefault();
+
+                if (query == null)
+                {
+                    return false;
+                }
+
+                try
+                {
+                    query.StatusCd = ticketDetails.CodeDetails.Where(x => x.CodeValue.Equals("Rejected")).Select(x => x.Id).FirstOrDefault();
+                    context.Entry(query).State = EntityState.Modified;
+                    result = context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+
+                return result > 0 ? true : false;
+            }
+        }
     }
 }
