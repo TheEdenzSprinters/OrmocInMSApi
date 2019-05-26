@@ -15,5 +15,7 @@ namespace IMSRepository.Utilities
         bool AttachItemToItemRequest(ItemRequestFormMapping item);
         ItemRequestFormMapping ValidateIfMappingExists(int itemId, int itemRequestId);
         bool DeleteItemFromItemRequest(int Id);
+        bool CancelItemRequest(int Id);
+        bool RejectItemRequest(int Id);
     }
 }

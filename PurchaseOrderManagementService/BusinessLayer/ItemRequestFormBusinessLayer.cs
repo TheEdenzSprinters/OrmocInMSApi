@@ -76,6 +76,7 @@ namespace PurchaseOrderManagementService.BusinessLayer
             query.Title = itemRequestForm.Title;
             query.DateCreated = itemRequestForm.DateFrom;
             query.DateTo = itemRequestForm.DateTo;
+            query.StatusCd = itemRequestForm.StatusCd;
 
             var items = _itemRequestFormDataAccess.GetItemRequestFormSearchResults(query);
 
@@ -253,7 +254,18 @@ namespace PurchaseOrderManagementService.BusinessLayer
                         result.Message = "Item Request has Quotations not set to Completed status.";
                     }
                     break;
+                case "Cancelled":
+                    var isCancelled = _itemRequestFormDataAccess.CancelItemRequest(itemRequest.Id);
 
+                    result.isSuccess = isCancelled;
+                    result.Message = isCancelled ? "Item Request " + itemRequest.Id + " cancelled." : "Item Request " + itemRequest.Id + " already cancelled.";  
+                    break;
+                case "Rejected":
+                    var isRejected = _itemRequestFormDataAccess.RejectItemRequest(itemRequest.Id);
+
+                    result.isSuccess = isRejected;
+                    result.Message = isRejected ? "Item Request " + itemRequest.Id + " set to rejected status." : "Item Request " + itemRequest.Id + " already rejected.";
+                    break;
                 default:
                     if(selectedCodeDetail == selectedItemRequest.CodeDetail.CodeValue)
                     {
