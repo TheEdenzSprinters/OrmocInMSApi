@@ -31,13 +31,22 @@ namespace IMSRepository.Utilities
             }
         }
 
-        public List<ItemRequestFormSearchResultModel> GetItemRequestFormSearchResults(ItemRequestFormSearchQueryModel query)
+        public ItemRequestSearchModel GetItemRequestFormSearchResults(ItemRequestFormSearchQueryModel query)
         {
+            ItemRequestSearchModel result = new ItemRequestSearchModel();
+            result.SearchResult = new List<ItemRequestFormSearchResultModel>();
+
             using (OrmocIMSEntities context = new OrmocIMSEntities())
             {
-                var result = context.ItemRequestFormSearch_SP(query.ModuleNm, query.Id.HasValue ? query.Id.Value.ToString() : null, 
+                result.RecordCount = context.ItemRequestFormSearch_SP(query.ModuleNm, query.Id.HasValue ? query.Id.Value.ToString() : null,
                     String.IsNullOrEmpty(query.Title) ? null : query.Title, query.StatusCd.HasValue ? query.StatusCd.Value.ToString() : null,
                     string.IsNullOrEmpty(query.DateCreated) ? null : query.DateCreated, string.IsNullOrEmpty(query.DateTo) ? null : query.DateTo)
+                    .Count();
+
+                result.SearchResult = context.ItemRequestFormSearch_SP(query.ModuleNm, query.Id.HasValue ? query.Id.Value.ToString() : null, 
+                    String.IsNullOrEmpty(query.Title) ? null : query.Title, query.StatusCd.HasValue ? query.StatusCd.Value.ToString() : null,
+                    string.IsNullOrEmpty(query.DateCreated) ? null : query.DateCreated, string.IsNullOrEmpty(query.DateTo) ? null : query.DateTo)
+                    .Skip(query.NextBatch).Take(10)
                     .Select(x => new ItemRequestFormSearchResultModel {
                         Id = x.Id,
                         Title = x.Title,

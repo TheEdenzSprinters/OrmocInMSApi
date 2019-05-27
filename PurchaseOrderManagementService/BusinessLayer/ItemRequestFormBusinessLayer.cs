@@ -65,11 +65,12 @@ namespace PurchaseOrderManagementService.BusinessLayer
             return result;
         }
 
-        public List<ItemRequestSearchResultModel> ItemRequestFormSearch(ItemRequestSearchQueryModel itemRequestForm)
+        public ItemRequestSearchResponseModel ItemRequestFormSearch(ItemRequestSearchQueryModel itemRequestForm)
         {
             ItemRequestFormSearchQueryModel query = new ItemRequestFormSearchQueryModel();
             ItemRequestSearchResultModel singleResult = new ItemRequestSearchResultModel();
-            List<ItemRequestSearchResultModel> result = new List<ItemRequestSearchResultModel>();
+            ItemRequestSearchResponseModel result = new ItemRequestSearchResponseModel();
+            result.SearchResult = new List<ItemRequestSearchResultModel>();
 
             query.ModuleNm = "itemrequestformsearch";
             query.Id = itemRequestForm.Id;
@@ -77,17 +78,19 @@ namespace PurchaseOrderManagementService.BusinessLayer
             query.DateCreated = itemRequestForm.DateFrom;
             query.DateTo = itemRequestForm.DateTo;
             query.StatusCd = itemRequestForm.StatusCd;
+            query.NextBatch = (itemRequestForm.NextBatch - 1) * 10;
 
             var items = _itemRequestFormDataAccess.GetItemRequestFormSearchResults(query);
+            result.RecordCount = items.RecordCount;
 
-            for (int i = 0; i < items.Count; i++)
+            for (int i = 0; i < items.SearchResult.Count; i++)
             {
-                singleResult.Id = items[i].Id;
-                singleResult.Title = items[i].Title;
-                singleResult.Status = items[i].Status;
-                singleResult.DateCreated = items[i].DateCreated;
+                singleResult.Id = items.SearchResult[i].Id;
+                singleResult.Title = items.SearchResult[i].Title;
+                singleResult.Status = items.SearchResult[i].Status;
+                singleResult.DateCreated = items.SearchResult[i].DateCreated;
 
-                result.Add(singleResult);
+                result.SearchResult.Add(singleResult);
                 singleResult = new ItemRequestSearchResultModel();
             }
 

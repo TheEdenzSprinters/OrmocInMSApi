@@ -90,6 +90,7 @@
     <Compile Include="Models\ItemRequestDelinquentQueryResultModel.cs" />
     <Compile Include="Models\ItemRequestFormSearchQueryModel.cs" />
     <Compile Include="Models\ItemRequestFormSearchResultModel.cs" />
+    <Compile Include="Models\ItemRequestSearchModel.cs" />
     <Compile Include="Models\ItemSearchModel.cs" />
     <Compile Include="Models\ItemSearchResult.cs" />
     <Compile Include="OrmocIMSEntities.Context.cs">
