@@ -14,5 +14,6 @@ namespace IMSRepository.Models
         public int? StatusCd { get; set; }
         public string DateCreated { get; set; }
         public string DateTo { get; set; }
+        public int NextBatch { get; set; }
     }
 }

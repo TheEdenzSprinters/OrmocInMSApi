@@ -10,7 +10,7 @@ namespace PurchaseOrderManagementService.Interfaces
     public interface IItemRequestFormBusinessLayer
     {
         ItemRequestFormModel GetItemRequestFormById(int id);
-        List<ItemRequestSearchResultModel> ItemRequestFormSearch(ItemRequestSearchQueryModel itemRequestForm);
+        ItemRequestSearchResponseModel ItemRequestFormSearch(ItemRequestSearchQueryModel itemRequestForm);
         List<ItemRequestDelinquentResultModel> GetItemRequestFormDelinquents();
         ItemRequestFormModel InsertNewItemRequest(InsertItemRequestModel itemRequest);
         bool UpdateItemRequestById(UpdateItemRequestModel itemRequest);

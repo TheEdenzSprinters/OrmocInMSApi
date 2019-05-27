@@ -12,5 +12,6 @@ namespace PurchaseOrderManagementService.Models
         public int? StatusCd { get; set; }
         public string DateFrom { get; set; }
         public string DateTo { get; set; }
+        public int NextBatch { get; set; }
     }
 }

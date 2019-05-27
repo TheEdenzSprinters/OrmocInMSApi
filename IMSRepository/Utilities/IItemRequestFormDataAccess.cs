@@ -6,7 +6,7 @@ namespace IMSRepository.Utilities
     public interface IItemRequestFormDataAccess
     {
         ItemRequestForm GetItemRequestFormById(int Id);
-        List<ItemRequestFormSearchResultModel> GetItemRequestFormSearchResults(ItemRequestFormSearchQueryModel query);
+        ItemRequestSearchModel GetItemRequestFormSearchResults(ItemRequestFormSearchQueryModel query);
         CodeHeader GetAllFollowupDetails();
         List<ItemRequestDelinquentQueryResultModel> GetItemRequestFormDelinquents(ItemRequestDelinquentQueryModel query);
         CodeHeader GetAllTicketStatus();
