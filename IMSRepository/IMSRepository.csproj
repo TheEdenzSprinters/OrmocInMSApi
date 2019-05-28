@@ -92,6 +92,7 @@
     <Compile Include="Models\ItemRequestFormSearchResultModel.cs" />
     <Compile Include="Models\ItemRequestSearchModel.cs" />
     <Compile Include="Models\ItemSearchModel.cs" />
+    <Compile Include="Models\ItemSearchResponseModel.cs" />
     <Compile Include="Models\ItemSearchResult.cs" />
     <Compile Include="OrmocIMSEntities.Context.cs">
       <AutoGen>True</AutoGen>

@@ -11,7 +11,7 @@ namespace ItemManagementService.Interfaces
     public interface IItemBusinessLayer
     {
         ItemSingleModel GetItemById(int id);
-        List<ItemSearchResultModel> ItemAdvancedSearch(ItemSearchQueryModel item);
+        ItemSearchGeneralResponseModel ItemAdvancedSearch(ItemSearchQueryModel item);
         List<string> ItemAutoComplete(string word);
         List<LocationModel> GetAllLocations();
         List<ItemStatus> GetAllItemStatus();
@@ -21,6 +21,6 @@ namespace ItemManagementService.Interfaces
         string UpdateItemStatusById(UpdateItemStatusModel status);
         List<TagsModel> TagsAutoComplete(string word);
         TagsModel AddNewTagToItem(TagsMappingModel tag);
-        List<ItemSearchResultModel> ItemBySimpleSearch(ItemSimpleSearchModel item);
+        ItemSearchGeneralResponseModel ItemBySimpleSearch(ItemSimpleSearchModel item);
     }
 }

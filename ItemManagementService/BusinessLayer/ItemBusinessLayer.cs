@@ -194,10 +194,11 @@ namespace ItemManagementService.BusinessLayer
             return result;
         }
 
-        public List<ItemSearchResultModel> ItemAdvancedSearch(ItemSearchQueryModel item)
+        public ItemSearchGeneralResponseModel ItemAdvancedSearch(ItemSearchQueryModel item)
         {
             ItemSearchResultModel singleItem = new ItemSearchResultModel();
-            List<ItemSearchResultModel> result = new List<ItemSearchResultModel>();
+            ItemSearchGeneralResponseModel result = new ItemSearchGeneralResponseModel();
+            result.SearchResult = new List<ItemSearchResultModel>();
             ItemSearchModel searchTerm = new ItemSearchModel();
 
             searchTerm.ModuleName = "items";
@@ -210,19 +211,22 @@ namespace ItemManagementService.BusinessLayer
             searchTerm.Tag = item.Tag;
             searchTerm.Sku = item.Sku;
             searchTerm.StatusCd = item.StatusCd;
+            searchTerm.NextBatch = (item.NextBatch - 1) * 10;
 
             var query = _itemDataAccess.AdvancedSearchItems(searchTerm);
             var codeDetail = _itemDataAccess.GetAllItemStatus();
 
-            for (int i = 0; i < query.Count; i++)
-            {
-                singleItem.Id = query[i].Id;
-                singleItem.ItemName = query[i].ItemName;
-                singleItem.Brand = query[i].Brand;
-                singleItem.Status = codeDetail.Where(x => x.Id == query[i].Status).Select(x => x.CodeValue).FirstOrDefault();
-                singleItem.CreateDttm = query[i].CreateDttm;
+            result.RecordCount = query.RecordCount;
 
-                result.Add(singleItem);
+            for (int i = 0; i < query.SearchResult.Count; i++)
+            {
+                singleItem.Id = query.SearchResult[i].Id;
+                singleItem.ItemName = query.SearchResult[i].ItemName;
+                singleItem.Brand = query.SearchResult[i].Brand;
+                singleItem.Status = codeDetail.Where(x => x.Id == query.SearchResult[i].Status).Select(x => x.CodeValue).FirstOrDefault();
+                singleItem.CreateDttm = query.SearchResult[i].CreateDttm;
+
+                result.SearchResult.Add(singleItem);
                 singleItem = new ItemSearchResultModel();
             }
 
@@ -345,26 +349,30 @@ namespace ItemManagementService.BusinessLayer
             return null;
         }
 
-        public List<ItemSearchResultModel> ItemBySimpleSearch(ItemSimpleSearchModel item)
+        public ItemSearchGeneralResponseModel ItemBySimpleSearch(ItemSimpleSearchModel item)
         {
             ItemSearchResultModel singleItem = new ItemSearchResultModel();
-            List<ItemSearchResultModel> result = new List<ItemSearchResultModel>();
+            ItemSearchGeneralResponseModel result = new ItemSearchGeneralResponseModel();
+            result.SearchResult = new List<ItemSearchResultModel>();
 
-            var query = _itemDataAccess.SimpleSearchItems(item.ItemName);
+            var query = _itemDataAccess.SimpleSearchItems(item.ItemName, (item.NextBatch - 1) * 10);
             var codeDetail = _itemDataAccess.GetAllItemStatus();
 
-            for (int i = 0; i < query.Count; i++)
-            {
-                singleItem.Id = query[i].Id;
-                singleItem.ItemName = query[i].ItemName;
-                singleItem.Brand = query[i].Brand;
-                singleItem.Status = codeDetail.Where(x => x.Id == query[i].Status).Select(x => x.CodeValue).FirstOrDefault();
-                singleItem.CreateDttm = query[i].CreateDttm;
-                singleItem.LocationName = query[i].LocationName;
-                singleItem.StocksLeft = query[i].StockLeft;
-                singleItem.Notes = query[i].Notes;
+            result.RecordCount = query.RecordCount;
 
-                result.Add(singleItem);
+            for (int i = 0; i < query.SearchResult.Count; i++)
+            {
+                singleItem.Id = query.SearchResult[i].Id;
+                singleItem.ItemName = query.SearchResult[i].ItemName;
+                singleItem.Brand = query.SearchResult[i].Brand;
+                singleItem.Status = codeDetail.Where(x => x.Id == query.SearchResult[i].Status)
+                                    .Select(x => x.CodeValue).FirstOrDefault();
+                singleItem.CreateDttm = query.SearchResult[i].CreateDttm;
+                singleItem.LocationName = query.SearchResult[i].LocationName;
+                singleItem.StocksLeft = query.SearchResult[i].StockLeft;
+                singleItem.Notes = query.SearchResult[i].Notes;
+
+                result.SearchResult.Add(singleItem);
                 singleItem = new ItemSearchResultModel();
             }
 

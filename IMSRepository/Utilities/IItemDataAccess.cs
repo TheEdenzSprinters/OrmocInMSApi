@@ -6,7 +6,7 @@ namespace IMSRepository.Utilities
     public interface IItemDataAccess
     {
         Item GetItemById(int id);
-        List<ItemSearchResult> AdvancedSearchItems(ItemSearchModel item);
+        ItemSearchResponseModel AdvancedSearchItems(ItemSearchModel item);
         List<string> ItemAutoComplete(string word);
         List<Location> GetAllLocations();
         List<CodeDetail> GetAllItemStatus();
@@ -22,7 +22,7 @@ namespace IMSRepository.Utilities
         int AddNewTag(Tag tag);
         bool AddTaggingByItemId(int tagId, int itemId);
         List<Tag> TagsAutoComplete(string word);
-        List<ItemSearchResult> SimpleSearchItems(string itemName);
+        ItemSearchResponseModel SimpleSearchItems(string itemName, int skip);
         Brand GetBrandByName(string brandName);
     }
 }

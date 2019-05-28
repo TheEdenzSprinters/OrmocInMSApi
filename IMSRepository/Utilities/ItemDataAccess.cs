@@ -22,11 +22,13 @@ namespace IMSRepository.Utilities
             }
         }
 
-        public List<ItemSearchResult> AdvancedSearchItems(ItemSearchModel item)
+        public ItemSearchResponseModel AdvancedSearchItems(ItemSearchModel item)
         {
+            ItemSearchResponseModel result = new ItemSearchResponseModel();
+
             using (OrmocIMSEntities context = new OrmocIMSEntities())
             {
-                var result = context.ItemAdvancedSearch_SP(item.ModuleName, item.Id.HasValue ? item.Id.Value.ToString() : null,
+                result.RecordCount = context.ItemAdvancedSearch_SP(item.ModuleName, item.Id.HasValue ? item.Id.Value.ToString() : null,
                     null, string.IsNullOrEmpty(item.ItemName) ? null : item.ItemName,
                     string.IsNullOrEmpty(item.Brand) ? null : item.Brand,
                     item.CategoryId.HasValue ? item.CategoryId.Value.ToString() : null,
@@ -35,7 +37,18 @@ namespace IMSRepository.Utilities
                     string.IsNullOrEmpty(item.Tag) ? null : item.Tag,
                     string.IsNullOrEmpty(item.Sku) ? null : item.Sku,
                     item.StatusCd.HasValue ? item.StatusCd.Value.ToString() : null
-                    )
+                    ).Count();
+
+                result.SearchResult = context.ItemAdvancedSearch_SP(item.ModuleName, item.Id.HasValue ? item.Id.Value.ToString() : null,
+                    null, string.IsNullOrEmpty(item.ItemName) ? null : item.ItemName,
+                    string.IsNullOrEmpty(item.Brand) ? null : item.Brand,
+                    item.CategoryId.HasValue ? item.CategoryId.Value.ToString() : null,
+                    item.SubCategoryId.HasValue ? item.SubCategoryId.Value.ToString() : null,
+                    item.Location.HasValue ? item.Location.Value.ToString() : null,
+                    string.IsNullOrEmpty(item.Tag) ? null : item.Tag,
+                    string.IsNullOrEmpty(item.Sku) ? null : item.Sku,
+                    item.StatusCd.HasValue ? item.StatusCd.Value.ToString() : null
+                    ).Skip(item.NextBatch).Take(10)
                     .Select(x => new ItemSearchResult
                     {
                         Id = x.Id,
@@ -321,11 +334,19 @@ namespace IMSRepository.Utilities
             }
         }
 
-        public List<ItemSearchResult> SimpleSearchItems(string itemName)
+        public ItemSearchResponseModel SimpleSearchItems(string itemName, int skip)
         {
+            ItemSearchResponseModel result = new ItemSearchResponseModel();
+
             using (OrmocIMSEntities context = new OrmocIMSEntities())
             {
-                var result = context.Items.Include(x => x.Brand).Include(x => x.Location).Where(x => x.ItemName.Contains(itemName))
+                result.RecordCount = context.Items.Include(x => x.Brand).Include(x => x.Location)
+                    .Where(x => x.ItemName.Contains(itemName)).Count();
+
+                result.SearchResult = context.Items.Include(x => x.Brand).Include(x => x.Location)
+                    .Where(x => x.ItemName.Contains(itemName))
+                    .OrderBy(x => x.Id)
+                    .Skip(skip).Take(10)
                     .Select(x => new ItemSearchResult
                     {
                         Id = x.Id,
