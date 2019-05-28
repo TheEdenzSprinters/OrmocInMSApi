@@ -12,5 +12,6 @@ namespace IMSRepository.Models
         public DateTime FirstFollowupDate { get; set; }
         public DateTime SecondFollowupDate { get; set; }
         public DateTime ThirdFollowupDate { get; set; }
+        public int NextBatch { get; set; }
     }
 }

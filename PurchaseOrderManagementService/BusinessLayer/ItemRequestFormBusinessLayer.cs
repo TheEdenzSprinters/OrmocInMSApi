@@ -97,12 +97,12 @@ namespace PurchaseOrderManagementService.BusinessLayer
             return result;
         }
 
-        public List<ItemRequestDelinquentResultModel> GetItemRequestFormDelinquents()
+        public ItemRequestDelinquentSearchResponseModel GetItemRequestFormDelinquents(ItemRequestDelinquentRequestModel request)
         {
-            ItemRequestFormSearchQueryModel query = new ItemRequestFormSearchQueryModel();
             ItemRequestDelinquentQueryModel delinquentQuery = new ItemRequestDelinquentQueryModel();
             ItemRequestDelinquentResultModel singleItem = new ItemRequestDelinquentResultModel();
-            List<ItemRequestDelinquentResultModel> result = new List<ItemRequestDelinquentResultModel>();
+            ItemRequestDelinquentSearchResponseModel result = new ItemRequestDelinquentSearchResponseModel();
+            result.SearchResult = new List<ItemRequestDelinquentResultModel>();
 
             var followupDays = _itemRequestFormDataAccess.GetAllFollowupDetails().CodeDetails.ToList();
 
@@ -114,17 +114,18 @@ namespace PurchaseOrderManagementService.BusinessLayer
             delinquentQuery.FirstFollowupDate = FirstFollowup;
             delinquentQuery.SecondFollowupDate = SecondFollowup;
             delinquentQuery.ThirdFollowupDate = ThirdFollowup;
+            delinquentQuery.NextBatch = (request.CurrentPage - 1) * 10;
 
-            var items = _itemRequestFormDataAccess.GetItemRequestFormDelinquents(delinquentQuery).OrderBy(x => x.Status).ToList();
+            var delinquents = _itemRequestFormDataAccess.GetItemRequestFormDelinquents(delinquentQuery);
 
-            for (int i = 0; i < items.Count; i++)
+            for (int i = 0; i < delinquents.SearchResult.Count; i++)
             {
-                singleItem.Id = items[i].Id;
-                singleItem.Title = items[i].Title;
-                singleItem.DateCreated = items[i].DateCreated;
-                singleItem.Status = items[i].Status;
+                singleItem.Id = delinquents.SearchResult[i].Id;
+                singleItem.Title = delinquents.SearchResult[i].Title;
+                singleItem.DateCreated = delinquents.SearchResult[i].DateCreated;
+                singleItem.Status = delinquents.SearchResult[i].Status;
 
-                switch (items[i].TicketStatus.ToLower())
+                switch (delinquents.SearchResult[i].TicketStatus.ToLower())
                 {
                     case "other":
                         singleItem.TicketStatus = "Incomplete ticket";
@@ -143,7 +144,8 @@ namespace PurchaseOrderManagementService.BusinessLayer
                         break;
                 }
 
-                result.Add(singleItem);
+                result.RecordCount = delinquents.RecordCount;
+                result.SearchResult.Add(singleItem);
                 singleItem = new ItemRequestDelinquentResultModel();
             }
 
