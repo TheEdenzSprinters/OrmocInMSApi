@@ -8,5 +8,6 @@ namespace ItemManagementService.Models
     public class ItemSimpleSearchModel
     {
         public string ItemName { get; set; }
+        public int NextBatch { get; set; }
     }
 }

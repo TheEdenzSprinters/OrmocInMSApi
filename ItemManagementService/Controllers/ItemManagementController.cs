@@ -238,7 +238,7 @@ namespace ItemManagementService.Controllers
 
                 var result = app.ItemAdvancedSearch(item);
 
-                return Json(new { Result = result });
+                return Json(result);
             }
         }
 
@@ -259,7 +259,7 @@ namespace ItemManagementService.Controllers
 
                 var result = app.ItemBySimpleSearch(item);
 
-                return Json(new { Result = result });
+                return Json(result);
             }
         }
 
