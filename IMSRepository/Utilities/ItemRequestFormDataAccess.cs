@@ -68,13 +68,19 @@ namespace IMSRepository.Utilities
             }
         }
 
-        public List<ItemRequestDelinquentQueryResultModel> GetItemRequestFormDelinquents(ItemRequestDelinquentQueryModel query)
+        public ItemRequestPullDelinquentsResponseModel GetItemRequestFormDelinquents(ItemRequestDelinquentQueryModel query)
         {
+            ItemRequestPullDelinquentsResponseModel result = new ItemRequestPullDelinquentsResponseModel();
+
             using (OrmocIMSEntities context = new OrmocIMSEntities())
             {
-                var result = context.ItemRequestFormSearch_SP(query.ModuleNm, null, null,
+                result.RecordCount = context.ItemRequestFormSearch_SP(query.ModuleNm, null, null,
                             query.FirstFollowupDate.ToString(), query.SecondFollowupDate.ToString(),
-                            query.ThirdFollowupDate.ToString())
+                            query.ThirdFollowupDate.ToString()).Count();
+
+                result.SearchResult = context.ItemRequestFormSearch_SP(query.ModuleNm, null, null,
+                            query.FirstFollowupDate.ToString(), query.SecondFollowupDate.ToString(),
+                            query.ThirdFollowupDate.ToString()).Skip(query.NextBatch).Take(10)
                             .Select(x => new ItemRequestDelinquentQueryResultModel
                             {
                                 Id = x.Id,

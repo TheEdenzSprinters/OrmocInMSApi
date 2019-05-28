@@ -8,7 +8,7 @@ namespace IMSRepository.Utilities
         ItemRequestForm GetItemRequestFormById(int Id);
         ItemRequestSearchModel GetItemRequestFormSearchResults(ItemRequestFormSearchQueryModel query);
         CodeHeader GetAllFollowupDetails();
-        List<ItemRequestDelinquentQueryResultModel> GetItemRequestFormDelinquents(ItemRequestDelinquentQueryModel query);
+        ItemRequestPullDelinquentsResponseModel GetItemRequestFormDelinquents(ItemRequestDelinquentQueryModel query);
         CodeHeader GetAllTicketStatus();
         ItemRequestForm InsertNewItemRequest(ItemRequestForm itemRequest);
         bool UpdateItemRequestById(ItemRequestForm itemRequest);
