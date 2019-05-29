@@ -29,8 +29,8 @@ namespace PurchaseOrderManagementService.Controllers
         }
 
         [Route("api/PurchaseOrderManagement/GetItemRequestFormDelinquents")]
-        [HttpGet]
-        public IHttpActionResult GetItemRequestFormDelinquents()
+        [HttpPost]
+        public IHttpActionResult GetItemRequestFormDelinquents([FromBody]ItemRequestDelinquentRequestModel request)
         {
             var container = ContainerConfig.Configure();
 
@@ -38,7 +38,7 @@ namespace PurchaseOrderManagementService.Controllers
             {
                 var app = scope.Resolve<IItemRequestFormBusinessLayer>();
 
-                var result = app.GetItemRequestFormDelinquents();
+                var result = app.GetItemRequestFormDelinquents(request);
 
                 return Json(result);
             }

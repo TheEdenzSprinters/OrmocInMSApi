@@ -109,6 +109,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IItemRequestFormBusinessLayer.cs" />
+    <Compile Include="Models\ItemRequestDelinquentRequestModel.cs" />
+    <Compile Include="Models\ItemRequestDelinquentSearchResponseModel.cs" />
     <Compile Include="Models\ItemRequestSearchResponseModel.cs" />
     <Compile Include="Models\ItemRequestStatusChangeModel.cs" />
     <Compile Include="Models\ItemToItemRequestModel.cs" />

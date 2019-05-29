@@ -122,6 +122,7 @@
     <Compile Include="Models\InsertItemModel.cs" />
     <Compile Include="Models\ItemDetailBySubCategoryModel.cs" />
     <Compile Include="Models\ItemDetailModel.cs" />
+    <Compile Include="Models\ItemSearchGeneralResponseModel.cs" />
     <Compile Include="Models\ItemSearchQueryModel.cs" />
     <Compile Include="Models\ItemSearchResultModel.cs" />
     <Compile Include="Models\ItemSimpleSearchModel.cs" />
