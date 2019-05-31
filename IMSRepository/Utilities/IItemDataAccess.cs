@@ -24,5 +24,8 @@ namespace IMSRepository.Utilities
         List<Tag> TagsAutoComplete(string word);
         ItemSearchResponseModel SimpleSearchItems(string itemName, int skip);
         Brand GetBrandByName(string brandName);
+        List<Item> GetRedLevelItems();
+        List<Item> GetAmberLevelItems();
+        List<Item> GetOldestStocks();
     }
 }
