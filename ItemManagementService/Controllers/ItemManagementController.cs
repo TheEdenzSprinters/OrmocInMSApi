@@ -368,6 +368,11 @@ namespace ItemManagementService.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public IHttpActionResult UpdateExistingItem([FromBody]UpdateItemModel item)
         {
             var container = ContainerConfig.Configure();
@@ -382,6 +387,11 @@ namespace ItemManagementService.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
         [Route("api/ItemManagement/UpdateItemStatusById")]
         [HttpPost]
         public IHttpActionResult UpdateItemStatusById([FromBody]UpdateItemStatusModel status)
@@ -398,6 +408,11 @@ namespace ItemManagementService.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
         [Route("api/ItemManagement/TagsAutoComplete")]
         [HttpPost]
         public IHttpActionResult TagsAutoComplete([FromBody]string word)
@@ -416,6 +431,11 @@ namespace ItemManagementService.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tags"></param>
+        /// <returns></returns>
         [Route("api/ItemManagement/AddNewTagging")]
         [HttpPost]
         public IHttpActionResult AddNewTagging([FromBody]TagsMappingModel tags)

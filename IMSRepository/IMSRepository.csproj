@@ -62,6 +62,9 @@
     <Compile Include="CodeHeader.cs">
       <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="HashKey.cs">
+      <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Item.cs">
       <DependentUpon>OrmocIMSEntities.tt</DependentUpon>
     </Compile>
@@ -146,10 +149,12 @@
     <Compile Include="Utilities\ICategoryDataAccess.cs" />
     <Compile Include="Utilities\IItemDataAccess.cs" />
     <Compile Include="Utilities\IItemRequestFormDataAccess.cs" />
+    <Compile Include="Utilities\ILoginDataAccess.cs" />
     <Compile Include="Utilities\ISubCategoryDataAccess.cs" />
     <Compile Include="Utilities\CategoryDataAccess.cs" />
     <Compile Include="Utilities\ItemDataAccess.cs" />
     <Compile Include="Utilities\ItemRequestFormDataAccess.cs" />
+    <Compile Include="Utilities\LoginDataAccess.cs" />
     <Compile Include="Utilities\SubCategoryDataAccess.cs" />
   </ItemGroup>
   <ItemGroup>

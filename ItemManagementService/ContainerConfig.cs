@@ -20,6 +20,7 @@ namespace ItemManagementService
             builder.RegisterType<CategoryBusinessLayer>().As<ICategoryBusinessLayer>();
             builder.RegisterType<BrandBusinessLayer>().As<IBrandBusinessLayer>();
             builder.RegisterType<ItemBusinessLayer>().As<IItemBusinessLayer>();
+            builder.RegisterType<LoginBusinessLayer>().As<ILoginBusinessLayer>();
 
             builder.RegisterAssemblyTypes(Assembly.Load(nameof(IMSRepository)))
                 .Where(t => t.Namespace.Contains("Utilities"))
