@@ -105,15 +105,18 @@
     <Compile Include="BusinessLayer\CategoryBusinessLayer.cs" />
     <Compile Include="BusinessLayer\BrandBusinessLayer.cs" />
     <Compile Include="BusinessLayer\ItemBusinessLayer.cs" />
+    <Compile Include="BusinessLayer\LoginBusinessLayer.cs" />
     <Compile Include="BusinessLayer\SubCategoryBusinessLayer.cs" />
     <Compile Include="ContainerConfig.cs" />
     <Compile Include="Controllers\ItemManagementController.cs" />
+    <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IBrandBusinessLayer.cs" />
     <Compile Include="Interfaces\ICategoryBusinessLayer.cs" />
     <Compile Include="Interfaces\IItemBusinessLayer.cs" />
+    <Compile Include="Interfaces\ILoginBusinessLayer.cs" />
     <Compile Include="Interfaces\ISubCategoryBusinessLayer.cs" />
     <Compile Include="Models\BaseItemModel.cs" />
     <Compile Include="Models\BrandModel.cs" />
@@ -129,6 +132,8 @@
     <Compile Include="Models\ItemSingleModel.cs" />
     <Compile Include="Models\ItemStatus.cs" />
     <Compile Include="Models\LocationModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\LoginResultModel.cs" />
     <Compile Include="Models\SearchItemByIdModel.cs" />
     <Compile Include="Models\SubCategoryByCategoryIdModel.cs" />
     <Compile Include="Models\SubCategoryModel.cs" />

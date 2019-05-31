@@ -56,6 +56,12 @@
           <Property Name="UpdateUserName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="UpdateDttm" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="HashKey">
+          <Key>
+            <PropertyRef Name="KeyValue" />
+          </Key>
+          <Property Name="KeyValue" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="ItemDetail">
           <Key>
             <PropertyRef Name="Id" />
@@ -127,6 +133,8 @@
           <Property Name="ThresholdQty" Type="int" />
           <Property Name="WarningThresholdQty" Type="int" />
           <Property Name="MeasuredBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UnitPrice" Type="varchar" MaxLength="50" />
+          <Property Name="RetailPrice" Type="varchar" MaxLength="50" />
           <Property Name="Sku" Type="varchar" MaxLength="50" />
           <Property Name="Notes" Type="varchar" MaxLength="500" />
           <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
@@ -284,7 +292,10 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Token" Type="varchar" MaxLength="100" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreateUserName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="CreateDttm" Type="datetime" Nullable="false" />
@@ -603,32 +614,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="ItemAdvancedSearch_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ModuleNm" Type="varchar" Mode="In" />
-          <Parameter Name="param1" Type="varchar" Mode="In" />
-          <Parameter Name="param2" Type="varchar" Mode="In" />
-          <Parameter Name="param3" Type="varchar" Mode="In" />
-          <Parameter Name="param4" Type="varchar" Mode="In" />
-          <Parameter Name="param5" Type="varchar" Mode="In" />
-          <Parameter Name="param6" Type="varchar" Mode="In" />
-          <Parameter Name="param7" Type="varchar" Mode="In" />
-          <Parameter Name="param8" Type="varchar" Mode="In" />
-          <Parameter Name="param9" Type="varchar" Mode="In" />
-          <Parameter Name="param10" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="ItemRequestFormSearch_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ModuleNm" Type="varchar" Mode="In" />
-          <Parameter Name="param1" Type="varchar" Mode="In" />
-          <Parameter Name="param2" Type="varchar" Mode="In" />
-          <Parameter Name="param3" Type="varchar" Mode="In" />
-          <Parameter Name="param4" Type="varchar" Mode="In" />
-          <Parameter Name="param5" Type="varchar" Mode="In" />
-        </Function>
         <EntityContainer Name="OrmocIMSModelStoreContainer">
           <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CodeDetail" EntityType="Self.CodeDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CodeHeader" EntityType="Self.CodeHeader" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HashKey" EntityType="Self.HashKey" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemDetail" EntityType="Self.ItemDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemDetailMapping" EntityType="Self.ItemDetailMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemRequestForm" EntityType="Self.ItemRequestForm" Schema="dbo" store:Type="Tables" />
@@ -785,7 +776,6 @@
           <EntitySet Name="Tags" EntityType="OrmocIMSModel.Tag" />
           <EntitySet Name="TagsMappings" EntityType="OrmocIMSModel.TagsMapping" />
           <EntitySet Name="UnitsOfMeasures" EntityType="OrmocIMSModel.UnitsOfMeasure" />
-          <EntitySet Name="Users" EntityType="OrmocIMSModel.User" />
           <AssociationSet Name="FK_SubCategoryCategory_Category" Association="OrmocIMSModel.FK_SubCategoryCategory_Category">
             <End Role="Category" EntitySet="Categories" />
             <End Role="SubCategory" EntitySet="SubCategories" />
@@ -859,6 +849,7 @@
             <Parameter Name="param4" Mode="In" Type="String" />
             <Parameter Name="param5" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="HashKeys" EntityType="OrmocIMSModel.HashKey" />
           <EntitySet Name="Items" EntityType="OrmocIMSModel.Item" />
           <AssociationSet Name="FK_ItemBrand_Brand" Association="OrmocIMSModel.FK_ItemBrand_Brand">
             <End Role="Brand" EntitySet="Brands" />
@@ -900,6 +891,7 @@
             <End Role="SubCategory" EntitySet="SubCategories" />
             <End Role="Item" EntitySet="Items" />
           </AssociationSet>
+          <EntitySet Name="Users" EntityType="OrmocIMSModel.User" />
           </EntityContainer>
         <ComplexType Name="ItemAdvancedSearch_SP_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1190,20 +1182,6 @@
           <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="ItemDetails" Relationship="OrmocIMSModel.FK_ItemDetailUnitsOfMeasure_UnitsOfMeasure" FromRole="UnitsOfMeasure" ToRole="ItemDetail" />
         </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
         <Association Name="FK_SubCategoryCategory_Category">
           <End Type="OrmocIMSModel.Category" Role="Category" Multiplicity="1" />
           <End Type="OrmocIMSModel.SubCategory" Role="SubCategory" Multiplicity="*" />
@@ -1432,6 +1410,12 @@
           <Property Type="String" Name="CodeValue" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="TicketStatus" Nullable="false" MaxLength="1" />
         </ComplexType>
+        <EntityType Name="HashKey">
+          <Key>
+            <PropertyRef Name="KeyValue" />
+          </Key>
+          <Property Name="KeyValue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="Item">
           <Key>
             <PropertyRef Name="Id" />
@@ -1447,6 +1431,8 @@
           <Property Name="ThresholdQty" Type="Int32" />
           <Property Name="WarningThresholdQty" Type="Int32" />
           <Property Name="MeasuredBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UnitPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RetailPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Sku" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="CreateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -1584,35 +1570,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Token" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDttm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="OrmocIMSModelStoreContainer" CdmEntityContainer="OrmocIMSEntities">
-          <FunctionImportMapping FunctionImportName="ItemAdvancedSearch_SP" FunctionName="OrmocIMSModel.Store.ItemAdvancedSearch_SP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="OrmocIMSModel.ItemAdvancedSearch_SP_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
-                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
-                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
-                <ScalarProperty Name="StatusCd" ColumnName="StatusCd" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="ThresholdQty" ColumnName="ThresholdQty" />
-                <ScalarProperty Name="MeasuredBy" ColumnName="MeasuredBy" />
-                <ScalarProperty Name="Sku" ColumnName="Sku" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
-                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
-                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
-                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
-                <ScalarProperty Name="BrandName" ColumnName="BrandName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="Brands">
             <EntityTypeMapping TypeName="OrmocIMSModel.Brand">
               <MappingFragment StoreEntitySet="Brand">
@@ -1863,21 +1843,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="OrmocIMSModel.User">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
-                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
-                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
-                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Quotations">
             <EntityTypeMapping TypeName="OrmocIMSModel.Quotation">
               <MappingFragment StoreEntitySet="Quotations">
@@ -1896,24 +1861,13 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="ItemRequestFormSearch_SP" FunctionName="OrmocIMSModel.Store.ItemRequestFormSearch_SP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="OrmocIMSModel.ItemRequestFormSearch_SP_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="StatusCd" ColumnName="StatusCd" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="FollowupStartDttm" ColumnName="FollowupStartDttm" />
-                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
-                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
-                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
-                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
-                <ScalarProperty Name="CodeValue" ColumnName="CodeValue" />
-                <ScalarProperty Name="TicketStatus" ColumnName="TicketStatus" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <EntitySetMapping Name="HashKeys">
+            <EntityTypeMapping TypeName="OrmocIMSModel.HashKey">
+              <MappingFragment StoreEntitySet="HashKey">
+                <ScalarProperty Name="KeyValue" ColumnName="KeyValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Items">
             <EntityTypeMapping TypeName="OrmocIMSModel.Item">
               <MappingFragment StoreEntitySet="Items">
@@ -1923,6 +1877,8 @@
                 <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="Sku" ColumnName="Sku" />
+                <ScalarProperty Name="RetailPrice" ColumnName="RetailPrice" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
                 <ScalarProperty Name="MeasuredBy" ColumnName="MeasuredBy" />
                 <ScalarProperty Name="WarningThresholdQty" ColumnName="WarningThresholdQty" />
                 <ScalarProperty Name="ThresholdQty" ColumnName="ThresholdQty" />
@@ -1933,6 +1889,24 @@
                 <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="OrmocIMSModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
