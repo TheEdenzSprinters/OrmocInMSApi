@@ -614,6 +614,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="ItemAdvancedSearch_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ModuleNm" Type="varchar" Mode="In" />
+          <Parameter Name="param1" Type="varchar" Mode="In" />
+          <Parameter Name="param2" Type="varchar" Mode="In" />
+          <Parameter Name="param3" Type="varchar" Mode="In" />
+          <Parameter Name="param4" Type="varchar" Mode="In" />
+          <Parameter Name="param5" Type="varchar" Mode="In" />
+          <Parameter Name="param6" Type="varchar" Mode="In" />
+          <Parameter Name="param7" Type="varchar" Mode="In" />
+          <Parameter Name="param8" Type="varchar" Mode="In" />
+          <Parameter Name="param9" Type="varchar" Mode="In" />
+          <Parameter Name="param10" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ItemRequestFormSearch_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ModuleNm" Type="varchar" Mode="In" />
+          <Parameter Name="param1" Type="varchar" Mode="In" />
+          <Parameter Name="param2" Type="varchar" Mode="In" />
+          <Parameter Name="param3" Type="varchar" Mode="In" />
+          <Parameter Name="param4" Type="varchar" Mode="In" />
+          <Parameter Name="param5" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="OrmocIMSModelStoreContainer">
           <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
@@ -746,19 +767,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="OrmocIMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="OrmocIMSEntities" annotation:LazyLoadingEnabled="true">
-          <FunctionImport Name="ItemAdvancedSearch_SP" ReturnType="Collection(OrmocIMSModel.ItemAdvancedSearch_SP_Result)">
-            <Parameter Name="ModuleNm" Mode="In" Type="String" />
-            <Parameter Name="param1" Mode="In" Type="String" />
-            <Parameter Name="param2" Mode="In" Type="String" />
-            <Parameter Name="param3" Mode="In" Type="String" />
-            <Parameter Name="param4" Mode="In" Type="String" />
-            <Parameter Name="param5" Mode="In" Type="String" />
-            <Parameter Name="param6" Mode="In" Type="String" />
-            <Parameter Name="param7" Mode="In" Type="String" />
-            <Parameter Name="param8" Mode="In" Type="String" />
-            <Parameter Name="param9" Mode="In" Type="String" />
-            <Parameter Name="param10" Mode="In" Type="String" />
-          </FunctionImport>
           <EntitySet Name="Brands" EntityType="OrmocIMSModel.Brand" />
           <EntitySet Name="Categories" EntityType="OrmocIMSModel.Category" />
           <EntitySet Name="CodeDetails" EntityType="OrmocIMSModel.CodeDetail" />
@@ -841,14 +849,6 @@
             <End Role="Supplier" EntitySet="Suppliers" />
             <End Role="Quotation" EntitySet="Quotations" />
           </AssociationSet>
-          <FunctionImport Name="ItemRequestFormSearch_SP" ReturnType="Collection(OrmocIMSModel.ItemRequestFormSearch_SP_Result)">
-            <Parameter Name="ModuleNm" Mode="In" Type="String" />
-            <Parameter Name="param1" Mode="In" Type="String" />
-            <Parameter Name="param2" Mode="In" Type="String" />
-            <Parameter Name="param3" Mode="In" Type="String" />
-            <Parameter Name="param4" Mode="In" Type="String" />
-            <Parameter Name="param5" Mode="In" Type="String" />
-          </FunctionImport>
           <EntitySet Name="HashKeys" EntityType="OrmocIMSModel.HashKey" />
           <EntitySet Name="Items" EntityType="OrmocIMSModel.Item" />
           <AssociationSet Name="FK_ItemBrand_Brand" Association="OrmocIMSModel.FK_ItemBrand_Brand">
@@ -892,26 +892,28 @@
             <End Role="Item" EntitySet="Items" />
           </AssociationSet>
           <EntitySet Name="Users" EntityType="OrmocIMSModel.User" />
+          <FunctionImport Name="ItemAdvancedSearch_SP" ReturnType="Collection(OrmocIMSModel.ItemAdvancedSearch_SP_Result)">
+            <Parameter Name="ModuleNm" Mode="In" Type="String" />
+            <Parameter Name="param1" Mode="In" Type="String" />
+            <Parameter Name="param2" Mode="In" Type="String" />
+            <Parameter Name="param3" Mode="In" Type="String" />
+            <Parameter Name="param4" Mode="In" Type="String" />
+            <Parameter Name="param5" Mode="In" Type="String" />
+            <Parameter Name="param6" Mode="In" Type="String" />
+            <Parameter Name="param7" Mode="In" Type="String" />
+            <Parameter Name="param8" Mode="In" Type="String" />
+            <Parameter Name="param9" Mode="In" Type="String" />
+            <Parameter Name="param10" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ItemRequestFormSearch_SP" ReturnType="Collection(OrmocIMSModel.ItemRequestFormSearch_SP_Result)">
+            <Parameter Name="ModuleNm" Mode="In" Type="String" />
+            <Parameter Name="param1" Mode="In" Type="String" />
+            <Parameter Name="param2" Mode="In" Type="String" />
+            <Parameter Name="param3" Mode="In" Type="String" />
+            <Parameter Name="param4" Mode="In" Type="String" />
+            <Parameter Name="param5" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
-        <ComplexType Name="ItemAdvancedSearch_SP_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="ItemName" Nullable="false" MaxLength="100" />
-          <Property Type="Int32" Name="CategoryID" Nullable="false" />
-          <Property Type="Int32" Name="SubCategoryID" Nullable="false" />
-          <Property Type="Int32" Name="LocationID" Nullable="false" />
-          <Property Type="Int32" Name="BrandID" Nullable="false" />
-          <Property Type="Int32" Name="StatusCd" Nullable="false" />
-          <Property Type="Int32" Name="Quantity" Nullable="true" />
-          <Property Type="Int32" Name="ThresholdQty" Nullable="true" />
-          <Property Type="String" Name="MeasuredBy" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Sku" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Notes" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="CreateUserName" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="CreateDttm" Nullable="false" Precision="23" />
-          <Property Type="String" Name="UpdateUserName" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="UpdateDttm" Nullable="false" Precision="23" />
-          <Property Type="String" Name="BrandName" Nullable="false" MaxLength="100" />
-        </ComplexType>
         <EntityType Name="Brand">
           <Key>
             <PropertyRef Name="Id" />
@@ -1396,20 +1398,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="ItemRequestFormSearch_SP_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
-          <Property Type="Int32" Name="StatusCd" Nullable="false" />
-          <Property Type="Boolean" Name="IsActive" Nullable="false" />
-          <Property Type="String" Name="Notes" Nullable="true" MaxLength="500" />
-          <Property Type="DateTime" Name="FollowupStartDttm" Nullable="true" Precision="23" />
-          <Property Type="String" Name="CreateUserName" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="CreateDttm" Nullable="false" Precision="23" />
-          <Property Type="String" Name="UpdateUserName" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="UpdateDttm" Nullable="false" Precision="23" />
-          <Property Type="String" Name="CodeValue" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="TicketStatus" Nullable="false" MaxLength="1" />
-        </ComplexType>
         <EntityType Name="HashKey">
           <Key>
             <PropertyRef Name="KeyValue" />
@@ -1587,6 +1575,42 @@
           <Property Name="UpdateUserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="UpdateDttm" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <ComplexType Name="ItemAdvancedSearch_SP_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="ItemName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="CategoryID" Nullable="false" />
+          <Property Type="Int32" Name="SubCategoryID" Nullable="false" />
+          <Property Type="Int32" Name="LocationID" Nullable="false" />
+          <Property Type="Int32" Name="BrandID" Nullable="false" />
+          <Property Type="Int32" Name="StatusCd" Nullable="false" />
+          <Property Type="Int32" Name="Quantity" Nullable="true" />
+          <Property Type="Int32" Name="ThresholdQty" Nullable="true" />
+          <Property Type="Int32" Name="WarningThresholdQty" Nullable="true" />
+          <Property Type="String" Name="MeasuredBy" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="UnitPrice" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="RetailPrice" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Sku" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Notes" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="CreateUserName" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="CreateDttm" Nullable="false" Precision="23" />
+          <Property Type="String" Name="UpdateUserName" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="UpdateDttm" Nullable="false" Precision="23" />
+          <Property Type="String" Name="BrandName" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="ItemRequestFormSearch_SP_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="StatusCd" Nullable="false" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="String" Name="Notes" Nullable="true" MaxLength="500" />
+          <Property Type="DateTime" Name="FollowupStartDttm" Nullable="true" Precision="23" />
+          <Property Type="String" Name="CreateUserName" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="CreateDttm" Nullable="false" Precision="23" />
+          <Property Type="String" Name="UpdateUserName" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="UpdateDttm" Nullable="false" Precision="23" />
+          <Property Type="String" Name="CodeValue" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="TicketStatus" Nullable="false" MaxLength="1" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1911,6 +1935,50 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ItemAdvancedSearch_SP" FunctionName="OrmocIMSModel.Store.ItemAdvancedSearch_SP">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OrmocIMSModel.ItemAdvancedSearch_SP_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="StatusCd" ColumnName="StatusCd" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ThresholdQty" ColumnName="ThresholdQty" />
+                <ScalarProperty Name="WarningThresholdQty" ColumnName="WarningThresholdQty" />
+                <ScalarProperty Name="MeasuredBy" ColumnName="MeasuredBy" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="RetailPrice" ColumnName="RetailPrice" />
+                <ScalarProperty Name="Sku" ColumnName="Sku" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+                <ScalarProperty Name="BrandName" ColumnName="BrandName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ItemRequestFormSearch_SP" FunctionName="OrmocIMSModel.Store.ItemRequestFormSearch_SP">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OrmocIMSModel.ItemRequestFormSearch_SP_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="StatusCd" ColumnName="StatusCd" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="FollowupStartDttm" ColumnName="FollowupStartDttm" />
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="CreateDttm" ColumnName="CreateDttm" />
+                <ScalarProperty Name="UpdateUserName" ColumnName="UpdateUserName" />
+                <ScalarProperty Name="UpdateDttm" ColumnName="UpdateDttm" />
+                <ScalarProperty Name="CodeValue" ColumnName="CodeValue" />
+                <ScalarProperty Name="TicketStatus" ColumnName="TicketStatus" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

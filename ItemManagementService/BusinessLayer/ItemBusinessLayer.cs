@@ -378,5 +378,71 @@ namespace ItemManagementService.BusinessLayer
 
             return result;
         }
+
+        public List<ItemSingleModel> GetRedLevelItems()
+        {
+            List<ItemSingleModel> result = new List<ItemSingleModel>();
+            ItemSingleModel singleItem = new ItemSingleModel();
+
+            var items = _itemDataAccess.GetRedLevelItems();
+
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                singleItem.Id = items[i].Id;
+                singleItem.SubCategoryId = items[i].SubCategoryID;
+                singleItem.UpdateDttm = items[i].UpdateDttm;
+                singleItem.CreateDttm = items[i].CreateDttm;
+
+                result.Add(singleItem);
+                singleItem = new ItemSingleModel();
+            }
+
+            return result;
+        }
+
+        public List<ItemSingleModel> GetAmberLevelItems()
+        {
+            List<ItemSingleModel> result = new List<ItemSingleModel>();
+            ItemSingleModel singleItem = new ItemSingleModel();
+
+            var items = _itemDataAccess.GetAmberLevelItems();
+
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                singleItem.Id = items[i].Id;
+                singleItem.SubCategoryId = items[i].SubCategoryID;
+                singleItem.UpdateDttm = items[i].UpdateDttm;
+                singleItem.CreateDttm = items[i].CreateDttm;
+
+                result.Add(singleItem);
+                singleItem = new ItemSingleModel();
+            }
+
+            return result;
+        }
+
+        public List<ItemSingleModel> GetOldestStocks()
+        {
+            List<ItemSingleModel> result = new List<ItemSingleModel>();
+            ItemSingleModel singleItem = new ItemSingleModel();
+
+            var items = _itemDataAccess.GetOldestStocks();
+
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                singleItem.Id = items[i].Id;
+                singleItem.SubCategoryId = items[i].SubCategoryID;
+                singleItem.UpdateDttm = items[i].UpdateDttm;
+                singleItem.CreateDttm = items[i].CreateDttm;
+
+                result.Add(singleItem);
+                singleItem = new ItemSingleModel();
+            }
+
+            return result;
+        }
     }
 }

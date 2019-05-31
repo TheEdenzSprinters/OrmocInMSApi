@@ -555,5 +555,133 @@ namespace ItemManagementService.Controllers
                 return Json(new { Result = result });
             }
         }
+
+        [Route("api/ItemManagement/GetAllSuppliers")]
+        [HttpGet]
+        public IHttpActionResult GetSuppliers()
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<ISupplierBusinessLayer>();
+
+                var result = app.GetSuppliers();
+
+                return Json(new { Result = result });
+            }
+        }
+
+        [Route("api/ItemManagement/CreateNewSupplier")]
+        [HttpPost]
+        public IHttpActionResult CreateNewSupplier([FromBody]SupplierModel supplier)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<ISupplierBusinessLayer>();
+
+                var result = app.CreateNewSupplier(supplier);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        [Route("api/ItemManagement/SuppliersSearch")]
+        [HttpPost]
+        public IHttpActionResult GetSupplierSearch([FromBody]SupplierSimpleSearchModel supplier)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<ISupplierBusinessLayer>();
+
+                var result = app.SuppliersSearch(supplier);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        [Route("api/ItemManagement/UpdateSupplier")]
+        [HttpPost]
+        public IHttpActionResult UpdateSupplier([FromBody]SupplierUpdateModel supplierUpdate)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<ISupplierBusinessLayer>();
+
+                var result = app.UpdateSupplier(supplierUpdate);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        [Route("api/ItemManagement/ViewSupplierById")]
+        [HttpPost]
+        public IHttpActionResult ViewSupplierById([FromBody]SearchSupplierByIdModel sup)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<ISupplierBusinessLayer>();
+
+                var result = app.ViewSupplierById(sup.Id);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        [Route("api/ItemManagement/GetRedLevelItems")]
+        [HttpGet]
+        public IHttpActionResult GetRedLevelItems()
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemBusinessLayer>();
+
+                var result = app.GetRedLevelItems();
+
+                return Json(result);
+            }
+        }
+
+        [Route("api/ItemManagement/GetAmberLevelItems")]
+        [HttpGet]
+        public IHttpActionResult GetAmberLevelItems()
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemBusinessLayer>();
+
+                var result = app.GetAmberLevelItems();
+
+                return Json(result);
+            }
+        }
+
+        [Route("api/ItemManagement/GetOldestStocks")]
+        [HttpGet]
+        public IHttpActionResult GetOldestStocks()
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IItemBusinessLayer>();
+
+                var result = app.GetOldestStocks();
+
+                return Json(result);
+            }
+        }
     }
 }
