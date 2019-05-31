@@ -372,5 +372,39 @@ namespace IMSRepository.Utilities
                 return result;
             }
         }
+
+        public List<Item> GetRedLevelItems()
+        {
+
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
+            {
+                var items = context.Items.Where(res => res.Quantity < res.ThresholdQty).OrderBy(x => x.Quantity).Take(5).ToList();
+                
+                return items;
+            }
+        }
+
+        public List<Item> GetAmberLevelItems()
+        {
+
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
+            {
+                var items = context.Items.Where(res => res.Quantity < res.WarningThresholdQty).OrderBy(x => x.CreateDttm).Take(5).ToList();
+                
+                return items;
+            }
+        }
+
+        public List<Item> GetOldestStocks()
+        {
+            DateTime outdatedStocksDate = DateTime.Now.AddMonths(-3);
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
+
+            {
+                var items = context.Items.Where(res => res.UpdateDttm < outdatedStocksDate).OrderByDescending(x => x.UpdateDttm).ToList();
+
+                return items;
+            }
+        }
     }
 }

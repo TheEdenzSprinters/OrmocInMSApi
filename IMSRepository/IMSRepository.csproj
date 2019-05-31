@@ -98,6 +98,7 @@
     <Compile Include="Models\ItemSearchModel.cs" />
     <Compile Include="Models\ItemSearchResponseModel.cs" />
     <Compile Include="Models\ItemSearchResult.cs" />
+    <Compile Include="Models\SupplierSearchModel.cs" />
     <Compile Include="OrmocIMSEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -152,10 +153,12 @@
     <Compile Include="Utilities\ILoginDataAccess.cs" />
     <Compile Include="Utilities\ISubCategoryDataAccess.cs" />
     <Compile Include="Utilities\CategoryDataAccess.cs" />
+    <Compile Include="Utilities\ISupplierDataAccess.cs" />
     <Compile Include="Utilities\ItemDataAccess.cs" />
     <Compile Include="Utilities\ItemRequestFormDataAccess.cs" />
     <Compile Include="Utilities\LoginDataAccess.cs" />
     <Compile Include="Utilities\SubCategoryDataAccess.cs" />
+    <Compile Include="Utilities\SupplierDataAccess.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

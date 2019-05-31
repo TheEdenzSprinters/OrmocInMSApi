@@ -22,5 +22,8 @@ namespace ItemManagementService.Interfaces
         List<TagsModel> TagsAutoComplete(string word);
         TagsModel AddNewTagToItem(TagsMappingModel tag);
         ItemSearchGeneralResponseModel ItemBySimpleSearch(ItemSimpleSearchModel item);
+        List<ItemSingleModel> GetRedLevelItems();
+        List<ItemSingleModel> GetAmberLevelItems();
+        List<ItemSingleModel> GetOldestStocks();
     }
 }

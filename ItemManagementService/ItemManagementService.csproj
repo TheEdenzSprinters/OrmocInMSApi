@@ -107,6 +107,7 @@
     <Compile Include="BusinessLayer\ItemBusinessLayer.cs" />
     <Compile Include="BusinessLayer\LoginBusinessLayer.cs" />
     <Compile Include="BusinessLayer\SubCategoryBusinessLayer.cs" />
+    <Compile Include="BusinessLayer\SupplierBusinessLayer.cs" />
     <Compile Include="ContainerConfig.cs" />
     <Compile Include="Controllers\ItemManagementController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Interfaces\IItemBusinessLayer.cs" />
     <Compile Include="Interfaces\ILoginBusinessLayer.cs" />
     <Compile Include="Interfaces\ISubCategoryBusinessLayer.cs" />
+    <Compile Include="Interfaces\ISupplierBusinessLayer.cs" />
     <Compile Include="Models\BaseItemModel.cs" />
     <Compile Include="Models\BrandModel.cs" />
     <Compile Include="Models\InputQueryModel.cs" />
@@ -135,11 +137,19 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\LoginResultModel.cs" />
     <Compile Include="Models\SearchItemByIdModel.cs" />
+    <Compile Include="Models\SearchSupplierByIdModel.cs" />
     <Compile Include="Models\SubCategoryByCategoryIdModel.cs" />
     <Compile Include="Models\SubCategoryModel.cs" />
     <Compile Include="Models\CategoryUpdateModel.cs" />
     <Compile Include="Models\SubCategoryUpdateModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
+    <Compile Include="Models\SupplierCreateModel.cs" />
+    <Compile Include="Models\SupplierDetailModel.cs" />
+    <Compile Include="Models\SupplierModel.cs" />
+    <Compile Include="Models\SupplierSearchResultModel.cs" />
+    <Compile Include="Models\SupplierSimpleSearchModel.cs" />
+    <Compile Include="Models\SupplierSingleModel.cs" />
+    <Compile Include="Models\SupplierUpdateModel.cs" />
     <Compile Include="Models\TagsMappingModel.cs" />
     <Compile Include="Models\TagsModel.cs" />
     <Compile Include="Models\UpdateItemModel.cs" />

@@ -22,7 +22,10 @@ namespace IMSRepository
         public int StatusCd { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<int> ThresholdQty { get; set; }
+        public Nullable<int> WarningThresholdQty { get; set; }
         public string MeasuredBy { get; set; }
+        public string UnitPrice { get; set; }
+        public string RetailPrice { get; set; }
         public string Sku { get; set; }
         public string Notes { get; set; }
         public string CreateUserName { get; set; }
