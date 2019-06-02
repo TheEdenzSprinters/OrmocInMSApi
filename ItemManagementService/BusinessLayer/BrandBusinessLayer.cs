@@ -101,6 +101,39 @@ namespace ItemManagementService.BusinessLayer
         /// </summary>
         /// <param name="brand"></param>
         /// <returns></returns>
+        public int ValidateBrandNameExist(BrandModel brand)
+        {
+            if (!string.IsNullOrEmpty(brand.BrandName))
+            {
+                var result = _brandDataAccess.GetBrandsCount(brand.BrandName);
+                return result;
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="brand"></param>
+        /// <returns></returns>
+        public List<string> GetBrandNamesList(BrandModel brand)
+        {
+            if (!string.IsNullOrEmpty(brand.BrandName))
+            {
+                var result = _brandDataAccess.GetBrandNameList(brand.BrandName);
+
+                return result;
+            }
+
+            return new List<string>();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="brand"></param>
+        /// <returns></returns>
         private BrandModel MapBrandToBrandModel(Brand brand)
         {
             return new BrandModel

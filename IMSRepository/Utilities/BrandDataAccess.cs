@@ -135,12 +135,43 @@ namespace IMSRepository.Utilities
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="brandName"></param>
+        /// <returns></returns>
         public List<Brand> SearchBrands(string brandName)
         {
             using (OrmocIMSEntities context = new OrmocIMSEntities())
             { 
                 var search = context.Brands.Where(x => x.BrandName.Contains(brandName)).ToList();
                 return search;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="brandName"></param>
+        /// <returns></returns>
+        public int GetBrandsCount(string brandName)
+        {
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
+            {
+                var result = context.Brands.Where(x => x.BrandName.Contains(brandName)).Count();
+
+                return result;
+            }
+        }
+
+        public List<string> GetBrandNameList(string brandName)
+        {
+            using (OrmocIMSEntities context = new OrmocIMSEntities())
+            {
+                var result = context.Brands.Where(x => x.BrandName.Contains(brandName) && x.IsActive == true)
+                    .Select(x => x.BrandName).Take(10).ToList();
+
+                return result;
             }
         }
     }

@@ -556,6 +556,10 @@ namespace ItemManagementService.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Route("api/ItemManagement/GetAllSuppliers")]
         [HttpGet]
         public IHttpActionResult GetSuppliers()
@@ -572,6 +576,11 @@ namespace ItemManagementService.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="supplier"></param>
+        /// <returns></returns>
         [Route("api/ItemManagement/CreateNewSupplier")]
         [HttpPost]
         public IHttpActionResult CreateNewSupplier([FromBody]SupplierModel supplier)
@@ -588,6 +597,11 @@ namespace ItemManagementService.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="supplier"></param>
+        /// <returns></returns>
         [Route("api/ItemManagement/SuppliersSearch")]
         [HttpPost]
         public IHttpActionResult GetSupplierSearch([FromBody]SupplierSimpleSearchModel supplier)
@@ -604,6 +618,11 @@ namespace ItemManagementService.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="supplierUpdate"></param>
+        /// <returns></returns>
         [Route("api/ItemManagement/UpdateSupplier")]
         [HttpPost]
         public IHttpActionResult UpdateSupplier([FromBody]SupplierUpdateModel supplierUpdate)
@@ -620,6 +639,11 @@ namespace ItemManagementService.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sup"></param>
+        /// <returns></returns>
         [Route("api/ItemManagement/ViewSupplierById")]
         [HttpPost]
         public IHttpActionResult ViewSupplierById([FromBody]SearchSupplierByIdModel sup)
@@ -636,6 +660,10 @@ namespace ItemManagementService.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Route("api/ItemManagement/GetRedLevelItems")]
         [HttpGet]
         public IHttpActionResult GetRedLevelItems()
@@ -652,6 +680,10 @@ namespace ItemManagementService.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Route("api/ItemManagement/GetAmberLevelItems")]
         [HttpGet]
         public IHttpActionResult GetAmberLevelItems()
@@ -668,6 +700,10 @@ namespace ItemManagementService.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Route("api/ItemManagement/GetOldestStocks")]
         [HttpGet]
         public IHttpActionResult GetOldestStocks()
@@ -679,6 +715,48 @@ namespace ItemManagementService.Controllers
                 var app = scope.Resolve<IItemBusinessLayer>();
 
                 var result = app.GetOldestStocks();
+
+                return Json(result);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="brand"></param>
+        /// <returns></returns>
+        [Route("api/ItemManagement/ValidateBrandNameExist")]
+        [HttpPost]
+        public IHttpActionResult ValidateBrandNameExist([FromBody]BrandModel brand)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IBrandBusinessLayer>();
+
+                var result = app.ValidateBrandNameExist(brand);
+
+                return Json(new { Result = result });
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="brand"></param>
+        /// <returns></returns>
+        [Route("api/ItemManagement/BrandsAutoComplete")]
+        [HttpPost]
+        public IHttpActionResult BrandsAutoComplete([FromBody]BrandModel brand)
+        {
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IBrandBusinessLayer>();
+
+                var result = app.GetBrandNamesList(brand);
 
                 return Json(result);
             }
