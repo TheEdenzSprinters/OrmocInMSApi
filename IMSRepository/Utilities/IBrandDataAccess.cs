@@ -9,5 +9,7 @@ namespace IMSRepository.Utilities
         string UpdateBrandDetails(Brand brand);
         string DeleteBrand(int brandId);
         List<Brand> SearchBrands(string brandName);
+        int GetBrandsCount(string brandName);
+        List<string> GetBrandNameList(string brandName);
     }
 }

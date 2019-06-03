@@ -46,8 +46,37 @@ namespace IMSRepository
         public virtual DbSet<UnitsOfMeasure> UnitsOfMeasures { get; set; }
         public virtual DbSet<Quotation> Quotations { get; set; }
         public virtual DbSet<HashKey> HashKeys { get; set; }
-        public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Item> Items { get; set; }
+    
+        public virtual ObjectResult<ItemRequestFormSearch_SP_Result> ItemRequestFormSearch_SP(string moduleNm, string param1, string param2, string param3, string param4, string param5)
+        {
+            var moduleNmParameter = moduleNm != null ?
+                new ObjectParameter("ModuleNm", moduleNm) :
+                new ObjectParameter("ModuleNm", typeof(string));
+    
+            var param1Parameter = param1 != null ?
+                new ObjectParameter("param1", param1) :
+                new ObjectParameter("param1", typeof(string));
+    
+            var param2Parameter = param2 != null ?
+                new ObjectParameter("param2", param2) :
+                new ObjectParameter("param2", typeof(string));
+    
+            var param3Parameter = param3 != null ?
+                new ObjectParameter("param3", param3) :
+                new ObjectParameter("param3", typeof(string));
+    
+            var param4Parameter = param4 != null ?
+                new ObjectParameter("param4", param4) :
+                new ObjectParameter("param4", typeof(string));
+    
+            var param5Parameter = param5 != null ?
+                new ObjectParameter("param5", param5) :
+                new ObjectParameter("param5", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ItemRequestFormSearch_SP_Result>("ItemRequestFormSearch_SP", moduleNmParameter, param1Parameter, param2Parameter, param3Parameter, param4Parameter, param5Parameter);
+        }
     
         public virtual ObjectResult<ItemAdvancedSearch_SP_Result> ItemAdvancedSearch_SP(string moduleNm, string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9, string param10)
         {
@@ -96,35 +125,6 @@ namespace IMSRepository
                 new ObjectParameter("param10", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ItemAdvancedSearch_SP_Result>("ItemAdvancedSearch_SP", moduleNmParameter, param1Parameter, param2Parameter, param3Parameter, param4Parameter, param5Parameter, param6Parameter, param7Parameter, param8Parameter, param9Parameter, param10Parameter);
-        }
-    
-        public virtual ObjectResult<ItemRequestFormSearch_SP_Result> ItemRequestFormSearch_SP(string moduleNm, string param1, string param2, string param3, string param4, string param5)
-        {
-            var moduleNmParameter = moduleNm != null ?
-                new ObjectParameter("ModuleNm", moduleNm) :
-                new ObjectParameter("ModuleNm", typeof(string));
-    
-            var param1Parameter = param1 != null ?
-                new ObjectParameter("param1", param1) :
-                new ObjectParameter("param1", typeof(string));
-    
-            var param2Parameter = param2 != null ?
-                new ObjectParameter("param2", param2) :
-                new ObjectParameter("param2", typeof(string));
-    
-            var param3Parameter = param3 != null ?
-                new ObjectParameter("param3", param3) :
-                new ObjectParameter("param3", typeof(string));
-    
-            var param4Parameter = param4 != null ?
-                new ObjectParameter("param4", param4) :
-                new ObjectParameter("param4", typeof(string));
-    
-            var param5Parameter = param5 != null ?
-                new ObjectParameter("param5", param5) :
-                new ObjectParameter("param5", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ItemRequestFormSearch_SP_Result>("ItemRequestFormSearch_SP", moduleNmParameter, param1Parameter, param2Parameter, param3Parameter, param4Parameter, param5Parameter);
         }
     }
 }
