@@ -118,6 +118,8 @@ namespace ItemManagementService.BusinessLayer
             editItem.Sku = item.Sku;
             editItem.UpdateUserName = "ADMIN";
             editItem.UpdateDttm = DateTime.UtcNow;
+            editItem.UnitPrice = (decimal)item.UnitPrice;
+            editItem.RetailPrice = (decimal)item.RetailPrice;
 
             for(int i = 0; i < item.ItemDetail.Count; i++)
             {
@@ -174,6 +176,8 @@ namespace ItemManagementService.BusinessLayer
             result.CreateDttm = query.CreateDttm;
             result.UpdateUserName = query.UpdateUserName;
             result.UpdateDttm = query.UpdateDttm;
+            result.UnitPrice = query.UnitPrice.HasValue ? query.UnitPrice.Value : 0.00m;
+            result.RetailPrice = query.RetailPrice.HasValue ? query.RetailPrice.Value : 0.00m;
 
             for (int i = 0; i < itemDetailQuery.Count; i++)
             {

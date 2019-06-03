@@ -14,5 +14,7 @@ namespace ItemManagementService.Interfaces
         string UpdateBrandDetail(BrandModel brand);
         string DeleteBrand(int Id);
         List<BrandModel> SearchBrands(string brandName);
+        int ValidateBrandNameExist(BrandModel brand);
+        List<string> GetBrandNamesList(BrandModel brand);
     }
 }
