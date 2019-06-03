@@ -40,7 +40,6 @@
         <AssociationConnector Association="OrmocIMSModel.FK_QuotationID_Quotations" />
         <AssociationConnector Association="OrmocIMSModel.FK_SupplierIDQuotations_Suppliers" />
         <EntityTypeShape EntityType="OrmocIMSModel.HashKey" Width="1.5" PointX="3.375" PointY="0.75" />
-        <EntityTypeShape EntityType="OrmocIMSModel.User" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="OrmocIMSModel.Item" Width="1.5" PointX="5.25" PointY="13.75" />
         <AssociationConnector Association="OrmocIMSModel.FK_ItemBrand_Brand" />
         <AssociationConnector Association="OrmocIMSModel.FK_ItemCategory_Category" />
@@ -52,6 +51,7 @@
         <AssociationConnector Association="OrmocIMSModel.FK_ItemIDTags_Items" />
         <AssociationConnector Association="OrmocIMSModel.FK_ItemLocation_Locations" />
         <AssociationConnector Association="OrmocIMSModel.FK_ItemSubCategory_SubCategory" />
+        <EntityTypeShape EntityType="OrmocIMSModel.User" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
