@@ -46,8 +46,8 @@ namespace IMSRepository
         public virtual DbSet<UnitsOfMeasure> UnitsOfMeasures { get; set; }
         public virtual DbSet<Quotation> Quotations { get; set; }
         public virtual DbSet<HashKey> HashKeys { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Item> Items { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     
         public virtual ObjectResult<ItemRequestFormSearch_SP_Result> ItemRequestFormSearch_SP(string moduleNm, string param1, string param2, string param3, string param4, string param5)
         {

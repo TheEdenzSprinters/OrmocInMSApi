@@ -19,7 +19,7 @@ namespace IMSRepository.Utilities
             using (OrmocIMSEntities context = new OrmocIMSEntities())
             {
                 var userId = context.Users
-                    .Where(x => x.Login.Equals(userName)).Select(x => x.Id).FirstOrDefault();
+                    .Where(x => x.UserName.Equals(userName)).Select(x => x.Id).FirstOrDefault();
 
                 return userId;
             }
