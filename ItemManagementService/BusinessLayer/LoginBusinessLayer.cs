@@ -5,6 +5,8 @@ using ItemManagementService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 
 namespace ItemManagementService.BusinessLayer
@@ -33,9 +35,9 @@ namespace ItemManagementService.BusinessLayer
             }
             
             string hash = GetHashKey();
-            //Call the string encrypt here
+            string encryptedPassword = EncryptText(hash, login.Password);
 
-            var passwordCheck = _LoginDataAccess.ValidateUserPassword(userId, login.Password);
+            var passwordCheck = _LoginDataAccess.ValidateUserPassword(userId, encryptedPassword);
 
             if (passwordCheck)
             {
@@ -63,12 +65,30 @@ namespace ItemManagementService.BusinessLayer
             return result;
         }
 
-
         private string GetHashKey()
         {
             var hash = _LoginDataAccess.GetHashKey();
 
             return hash;
+        }
+
+        private string EncryptText(string hashKey, string originalText)
+        {
+            String encryptedText = String.Empty;
+
+            byte[] data = UTF8Encoding.UTF8.GetBytes(originalText);
+            using (MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
+            {
+                byte[] keys = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hashKey));
+                using (TripleDESCryptoServiceProvider tripDes = new TripleDESCryptoServiceProvider() { Key = keys, Mode = CipherMode.ECB, Padding = PaddingMode.PKCS7 })
+                {
+                    ICryptoTransform transform = tripDes.CreateEncryptor();
+                    byte[] results = transform.TransformFinalBlock(data, 0, data.Length);
+                    encryptedText = Convert.ToBase64String(results, 0, results.Length);
+                }
+            }
+
+            return encryptedText;
         }
     }
 }
