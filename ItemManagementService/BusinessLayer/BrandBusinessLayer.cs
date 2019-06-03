@@ -119,7 +119,7 @@ namespace ItemManagementService.BusinessLayer
         /// <returns></returns>
         public List<string> GetBrandNamesList(BrandModel brand)
         {
-            if (!string.IsNullOrEmpty(brand.BrandName))
+            if (!string.IsNullOrEmpty(brand.BrandName) || brand.BrandName.Length > 3)
             {
                 var result = _brandDataAccess.GetBrandNameList(brand.BrandName);
 

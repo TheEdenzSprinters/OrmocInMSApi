@@ -19,5 +19,7 @@ namespace ItemManagementService.Models
         public string MeasuredBy { get; set; }
         public string Sku { get; set; }
         public string Notes { get; set; }
+        public decimal UnitPrice { get; set; }
+        public decimal RetailPrice { get; set; }
     }
 }
