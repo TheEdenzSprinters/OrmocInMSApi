@@ -374,11 +374,11 @@ namespace IMSRepository.Utilities
         }
 
         public List<Item> GetRedLevelItems()
-        {
-
+        { 
             using (OrmocIMSEntities context = new OrmocIMSEntities())
             {
-                var items = context.Items.Where(res => res.Quantity < res.ThresholdQty).OrderBy(x => x.Quantity).Take(5).ToList();
+                var items = context.Items.Where(res => res.Quantity < res.ThresholdQty).OrderBy(x => x.Quantity)
+                    .Take(5).ToList();
                 
                 return items;
             }
@@ -386,10 +386,10 @@ namespace IMSRepository.Utilities
 
         public List<Item> GetAmberLevelItems()
         {
-
             using (OrmocIMSEntities context = new OrmocIMSEntities())
             {
-                var items = context.Items.Where(res => res.Quantity < res.WarningThresholdQty).OrderBy(x => x.CreateDttm).Take(5).ToList();
+                var items = context.Items.Where(res => res.Quantity < res.WarningThresholdQty && res.Quantity > res.ThresholdQty)
+                    .OrderBy(x => x.Quantity).Take(5).ToList();
                 
                 return items;
             }
