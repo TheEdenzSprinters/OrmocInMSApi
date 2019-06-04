@@ -394,9 +394,7 @@ namespace ItemManagementService.BusinessLayer
             for (int i = 0; i < items.Count; i++)
             {
                 singleItem.Id = items[i].Id;
-                singleItem.SubCategoryId = items[i].SubCategoryID;
-                singleItem.UpdateDttm = items[i].UpdateDttm;
-                singleItem.CreateDttm = items[i].CreateDttm;
+                singleItem.ItemName = items[i].ItemName;
 
                 result.Add(singleItem);
                 singleItem = new ItemSingleModel();
@@ -416,9 +414,7 @@ namespace ItemManagementService.BusinessLayer
             for (int i = 0; i < items.Count; i++)
             {
                 singleItem.Id = items[i].Id;
-                singleItem.SubCategoryId = items[i].SubCategoryID;
-                singleItem.UpdateDttm = items[i].UpdateDttm;
-                singleItem.CreateDttm = items[i].CreateDttm;
+                singleItem.ItemName = items[i].ItemName;
 
                 result.Add(singleItem);
                 singleItem = new ItemSingleModel();
@@ -438,9 +434,7 @@ namespace ItemManagementService.BusinessLayer
             for (int i = 0; i < items.Count; i++)
             {
                 singleItem.Id = items[i].Id;
-                singleItem.SubCategoryId = items[i].SubCategoryID;
-                singleItem.UpdateDttm = items[i].UpdateDttm;
-                singleItem.CreateDttm = items[i].CreateDttm;
+                singleItem.ItemName = items[i].ItemName;
 
                 result.Add(singleItem);
                 singleItem = new ItemSingleModel();
