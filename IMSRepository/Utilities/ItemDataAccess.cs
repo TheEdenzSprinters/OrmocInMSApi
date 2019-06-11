@@ -401,7 +401,7 @@ namespace IMSRepository.Utilities
             using (OrmocIMSEntities context = new OrmocIMSEntities())
 
             {
-                var items = context.Items.Where(res => res.UpdateDttm < outdatedStocksDate).OrderByDescending(x => x.UpdateDttm).ToList();
+                var items = context.Items.Where(res => res.UpdateDttm < outdatedStocksDate).OrderByDescending(x => x.UpdateDttm).Take(10).ToList();
 
                 return items;
             }

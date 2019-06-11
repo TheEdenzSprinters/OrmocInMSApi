@@ -201,7 +201,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Gets the specific Item record by ID.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -222,7 +222,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Gets all items and returns the result as per search field queries.
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
@@ -243,7 +243,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Gets all items and returns the result as per simple search by Item Name.
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
@@ -264,7 +264,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Gets a list of suggested Item Name for auto-suggest in Item Simple Search.
         /// </summary>
         /// <param name="word"></param>
         /// <returns></returns>
@@ -287,7 +287,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Gets all active Locations key-value pair.
         /// </summary>
         /// <returns></returns>
         [Route("api/ItemManagement/GetAllLocations")]
@@ -307,7 +307,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Gets all active Item Status key-value pair.
         /// </summary>
         /// <returns></returns>
         [Route("api/ItemManagement/GetAllItemStatus")]
@@ -327,7 +327,9 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Gets all Item Details Mapping per Sub-Category. Item Details Mapping contains 
+        /// the mapping of several key-value pair for the fields specific per Sub-Category 
+        /// (e.g. height, width and length for all Sub-Category under plywood).
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -348,7 +350,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Inserts new Item record into the database.
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
@@ -369,10 +371,12 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Updates fields for an existing Item record.
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
+        [Route("api/ItemManagement/UpdateExistingItem")]
+        [HttpPost]
         public IHttpActionResult UpdateExistingItem([FromBody]UpdateItemModel item)
         {
             var container = ContainerConfig.Configure();
@@ -388,7 +392,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Updates status of an item record.
         /// </summary>
         /// <param name="status"></param>
         /// <returns></returns>
@@ -409,7 +413,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Gets a list of suggested Tag Name for auto-suggest in Tags field under Item Advanced Search.
         /// </summary>
         /// <param name="word"></param>
         /// <returns></returns>
@@ -432,7 +436,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Add new Tags for specific Item record.
         /// </summary>
         /// <param name="tags"></param>
         /// <returns></returns>
