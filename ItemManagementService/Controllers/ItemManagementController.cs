@@ -13,7 +13,7 @@ namespace ItemManagementService.Controllers
     public class ItemManagementController : ApiController
     {
         /// <summary>
-        /// 
+        /// Gets all Categories
         /// </summary>
         /// <returns></returns>
         [Route("api/ItemManagement/GetAllCategories")]
@@ -33,7 +33,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Adds a new Category
         /// </summary>
         /// <param name="category"></param>
         /// <returns></returns>
@@ -54,7 +54,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Updates existing Category by ID
         /// </summary>
         /// <param name="category"></param>
         /// <returns></returns>
@@ -75,7 +75,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Inactivates existing Category by ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -96,7 +96,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Gets all SubCategories
         /// </summary>
         /// <returns></returns>
         [Route("api/ItemManagement/GetAllSubCategories")]
@@ -116,7 +116,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Gets all SubCategories of the selected Category ID
         /// </summary>
         /// <param name="categoryId"></param>
         /// <returns></returns>
@@ -138,7 +138,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Adds a new SubCategory
         /// </summary>
         /// <param name="subcategory"></param>
         /// <returns></returns>
@@ -159,7 +159,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Updates existing SubCategory by ID
         /// </summary>
         /// <param name="subcategory"></param>
         /// <returns></returns>
@@ -180,7 +180,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Inactivates existing SubCategory by ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -457,7 +457,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Gets all Brands
         /// </summary>
         /// <returns></returns>
         [Route("api/ItemManagement/GetAllBrands")]
@@ -477,7 +477,7 @@ namespace ItemManagementService.Controllers
         }
         
         /// <summary>
-        /// 
+        /// Inserts a new Brand
         /// </summary>
         /// <param name="brand"></param>
         /// <returns></returns>
@@ -498,7 +498,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Updates an existing Brand by Brand ID
         /// </summary>
         /// <param name="brand"></param>
         /// <returns></returns>
@@ -519,7 +519,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Inactivates an existing Brand by Brand ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -540,7 +540,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Gets a Brands list by Brand name
         /// </summary>
         /// <param name="brandName"></param>
         /// <returns></returns>
@@ -561,7 +561,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Gets all Suppliers
         /// </summary>
         /// <returns></returns>
         [Route("api/ItemManagement/GetAllSuppliers")]
@@ -581,7 +581,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Creates a new Supplier
         /// </summary>
         /// <param name="supplier"></param>
         /// <returns></returns>
@@ -602,7 +602,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Gets a Suppliers list by Supplier name and Supplier address
         /// </summary>
         /// <param name="supplier"></param>
         /// <returns></returns>
@@ -623,7 +623,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Updates an existing Supplier
         /// </summary>
         /// <param name="supplierUpdate"></param>
         /// <returns></returns>
@@ -644,7 +644,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Gets a Suppliers list by Supplier Id
         /// </summary>
         /// <param name="sup"></param>
         /// <returns></returns>
@@ -665,7 +665,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Returns the Items with the Red stock Level
         /// </summary>
         /// <returns></returns>
         [Route("api/ItemManagement/GetRedLevelItems")]
@@ -685,7 +685,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Returns the Items with the Amber stock Level
         /// </summary>
         /// <returns></returns>
         [Route("api/ItemManagement/GetAmberLevelItems")]
@@ -705,7 +705,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Returns the Oldest stock Items list
         /// </summary>
         /// <returns></returns>
         [Route("api/ItemManagement/GetOldestStocks")]
@@ -725,7 +725,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Returns Brands list if the searched Brand exists or 0 if not
         /// </summary>
         /// <param name="brand"></param>
         /// <returns></returns>
@@ -746,7 +746,7 @@ namespace ItemManagementService.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Gets a list of suggested Brands for auto-suggest in the Brand Search.
         /// </summary>
         /// <param name="brand"></param>
         /// <returns></returns>
