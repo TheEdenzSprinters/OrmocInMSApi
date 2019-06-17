@@ -12,9 +12,14 @@ namespace ItemManagementService.Controllers
 {
     public class UserManagementController : ApiController
     {
-       [Route("api/UserManagement/Login")]
-       [HttpPost]
-       public IHttpActionResult Login([FromBody]LoginModel loginToCompare)
+        /// <summary>
+        /// Gets user name and returns the result with access grant or access deny
+        /// </summary>
+        /// <param name="loginToCompare"></param>
+        /// <returns></returns>
+        [Route("api/UserManagement/Login")]
+        [HttpPost]
+        public IHttpActionResult Login([FromBody]LoginModel loginToCompare)
         {
             var container = ContainerConfig.Configure();
 
