@@ -51,23 +51,40 @@ namespace ItemManagementService.BusinessLayer
         /// </summary>
         /// <param name="cat"></param>
         /// <returns></returns>
-        public Category InsertNewCategory(CategoryModel cat)
+        public InsertCategoryResultModel InsertNewCategory(CategoryModel cat)
         {
             Category catToInsert = new Category();
-            Category result = new Category();
+            InsertCategoryResultModel result = new InsertCategoryResultModel();
 
-            catToInsert.CategoryName = cat.CategoryName;
-            catToInsert.IsActive = true;
-            catToInsert.CreateUserName = "ADMIN";
-            catToInsert.CreateDttm = DateTime.UtcNow;
-            catToInsert.UpdateUserName = "ADMIN";
-            catToInsert.UpdateDttm = DateTime.UtcNow;
+            if(cat == null)
+            {
+                result.IsSuccess = false;
+                result.Message = "Input is null.";
+                return result;
+            }
+            else if (string.IsNullOrEmpty(cat.CategoryName))
+            {
+                result.IsSuccess = false;
+                result.Message = "Category Name should not be blank.";
+                return result;
+            }
+            else
+            {
+                catToInsert.CategoryName = cat.CategoryName;
+                catToInsert.IsActive = true;
+                catToInsert.CreateUserName = "ADMIN";
+                catToInsert.CreateDttm = DateTime.UtcNow;
+                catToInsert.UpdateUserName = "ADMIN";
+                catToInsert.UpdateDttm = DateTime.UtcNow;
 
-            var insertCat = _CategoryDataAccess.InsertNewCategory(catToInsert);
+                var query = _CategoryDataAccess.InsertNewCategory(catToInsert);
 
-            result = insertCat;
+                result.IsSuccess = true;
+                result.NewCategory = query;
+                result.Message = "Success";
 
-            return result;
+                return result;
+            }
         }
 
         /// <summary>
@@ -78,16 +95,30 @@ namespace ItemManagementService.BusinessLayer
         public string UpdateCategoryDetail(CategoryUpdateModel cat)
         {
             Category catToUpdate = new Category();
+            string result;
 
-            catToUpdate.Id = cat.Id;
-            catToUpdate.CategoryName = cat.CategoryName;
-            catToUpdate.IsActive = true;
-            catToUpdate.UpdateUserName = "ADMIN";
-            catToUpdate.UpdateDttm = DateTime.UtcNow;
+            if (cat == null)
+            {
+                result = "Input is null.";
+                return result;
+            }
+            else if (string.IsNullOrEmpty(cat.CategoryName))
+            {
+                result = "Category Name should not be blank.";
+                return result;
+            }
+            else
+            {
+                catToUpdate.Id = cat.Id;
+                catToUpdate.CategoryName = cat.CategoryName;
+                catToUpdate.IsActive = true;
+                catToUpdate.UpdateUserName = "ADMIN";
+                catToUpdate.UpdateDttm = DateTime.UtcNow;
 
-            string result = _CategoryDataAccess.UpdateCategoryDetails(catToUpdate);
+                result = _CategoryDataAccess.UpdateCategoryDetails(catToUpdate);
 
-            return result;
+                return result;
+            }
         }
 
         /// <summary>
