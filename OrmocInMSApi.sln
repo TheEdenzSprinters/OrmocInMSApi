@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemManagementService", "It
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PurchaseOrderManagementService", "PurchaseOrderManagementService\PurchaseOrderManagementService.csproj", "{48DA5B53-9DB3-454A-8FEB-85E8B2D4B68D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemManagement.Service.Test", "ItemManagement.Service.Test\ItemManagement.Service.Test.csproj", "{7FCCA548-DD63-4574-BD87-48A9D91BDFD4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{48DA5B53-9DB3-454A-8FEB-85E8B2D4B68D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48DA5B53-9DB3-454A-8FEB-85E8B2D4B68D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48DA5B53-9DB3-454A-8FEB-85E8B2D4B68D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FCCA548-DD63-4574-BD87-48A9D91BDFD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FCCA548-DD63-4574-BD87-48A9D91BDFD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FCCA548-DD63-4574-BD87-48A9D91BDFD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FCCA548-DD63-4574-BD87-48A9D91BDFD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

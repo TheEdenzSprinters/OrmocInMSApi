@@ -123,6 +123,7 @@
     <Compile Include="Models\BaseItemModel.cs" />
     <Compile Include="Models\BrandModel.cs" />
     <Compile Include="Models\InputQueryModel.cs" />
+    <Compile Include="Models\InsertCategoryResultModel.cs" />
     <Compile Include="Models\InsertItemDetailMappingModel.cs" />
     <Compile Include="Models\InsertItemModel.cs" />
     <Compile Include="Models\ItemDetailBySubCategoryModel.cs" />
